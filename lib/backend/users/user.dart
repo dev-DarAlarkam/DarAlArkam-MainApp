@@ -1,5 +1,5 @@
 import 'dart:core';
-import 'package:daralarkam_main_app/Users/name.dart';
+import 'package:daralarkam_main_app/backend/users/name.dart';
 
 enum UserType {
   Guest, Student, Teacher, Supervisor, Admin
@@ -28,5 +28,11 @@ class User {
   void logOut() {
     isLoggedIn = false;
   }
-
+  Map<String, String> toJson() => {
+    "UserId" : id,
+    "UserType" : type.toString(),
+    "UserName" : userName.getAsString(),
+    "Birthday" : birthday.toString(),
+    "Status" : isLoggedIn.toString()
+  };
 }
