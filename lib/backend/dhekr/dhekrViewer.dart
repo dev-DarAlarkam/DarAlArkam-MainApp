@@ -1,41 +1,26 @@
 import 'dart:core';
 
-import 'package:daralarkam_main_app/backend/users/counter.dart';
-
-
-class Dhekr{
-  Map<String,int> list;
+class Viewer{
   int index=0,counter=0;
-  List<String> keys;
+  List<String> keys,comments;
 
-  Dhekr(this.list, this.keys);
+  Viewer(this.keys, this.comments);
 
-  void jumpToNext() {
-    counter = 0;
+  void next() {
     index++;
     if(index == keys.length){
       index = 0;
     }
   }
-
-  void next() {
-    if(list[keys[index]]!> counter){
-      ++counter;
-    }
-    else{
-        jumpToNext();
-    }
-  }
-  void prev() {
-    counter = 0;
+  void previous() {
     index--;
     if(index<0){
       index= keys.length -1;
     }
   }
 
-  Set<String> current() => {
+  List<String> current() => [
       keys[index],
-      list[keys[index]].toString()
-    };
+      comments[index]
+    ];
 }
