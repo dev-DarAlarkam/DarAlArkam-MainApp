@@ -6,19 +6,19 @@ import 'package:daralarkam_main_app/backend/dhekr/dhekrViewer.dart' as adhkar;
 import 'package:daralarkam_main_app/backend/dhekr/adhkar.dart' as txt;
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
 
-class MorningEvening extends StatefulWidget {
-  const MorningEvening({Key? key}) : super(key: key);
+class AfterSalah extends StatefulWidget {
+  const AfterSalah({Key? key}) : super(key: key);
 
   @override
-  _MorningEveningState createState() => _MorningEveningState();
+  _AfterSalahState createState() => _AfterSalahState();
 }
 
-class _MorningEveningState extends State<MorningEvening> {
+class _AfterSalahState extends State<AfterSalah> {
 
-  _MorningEveningState();
+  _AfterSalahState();
   adhkar.Viewer block = adhkar.Viewer(
-      txt.morningEvening.keys.toList(),
-      txt.morningEvening.values.toList()
+      txt.afterSalah.keys.toList(),
+      txt.afterSalah.values.toList()
   );
   @override
   Widget build(BuildContext context) {
@@ -28,47 +28,45 @@ class _MorningEveningState extends State<MorningEvening> {
 
 
     return Scaffold(
-          appBar:AppBar(
-            iconTheme: IconThemeData(
-              color: colors.green, //change your color here
-            ),
-            backgroundColor: Colors.transparent, //for hiding the appBar
-            elevation: 0, //for hiding the shadows
+        appBar:AppBar(
+          iconTheme: IconThemeData(
+            color: colors.green, //change your color here
           ),
-          body: Container(
-            height: height,
-            width: width,
-
-            child: Column(
+          backgroundColor: Colors.transparent, //for hiding the appBar
+          elevation: 0, //for hiding the shadows
+        ),
+        body:Column(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
-              children: [
-                boldColoredArabicText("المأثورات", c:colors.green,minSize: 40, maxSize: 40),
+              children: [boldColoredArabicText("أذكار ما بعد الصلاة", c:colors.green,minSize: 40, maxSize: 40),
                 Expanded(child: SizedBox()),
                 SizedBox(
-                  height: height*0.55,
+                  height: height*0.6,
                   width: width*.95,
                   child:Center(
                     child: SingleChildScrollView(
-                      child: coloredArabicText(block.current()[0], c: Colors.black, maxLines: 20,minSize: 25, maxSize: 40),
+                      child: coloredArabicText(block.current()[0], c: Colors.black, maxLines: 20,minSize: 30, maxSize: 40),
                       physics: const ClampingScrollPhysics(),
                     ),
                   ),
                 ),
                 Expanded(child: SizedBox()),
-                coloredArabicText(block.current()[1], c: Colors.red),
+                SizedBox(
+                    width: width*0.95,
+                    child: coloredArabicText(block.current()[1],maxLines: 2 ,c: Colors.red)
+                ),
                 Expanded(child: SizedBox()),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    TextButton.icon(
-                        onPressed: _next,
-                        icon: Icon(
-                          MyFlutterApp.arrow_alt_circle_left,
-                          color: colors.green,
-                        ),
-                        label: coloredArabicText("التالي", c:colors.green)
-                    ),
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      TextButton.icon(
+                          onPressed: _next,
+                          icon: Icon(
+                            MyFlutterApp.arrow_alt_circle_left,
+                            color: colors.green,
+                          ),
+                          label: coloredArabicText("التالي", c:colors.green)
+                      ),
                       TextButton.icon(
                           onPressed: _previous,
                           icon: Icon(
@@ -77,20 +75,19 @@ class _MorningEveningState extends State<MorningEvening> {
                           ),
                           label: coloredArabicText("السابق", c: colors.green)
                       )
-                  ]
-              ),
+                    ]
+                ),
               ],
             )
-        )
     );
   }
   void _next()
   {
-      setState(()
-      {
-        block.next();
-      }
-      );
+    setState(()
+    {
+      block.next();
+    }
+    );
   }
   void _previous()
   {

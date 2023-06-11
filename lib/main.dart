@@ -1,6 +1,9 @@
+import 'package:daralarkam_main_app/ui/after-salah.dart';
 import 'package:daralarkam_main_app/ui/main-adhkar.dart';
 import 'package:daralarkam_main_app/ui/morning-evening.dart';
 import 'package:flutter/material.dart';
+import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
+
 
 void main() {
   runApp(const MyApp());
@@ -17,9 +20,9 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
               title: 'Flutter Demo',
               theme: ThemeData(
-                  primarySwatch: Colors.blue,
+                  primarySwatch: Colors.green,
                 ),
-        home: const MorningEvening(),
+        home: const MainAdhkar(),
         ),
       );
   }
