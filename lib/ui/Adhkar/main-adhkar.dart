@@ -1,7 +1,7 @@
 import 'dart:core';
-import 'package:daralarkam_main_app/ui/after-salah.dart';
-import 'package:daralarkam_main_app/ui/morning-evening.dart';
-import 'package:daralarkam_main_app/ui/widgets/adhkar-buttons.dart';
+import 'package:daralarkam_main_app/ui/Adhkar/after-salah.dart';
+import 'package:daralarkam_main_app/ui/Adhkar/morning-evening.dart';
+import 'package:daralarkam_main_app/ui/widgets/navigate-to-tab-button.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +32,7 @@ class MainAdhkar extends StatelessWidget {
               const Expanded(flex:1,child: SizedBox()),
               const NavigateToTabButton(text: "المأثورات",icon: "lib/assets/icons/beads.png", nextScreen: MorningEvening()),
               const SizedBox(height: 10,),
-              const NavigateToTabButton(text: "أذكار ما بعد الصلاة",icon: "lib/assets/icons/pray.png", nextScreen: AfterSalah()),
+              const NavigateToTabButton(text: "ما بعد الصلاة",icon: "lib/assets/icons/pray.png", nextScreen: AfterSalah()),
               const Expanded(flex:4,child: SizedBox()),
             ],
           ),

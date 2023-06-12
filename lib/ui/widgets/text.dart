@@ -4,6 +4,7 @@ import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
 import 'package:flutter/widgets.dart';
 var myGroup = AutoSizeGroup();
 Widget boldColoredArabicText(String text, {Color c = Colors.black ,int maxLines = 1, double maxSize = 40, double minSize = 20}) {
+
   return AutoSizeText(
     text,
     style: TextStyle(
@@ -16,6 +17,7 @@ Widget boldColoredArabicText(String text, {Color c = Colors.black ,int maxLines 
     maxLines: maxLines,
     textDirection: TextDirection.rtl,
     textAlign: TextAlign.center,
+    stepGranularity: 1,
   );
 }
 

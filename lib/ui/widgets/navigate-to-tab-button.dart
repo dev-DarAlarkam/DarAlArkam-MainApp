@@ -10,8 +10,12 @@ class NavigateToTabButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
+    final int minFont = ((width * 8) ~/ 100);
+    final int maxFont = ((width * 10) ~/ 100);
+
+
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context)=> nextScreen));
@@ -25,8 +29,8 @@ class NavigateToTabButton extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Expanded(flex:3,child: SizedBox()),
-            boldColoredArabicText(text, c: Colors.white, minSize: 20),
+            Expanded(flex:2,child: SizedBox()),
+            boldColoredArabicText(text, c: Colors.white, minSize: minFont * 1.0, maxSize: maxFont * 1.0),
             Expanded(flex:2,child: SizedBox()),
             SizedBox(
                 height: height*0.08,
