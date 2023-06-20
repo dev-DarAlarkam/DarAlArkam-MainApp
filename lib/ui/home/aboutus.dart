@@ -4,6 +4,7 @@ import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
+import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:daralarkam_main_app/ui/widgets/designs.dart';
 
@@ -51,7 +52,8 @@ class AboutUs extends StatelessWidget {
                             maxLines: 4
                           ),
                         ),
-                        Center(
+                        SizedBox(
+                          width: width*0.5,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -59,10 +61,10 @@ class AboutUs extends StatelessWidget {
                                   "https://www.facebook.com/dar9alarkam"),
                               const SizedBox(height: 10),
                               links(MyFlutterApp.instagram, "@Dar9Alarkam",
-                                  "@Dar9Alarkam"),
+                                  "https://instagram.com/dar9alarkam"),
                               const SizedBox(height: 10),
                               links(MyFlutterApp.whatsapp, "+972 534308754",
-                                  "wa.me/message/AVCZWBMNXLBQK1"),
+                                  "https://wa.me/message/AVCZWBMNXLBQK1"),
                             ],
                           ),
                         )
@@ -79,7 +81,7 @@ class AboutUs extends StatelessWidget {
 
   Widget links(IconData icon, String text, String url) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Icon(icon, size: 40, color: Colors.white),
         const SizedBox(
@@ -92,9 +94,16 @@ class AboutUs extends StatelessWidget {
             minFontSize: 18,
 
           ),
-          onTap: () => launchUrlString(url),
+          onTap: () => _launchURL(url),
         )
       ],
     );
   }
+}
+
+_launchURL(String url) async {
+  launchUrl(
+    Uri.parse(url),
+    mode: LaunchMode.externalApplication,
+  );
 }

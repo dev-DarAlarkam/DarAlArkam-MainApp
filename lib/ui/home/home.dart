@@ -6,14 +6,14 @@ import 'aboutus.dart';
 import 'main-tab.dart';
 
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomeState createState() => _HomeState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeState extends State<Home> {
   int _currentIndex = 0;
   final tabs = [const MainTab(), const AboutUs()];
 
