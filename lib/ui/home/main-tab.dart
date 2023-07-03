@@ -2,6 +2,7 @@ import 'dart:core';
 import 'package:daralarkam_main_app/ui/Adhkar/after-salah.dart';
 import 'package:daralarkam_main_app/ui/Adhkar/main-adhkar.dart';
 import 'package:daralarkam_main_app/ui/Adhkar/morning-evening.dart';
+import 'package:daralarkam_main_app/ui/Quran/Quranmain.dart';
 import 'package:daralarkam_main_app/ui/widgets/navigate-to-tab-button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class MainTab extends StatelessWidget {
             children: [
               SizedBox(height: height*.1,child: Image.asset("lib/assets/photos/main-logo.png"),),
               const Expanded(flex:1,child: SizedBox()),
-              const NavigateToStatelessTabButton(text: "القرآن الكريم",icon: "lib/assets/icons/quran.png", nextScreen: MainAdhkar()),
+              const NavigateToStatefulTabButton(text: "القرآن الكريم",icon: "lib/assets/icons/quran.png", nextScreen: Quran()),
               const SizedBox(height: 10,),
               const NavigateToStatelessTabButton(text: "أوقات الصلاة",icon: "lib/assets/icons/salat.png", nextScreen: MainAdhkar()),
               const SizedBox(height: 10,),

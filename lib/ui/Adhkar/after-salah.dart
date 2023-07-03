@@ -35,49 +35,64 @@ class _AfterSalahState extends State<AfterSalah> {
           backgroundColor: Colors.transparent, //for hiding the appBar
           elevation: 0, //for hiding the shadows
         ),
-        body:Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [boldColoredArabicText("أذكار ما بعد الصلاة", c:colors.green,minSize: 40, maxSize: 40),
-                Expanded(child: SizedBox()),
-                SizedBox(
-                  height: height*0.6,
-                  width: width*.95,
-                  child:Center(
-                    child: SingleChildScrollView(
-                      child: coloredArabicText(block.current()[0], c: Colors.black, maxLines: 20,minSize: 30, maxSize: 40),
-                      physics: const ClampingScrollPhysics(),
-                    ),
-                  ),
-                ),
-                Expanded(child: SizedBox()),
-                SizedBox(
-                    width: width*0.95,
-                    child: coloredArabicText(block.current()[1],maxLines: 2 ,c: Colors.red)
-                ),
-                Expanded(child: SizedBox()),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      TextButton.icon(
-                          onPressed: _next,
-                          icon: Icon(
-                            MyFlutterApp.arrow_alt_circle_left,
-                            color: colors.green,
-                          ),
-                          label: coloredArabicText("التالي", c:colors.green)
+        body:
+            GestureDetector(
+              onHorizontalDragEnd: (dragDetail) {
+                if (dragDetail.velocity.pixelsPerSecond.dx < 0) {
+                  _previous();
+                } else {
+                  _next();
+                }
+              },
+              behavior: HitTestBehavior.translucent,
+              child: SizedBox(
+                height: height,
+                width: width,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [boldColoredArabicText("أذكار ما بعد الصلاة", c:colors.green,minSize: 40, maxSize: 40),
+                    const Expanded(child: SizedBox()),
+                    SizedBox(
+                      height: height*0.6,
+                      width: width*.95,
+                      child:Center(
+                        child: SingleChildScrollView(
+                          child: coloredArabicText(block.current()[0], c: Colors.black, maxLines: 20,minSize: 30, maxSize: 40),
+                          physics: const ClampingScrollPhysics(),
+                        ),
                       ),
-                      TextButton.icon(
-                          onPressed: _previous,
-                          icon: Icon(
-                            MyFlutterApp.arrow_alt_circle_right,
-                            color: colors.green,
+                    ),
+                    const Expanded(child: SizedBox()),
+                    SizedBox(
+                        width: width*0.95,
+                        child: coloredArabicText(block.current()[1],maxLines: 2 ,c: Colors.red)
+                    ),
+                    const Expanded(child: SizedBox()),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          TextButton.icon(
+                              onPressed: _next,
+                              icon: Icon(
+                                MyFlutterApp.arrow_alt_circle_left,
+                                color: colors.green,
+                              ),
+                              label: coloredArabicText("التالي", c:colors.green)
                           ),
-                          label: coloredArabicText("السابق", c: colors.green)
-                      )
-                    ]
+                          TextButton.icon(
+                              onPressed: _previous,
+                              icon: Icon(
+                                MyFlutterApp.arrow_alt_circle_right,
+                                color: colors.green,
+                              ),
+                              label: coloredArabicText("السابق", c: colors.green)
+                          )
+                        ]
+                    ),
+                  ],
                 ),
-              ],
+              ),
             )
     );
   }

@@ -1,6 +1,7 @@
 import 'package:daralarkam_main_app/ui/Adhkar/after-salah.dart';
 import 'package:daralarkam_main_app/ui/Adhkar/main-adhkar.dart';
 import 'package:daralarkam_main_app/ui/Adhkar/morning-evening.dart';
+import 'package:daralarkam_main_app/ui/Quran/Quranmain.dart';
 import 'package:daralarkam_main_app/ui/home/home.dart';
 import 'package:daralarkam_main_app/ui/home/main-tab.dart';
 import 'package:flutter/material.dart';

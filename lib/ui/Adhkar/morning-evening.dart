@@ -35,51 +35,61 @@ class _MorningEveningState extends State<MorningEvening> {
             backgroundColor: Colors.transparent, //for hiding the appBar
             elevation: 0, //for hiding the shadows
           ),
-          body: Container(
+          body: SizedBox(
             height: height,
             width: width,
 
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                boldColoredArabicText("المأثورات", c:colors.green,minSize: 40, maxSize: 40),
-                Expanded(child: SizedBox()),
-                SizedBox(
-                  height: height*0.55,
-                  width: width*.95,
-                  child:Center(
-                    child: SingleChildScrollView(
-                      child: coloredArabicText(block.current()[0], c: Colors.black, maxLines: 20,minSize: 25, maxSize: 40),
-                      physics: const ClampingScrollPhysics(),
+            child: GestureDetector(
+              onHorizontalDragEnd: (dragDetail) {
+                if (dragDetail.velocity.pixelsPerSecond.dx < 0) {
+                  _previous();
+                } else {
+                  _next();
+                }
+              },
+              behavior: HitTestBehavior.translucent,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  boldColoredArabicText("المأثورات", c:colors.green,minSize: 40, maxSize: 40),
+                  const Expanded(child: SizedBox()),
+                  SizedBox(
+                    height: height*0.55,
+                    width: width*.95,
+                    child:Center(
+                      child: SingleChildScrollView(
+                        child: coloredArabicText(block.current()[0], c: Colors.black, maxLines: 20,minSize: 25, maxSize: 40),
+                        physics: const ClampingScrollPhysics(),
+                      ),
                     ),
                   ),
-                ),
-                Expanded(child: SizedBox()),
-                coloredArabicText(block.current()[1], c: Colors.red),
-                Expanded(child: SizedBox()),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    TextButton.icon(
-                        onPressed: _next,
-                        icon: Icon(
-                          MyFlutterApp.arrow_alt_circle_left,
-                          color: colors.green,
-                        ),
-                        label: coloredArabicText("التالي", c:colors.green)
-                    ),
+                  const Expanded(child: SizedBox()),
+                  coloredArabicText(block.current()[1], c: Colors.red),
+                  const Expanded(child: SizedBox()),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
                       TextButton.icon(
-                          onPressed: _previous,
+                          onPressed: _next,
                           icon: Icon(
-                            MyFlutterApp.arrow_alt_circle_right,
+                            MyFlutterApp.arrow_alt_circle_left,
                             color: colors.green,
                           ),
-                          label: coloredArabicText("السابق", c: colors.green)
-                      )
-                  ]
+                          label: coloredArabicText("التالي", c:colors.green)
+                      ),
+                        TextButton.icon(
+                            onPressed: _previous,
+                            icon: Icon(
+                              MyFlutterApp.arrow_alt_circle_right,
+                              color: colors.green,
+                            ),
+                            label: coloredArabicText("السابق", c: colors.green)
+                        )
+                    ]
+                ),
+                ],
               ),
-              ],
             )
         )
     );
