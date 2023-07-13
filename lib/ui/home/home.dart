@@ -1,6 +1,10 @@
+import 'package:daralarkam_main_app/ui/Authenticate/authenticationTab.dart';
+import 'package:daralarkam_main_app/ui/Authenticate/signUpTab.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
+import '../../services/utils/showSnackBar.dart';
 import '../widgets/my-flutter-app-icons.dart';
 import 'aboutus.dart';
 import 'main-tab.dart';
@@ -42,7 +46,12 @@ class _HomeState extends State<Home> {
                  width: width *0.25,
                   child: FittedBox(
                       child: FloatingActionButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        Firebase.initializeApp().then((value) => Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const SignInTab())))
+                            .onError((error, stackTrace) => showSnackBar(context, error.toString()));
+
+                      },
                         child: SizedBox(width: width*0.12,child: Image.asset("lib/assets/photos/logo-white.png")),
                       ),
                   ),

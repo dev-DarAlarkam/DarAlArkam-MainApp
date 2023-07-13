@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "220867444623",
+    "firebase_url": "https://dar-alarkam-main-app-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "dar-alarkam-main-app",
+    "storage_bucket": "dar-alarkam-main-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220867444623:android:30d40995b5644b2114d5fa",
+        "android_client_info": {
+          "package_name": "com.example.daralarkam_main_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "220867444623-4s160in1qk3rqk80o9h8scvabeh4dpmk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuzlHDtHGLqJzH_UHt71KOmCR-EdbjpG0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "220867444623-4s160in1qk3rqk80o9h8scvabeh4dpmk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "220867444623-3h64i7i2t4otj3hmhai7ktvvmothaklk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.daralarkamMainApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
