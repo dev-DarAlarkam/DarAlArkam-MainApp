@@ -1,7 +1,10 @@
+import 'package:daralarkam_main_app/services/firebaseAuthMethods.dart';
 import 'package:daralarkam_main_app/ui/Authenticate/signUpTab.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../globals/globalColors.dart' as color;
+import '../../services/utils/signInTextField.dart';
 import '../widgets/my-flutter-app-icons.dart';
 
 class SignInTab extends StatefulWidget {
@@ -14,6 +17,14 @@ class SignInTab extends StatefulWidget {
 class _SignInTabState extends State<SignInTab> {
   TextEditingController passwordTextController = TextEditingController();
   TextEditingController emailTextController = TextEditingController();
+
+  void signInUser() {
+    FirebaseAuthMethods(FirebaseAuth.instance)
+        .signInWithEmail(
+        email: emailTextController.text,
+        password: passwordTextController.text,
+        context: context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,16 +57,21 @@ class _SignInTabState extends State<SignInTab> {
               const Expanded(flex: 1, child: SizedBox()),
               boldColoredArabicText("تسجيل الدخول"),
               const SizedBox(height: 10,),
-              reusableTextField(
+              signInTextField(
                   "أدخل البريد الإلكتروني", Icons.person_outline, false,
                   emailTextController),
               const SizedBox(height: 10,),
-              reusableTextField("أدخل كلمة السر", Icons.lock_outline, true,
+              signInTextField("أدخل كلمة السر", Icons.lock_outline, true,
                   passwordTextController),
               const SizedBox(height: 10,),
               signUpOption(),
               const SizedBox(height: 10,),
+              signInButton(context, "تسجيل الدخول", emailTextController,
+                  passwordTextController),
+              const SizedBox(height: 10,),
               line(),
+              const SizedBox(height: 10,),
+              googleButton(),
               const Expanded(flex: 3, child: SizedBox()),
             ],
           ),
@@ -64,8 +80,29 @@ class _SignInTabState extends State<SignInTab> {
     );
   }
 
+  Widget line() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          height: 1,
+          width: 50,
+          decoration: const BoxDecoration(color: Colors.black),
+        ),
+        const Text(
+          "  أو  ",
+          style: TextStyle(fontSize: 16),
+        ),
+        Container(
+          height: 1,
+          width: 50,
+          decoration: const BoxDecoration(color: Colors.black),
+        ),
+      ],
+    );
+  }
 
-  Row signUpOption() {
+  Widget signUpOption() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -74,40 +111,60 @@ class _SignInTabState extends State<SignInTab> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const SignUpTab()));
           },
-          child: boldColoredArabicText("لا تملك حسابًا؟ قم بإنشاء حساب", maxSize: 15, minSize: 10),
+          child: boldColoredArabicText(
+              "لا تملك حسابًا؟ قم بإنشاء حساب", maxSize: 15, minSize: 10),
         ),
       ],
     );
   }
-}
 
-TextField reusableTextField(String text, IconData icon, bool isPasswordType,
-    TextEditingController controller) {
-  return TextField(
-    controller: controller,
-    obscureText: isPasswordType,
-    enableSuggestions: !isPasswordType,
-    autocorrect: !isPasswordType,
-    cursorColor: Colors.black,
-    textDirection: TextDirection.ltr,
-    style: const TextStyle(color: Colors.black, fontSize: 15, fontFamily: 'kb'),
-    decoration: InputDecoration(
-      prefixIcon: Icon(
-        icon,
-        color:color.green,
+  Widget signInButton(BuildContext context, String title,
+      TextEditingController email, TextEditingController password) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 50,
+      margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(90)),
+      child: ElevatedButton(
+        onPressed: () {
+          signInUser();
+        },
+        child: boldColoredArabicText(title),
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.resolveWith((states) {
+              if (states.contains(MaterialState.pressed)) {
+                return Colors.black26;
+              }
+              return Colors.white;
+            }),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30)))),
       ),
-      labelText: text,
-      labelStyle: TextStyle(color: color.green),
-      filled: true,
-      floatingLabelBehavior: FloatingLabelBehavior.never,
-      fillColor: Colors.white24,
-      border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30.0),
-          borderSide:  BorderSide(width: 0, style: BorderStyle.solid)),
-
-    ),
-    keyboardType: isPasswordType
-        ? TextInputType.visiblePassword
-        : TextInputType.emailAddress,
-  );
+    );
+  }
+  Widget googleButton() {
+    double width = MediaQuery.of(context).size.width;
+    return Container(
+      height: 50,
+      width: width*0.8,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        color: color.green,
+      ),
+      child: GestureDetector(
+          onTap: () async {FirebaseAuthMethods(FirebaseAuth.instance).signInWithGoogle(context);},
+          child: Directionality(
+            textDirection: TextDirection.rtl                                                                    ,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                boldColoredArabicText("تسحيل الدخول بواسطة جوجل   ", c:Colors.white),
+                const Icon(MyFlutterApp.google, color: Colors.white)
+              ],
+            ),
+          )),
+    );
+  }
 }
+

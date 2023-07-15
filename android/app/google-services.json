@@ -15,7 +15,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "220867444623-4s160in1qk3rqk80o9h8scvabeh4dpmk.apps.googleusercontent.com",
+          "client_id": "220867444623-b8v40riij05a5d3jmq4vnn84auq0efaf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.daralarkam_main_app",
+            "certificate_hash": "b917a6bfd9761874b083a8ae57cf46c2db84cb44"
+          }
+        },
+        {
+          "client_id": "220867444623-09ji4ca5gj2ultmpif097udikafqs9h9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -28,7 +36,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "220867444623-4s160in1qk3rqk80o9h8scvabeh4dpmk.apps.googleusercontent.com",
+              "client_id": "220867444623-09ji4ca5gj2ultmpif097udikafqs9h9.apps.googleusercontent.com",
               "client_type": 3
             },
             {
