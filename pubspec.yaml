@@ -41,6 +41,8 @@ dependencies:
   firebase_auth: ^4.6.3
   google_sign_in: ^6.1.4
   flutter_facebook_auth: ^6.0.0
+  xml: ^6.3.0
+  timezone: ^0.9.2
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +69,7 @@ flutter:
     - lib/assets/photos/
     - lib/assets/icons/
     - lib/assets/pdf/
+    - lib/assets/files/
 
   fonts:
     - family: kb

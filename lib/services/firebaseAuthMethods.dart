@@ -84,17 +84,17 @@ class FirebaseAuthMethods {
   }
 
   // FACEBOOK SIGN IN
-  Future<void> signInWithFacebook(BuildContext context) async {
-    try {
-      final LoginResult loginResult = await FacebookAuth.instance.login();
-
-      final OAuthCredential facebookAuthCredential =
-      FacebookAuthProvider.credential(loginResult.accessToken!.token);
-
-      await _auth.signInWithCredential(facebookAuthCredential);
-    } on FirebaseAuthException catch (e) {
-      showSnackBar(context, e.message!); // Displaying the error message
-    }
-  }
+  // Future<void> signInWithFacebook(BuildContext context) async {
+  //   try {
+  //     final LoginResult loginResult = await FacebookAuth.instance.login();
+  //
+  //     final OAuthCredential facebookAuthCredential =
+  //     FacebookAuthProvider.credential(loginResult.accessToken!.token);
+  //
+  //     await _auth.signInWithCredential(facebookAuthCredential);
+  //   } on FirebaseAuthException catch (e) {
+  //     showSnackBar(context, e.message!); // Displaying the error message
+  //   }
+  // }
 
 }
