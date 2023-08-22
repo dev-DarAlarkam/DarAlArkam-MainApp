@@ -35,7 +35,7 @@ class MainTab extends StatelessWidget {
               const Expanded(flex:1,child: SizedBox()),
               const NavigateToStatefulTabButton(text: "القرآن الكريم",icon: "lib/assets/icons/quran.png", nextScreen: Quran()),
               const SizedBox(height: 10,),
-              const NavigateToStatelessTabButton(text: "أوقات الصلاة",icon: "lib/assets/icons/salat.png", nextScreen: SalahTab()),
+              const NavigateToStatefulTabButton(text: "أوقات الصلاة",icon: "lib/assets/icons/salat.png", nextScreen: Salah()),
               const SizedBox(height: 10,),
               const NavigateToStatelessTabButton(text: "الأذكار",icon: "lib/assets/icons/beads.png", nextScreen: MainAdhkar()),
               const SizedBox(height: 10,),
