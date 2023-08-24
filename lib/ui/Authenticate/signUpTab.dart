@@ -1,5 +1,4 @@
 import 'package:daralarkam_main_app/services/firebaseAuthMethods.dart';
-import 'package:daralarkam_main_app/ui/Authenticate/newUserTab.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import '../../globals/globalColors.dart' as color;

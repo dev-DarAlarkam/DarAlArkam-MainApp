@@ -1,3 +1,4 @@
+import 'package:daralarkam_main_app/debug-main.dart';
 import 'package:daralarkam_main_app/ui/Adhkar/after-salah.dart';
 import 'package:daralarkam_main_app/ui/Adhkar/main-adhkar.dart';
 import 'package:daralarkam_main_app/ui/Adhkar/morning-evening.dart';
