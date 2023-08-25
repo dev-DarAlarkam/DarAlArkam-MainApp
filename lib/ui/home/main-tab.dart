@@ -1,14 +1,11 @@
 import 'dart:core';
-import 'package:daralarkam_main_app/ui/Adhkar/after-salah.dart';
 import 'package:daralarkam_main_app/ui/Adhkar/main-adhkar.dart';
-import 'package:daralarkam_main_app/ui/Adhkar/morning-evening.dart';
 import 'package:daralarkam_main_app/ui/Quran/Quranmain.dart';
+import 'package:daralarkam_main_app/ui/activities/activities.dart';
 import 'package:daralarkam_main_app/ui/salah/salah.dart';
 import 'package:daralarkam_main_app/ui/widgets/navigate-to-tab-button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
-import 'package:flutter/painting.dart';
 
 
 class MainTab extends StatelessWidget {
@@ -17,7 +14,6 @@ class MainTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
         appBar:AppBar(
@@ -39,7 +35,7 @@ class MainTab extends StatelessWidget {
               const SizedBox(height: 10,),
               const NavigateToStatelessTabButton(text: "الأذكار",icon: "lib/assets/icons/beads.png", nextScreen: MainAdhkar()),
               const SizedBox(height: 10,),
-              const NavigateToStatelessTabButton(text: "فعاليات",icon: "lib/assets/icons/drum.png", nextScreen: MainAdhkar()),
+              const NavigateToStatelessTabButton(text: "فعاليات",icon: "lib/assets/icons/drum.png", nextScreen: Activities()),
               const Expanded(flex:3,child: SizedBox()),
             ],
           ),

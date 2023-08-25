@@ -1,7 +1,6 @@
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
-import 'package:hijri/hijri_calendar.dart';
 import '../../backend/salah/hijri-date.dart';
 import '../../backend/salah/salah.dart';
 
@@ -13,7 +12,6 @@ class Salah extends StatefulWidget {
 }
 
 class _SalahState extends State<Salah> {
-  @override
   bool _isDST = false;
 
   @override
@@ -35,7 +33,7 @@ class _SalahState extends State<Salah> {
               future: parseXml(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else if (snapshot.hasData) {
                   final prayerTimes = snapshot.data;
 
@@ -128,7 +126,6 @@ Widget salahRow(String name, String time, BuildContext context){
 Widget dateRow(BuildContext context){
   double height = MediaQuery.of(context).size.height;
   double width = MediaQuery.of(context).size.width;
-  var _today = HijriCalendar.now();
 
   return Directionality(
     textDirection: TextDirection.rtl,

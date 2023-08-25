@@ -47,10 +47,8 @@ class _HomeState extends State<Home> {
                   child: FittedBox(
                       child: FloatingActionButton(
                       onPressed: (){
-                        Firebase.initializeApp().then((value) => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const SignInTab())))
+                        Firebase.initializeApp().then((value) => Navigator.push(context, MaterialPageRoute(builder: (context) => const SignInTab())))
                             .onError((error, stackTrace) => showSnackBar(context, error.toString()));
-
                       },
                         child: SizedBox(width: width*0.12,child: Image.asset("lib/assets/photos/logo-white.png")),
                       ),

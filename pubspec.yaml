@@ -44,6 +44,7 @@ dependencies:
   xml: ^6.3.0
   timezone: ^0.9.2
   hijri: ^3.0.0
+  cloud_firestore: ^4.9.0
 
 dev_dependencies:
   flutter_test:
