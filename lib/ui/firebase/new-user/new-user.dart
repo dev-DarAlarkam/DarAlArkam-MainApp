@@ -1,3 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daralarkam_main_app/backend/firebase/navigator.dart';
+import 'package:daralarkam_main_app/backend/firebase/users/get-user.dart';
+import 'package:daralarkam_main_app/backend/users/user.dart';
+import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
@@ -38,7 +43,10 @@ class _NewUserTabState extends State<NewUserTab> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const Expanded(flex:1,child: SizedBox() ),
                   SizedBox(height: height*.1,child: Image.asset("lib/assets/photos/main-logo.png"),),
+                  const Expanded(flex:1,child: SizedBox() ),
+                  boldColoredArabicText("إنشاء حساب"),
                   const Expanded(flex:1,child: SizedBox() ),
                   //First name input box
                   SizedBox(
@@ -153,11 +161,44 @@ class _NewUserTabState extends State<NewUserTab> {
                       Container(child: coloredArabicText(birthday))
                     ],
                   ),
+                  const Expanded(flex:1,child: SizedBox()),
+                  signUpButton(),
                   const Expanded(flex:3,child: SizedBox()),
                 ],
               ),
             ),
           ),
+      ),
+    );
+  }
+  Widget signUpButton() {
+    return Container(
+      height: 50,
+      width: 300,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        color: colors.green,
+      ),
+      child: Center(
+        child: GestureDetector(
+          onTap: () async {
+
+
+            final user = FirebaseUser(
+                id:  getUserId(),
+                firstName: firstName.text,
+                secondName: secondName.text,
+                thirdName: thirdName.text,
+                birthday: birthday,
+                type: "guest");
+            final json = user.toJson();
+            final docUser = FirebaseFirestore.instance.collection('users').doc(getUserId());
+            await docUser.set(json)
+                .then((value) {navigateBasedOnType(context, getUserId());})
+                .onError((error, stackTrace) {showSnackBar(context, error.toString());});
+            },
+          child: coloredArabicText("انشئ حساب", c:Colors.white),
+        ),
       ),
     );
   }

@@ -26,7 +26,8 @@ class _SignUpTabState extends State<SignUpTab> {
         email: emailTextController.text,
         password: passwordTextController.text,
         context: context
-    );
+    ).then((value) => Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const SignInTab()),
+            (route) => route.isFirst).onError((error, stackTrace) {showSnackBar(context, error.toString());}));
   }
 
   @override
@@ -84,7 +85,9 @@ class _SignUpTabState extends State<SignUpTab> {
       margin: const EdgeInsets.fromLTRB(0, 10, 0, 20),
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(90)),
       child: ElevatedButton(
-        onPressed: (){signUpUser();},
+        onPressed: (){
+          signUpUser();
+          },
         child: boldColoredArabicText(title),
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.resolveWith((states) {

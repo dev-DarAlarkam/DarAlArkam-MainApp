@@ -3,7 +3,9 @@ import 'package:daralarkam_main_app/ui/Authenticate/signUpTab.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../../backend/firebase/navigator.dart';
 import '../../globals/globalColors.dart' as color;
+import '../../services/utils/showSnackBar.dart';
 import '../../services/utils/signInTextField.dart';
 import '../widgets/my-flutter-app-icons.dart';
 
@@ -23,7 +25,11 @@ class _SignInTabState extends State<SignInTab> {
         .signInWithEmail(
         email: emailTextController.text,
         password: passwordTextController.text,
-        context: context);
+        context: context)
+        .then((value) {
+          navigateBasedOnType(context, FirebaseAuth.instance.currentUser!.uid);
+        })
+        .onError((error, stackTrace) {showSnackBar(context, error.toString());});
   }
 
   @override
@@ -153,9 +159,14 @@ class _SignInTabState extends State<SignInTab> {
         color: color.green,
       ),
       child: GestureDetector(
-          onTap: () async {FirebaseAuthMethods(FirebaseAuth.instance).signInWithGoogle(context);},
+          onTap: () async {
+            FirebaseAuthMethods(FirebaseAuth.instance)
+              .signInWithGoogle(context)
+              .then((value) {navigateBasedOnType(context, FirebaseAuth.instance.currentUser!.uid);})
+              .onError((error, stackTrace) {showSnackBar(context, error.toString());});
+            },
           child: Directionality(
-            textDirection: TextDirection.rtl                                                                    ,
+            textDirection: TextDirection.rtl,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
