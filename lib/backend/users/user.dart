@@ -28,5 +28,12 @@ class FirebaseUser {
     "birthday" : birthday,
   };
 
-  //todo: fromJson method
+  static FirebaseUser fromJson(Map<String, dynamic> data) => FirebaseUser(
+      id: data['id'],
+      firstName: data['firstName'],
+      secondName: data['secondName'],
+      thirdName: data['thirdName'],
+      birthday: data['birthday'],
+      type: data['type']
+  );
 }

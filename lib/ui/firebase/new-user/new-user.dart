@@ -182,21 +182,23 @@ class _NewUserTabState extends State<NewUserTab> {
       child: Center(
         child: GestureDetector(
           onTap: () async {
-
-
-            final user = FirebaseUser(
-                id:  getUserId(),
-                firstName: firstName.text,
-                secondName: secondName.text,
-                thirdName: thirdName.text,
-                birthday: birthday,
-                type: "guest");
-            final json = user.toJson();
-            final docUser = FirebaseFirestore.instance.collection('users').doc(getUserId());
-            await docUser.set(json)
-                .then((value) {navigateBasedOnType(context, getUserId());})
-                .onError((error, stackTrace) {showSnackBar(context, error.toString());});
-            },
+              final user = FirebaseUser(
+                  id: getUserId(),
+                  firstName: firstName.text,
+                  secondName: secondName.text,
+                  thirdName: thirdName.text,
+                  birthday: birthday,
+                  type: "guest");
+              final json = user.toJson();
+              final docUser = FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(getUserId());
+              await docUser.set(json).then((value) {
+                navigateBasedOnType(context, getUserId());
+              }).onError((error, stackTrace) {
+                showSnackBar(context, error.toString());
+              });
+          },
           child: coloredArabicText("انشئ حساب", c:Colors.white),
         ),
       ),

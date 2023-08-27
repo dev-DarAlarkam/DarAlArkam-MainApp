@@ -7,8 +7,6 @@ import '../../services/utils/signInTextField.dart';
 import '../widgets/text.dart';
 import 'authenticationTab.dart';
 
-
-
 class SignUpTab extends StatefulWidget {
   const SignUpTab({Key? key}) : super(key: key);
 

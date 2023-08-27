@@ -1,7 +1,12 @@
 import 'dart:core';
+import 'package:daralarkam_main_app/backend/firebase/users/get-user.dart';
+import 'package:daralarkam_main_app/ui/firebase/admin/users-tab.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
+
+import '../../../backend/users/user.dart';
+import '../../widgets/navigate-to-tab-button.dart';
 
 
 class AdminTab extends StatelessWidget {
@@ -24,11 +29,30 @@ class AdminTab extends StatelessWidget {
             children: [
               SizedBox(height: height*.1,child: Image.asset("lib/assets/photos/logo.png"),),
               const Expanded(flex:1,child: SizedBox()),
-              boldColoredArabicText("", c: colors.green), //todo: add text based on the username
-              const Expanded(flex:4,child: SizedBox()),
+              FutureBuilder(
+                future: readUser(context, getUserId()),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError){return Text(snapshot.error.toString());}
+                  else if(snapshot.hasData) {
+                    final dynamic user = snapshot.data!;
+                    return coloredArabicText("السلام عليكم" +" "+ getUserFirstName(user));
+                  }
+                  else{return const Center(child: CircularProgressIndicator());}
+                },
+              ),
+              const Expanded(flex:1,child: SizedBox()),
+              const SingleChildScrollView(
+                child: Column(
+                  children: [
+                    NavigateToStatefulTabButton(text: "users",icon: "lib/assets/icons/salat.png", nextScreen: UsersTab()),
+                  ]
+                ),
+              ),
+              const Expanded(flex:2,child: SizedBox()),
             ],
           ),
         )
     );
   }
+  String getUserFirstName(FirebaseUser user) => user.firstName;
 }
