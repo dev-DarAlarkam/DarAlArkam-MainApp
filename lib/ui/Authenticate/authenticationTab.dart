@@ -20,28 +20,25 @@ class _SignInTabState extends State<SignInTab> {
   TextEditingController passwordTextController = TextEditingController();
   TextEditingController emailTextController = TextEditingController();
 
-  void signInUser() {
-    FirebaseAuthMethods(FirebaseAuth.instance)
-        .signInWithEmail(
+  void signInUser() async {
+    try {
+      await FirebaseAuthMethods(FirebaseAuth.instance).signInWithEmail(
         email: emailTextController.text,
         password: passwordTextController.text,
-        context: context)
-        .then((value) {
-          navigateBasedOnType(context, FirebaseAuth.instance.currentUser!.uid);
-        })
-        .onError((error, stackTrace) {showSnackBar(context, error.toString());});
+        context: context,
+      );
+      if (FirebaseAuth.instance.currentUser != null){
+        navigateBasedOnType(context, FirebaseAuth.instance.currentUser!.uid);
+      }
+    } catch (error) {
+      showSnackBar(context, error.toString());
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -63,17 +60,13 @@ class _SignInTabState extends State<SignInTab> {
               const Expanded(flex: 1, child: SizedBox()),
               boldColoredArabicText("تسجيل الدخول"),
               const SizedBox(height: 10,),
-              signInTextField(
-                  "أدخل البريد الإلكتروني", Icons.person_outline, false,
-                  emailTextController),
+              signInTextField("أدخل البريد الإلكتروني", Icons.person_outline, false, emailTextController),
               const SizedBox(height: 10,),
-              signInTextField("أدخل كلمة السر", Icons.lock_outline, true,
-                  passwordTextController),
+              signInTextField("أدخل كلمة السر", Icons.lock_outline, true, passwordTextController),
               const SizedBox(height: 10,),
               signUpOption(),
               const SizedBox(height: 10,),
-              signInButton(context, "تسجيل الدخول", emailTextController,
-                  passwordTextController),
+              signInButton(context, "تسجيل الدخول", emailTextController, passwordTextController),
               const SizedBox(height: 10,),
               line(),
               const SizedBox(height: 10,),
@@ -143,9 +136,7 @@ class _SignInTabState extends State<SignInTab> {
               }
               return Colors.white;
             }),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30)))),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
       ),
     );
   }

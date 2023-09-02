@@ -1,11 +1,14 @@
 import 'dart:core';
 import 'package:daralarkam_main_app/backend/firebase/users/get-user.dart';
+import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
 import 'package:daralarkam_main_app/ui/firebase/admin/users-tab.dart';
+import 'package:daralarkam_main_app/ui/home/home.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
 
-import '../../../backend/users/user.dart';
+import '../../../backend/users/users.dart';
 import '../../widgets/navigate-to-tab-button.dart';
 
 
@@ -17,18 +20,27 @@ class AdminTab extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar:AppBar(
-          iconTheme: IconThemeData(
-            color: colors.green, //change your color here
+          iconTheme: const IconThemeData(
+            color: Colors.white, //change your color here
           ),
-          backgroundColor: Colors.transparent, //for hiding the appBar
-          elevation: 0, //for hiding the shadows
+          actions: [
+            //Sign-out button
+            IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () {
+                signOut(context);
+              },
+            ),
+          ], //for hiding the shadows
         ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const SizedBox(height: 10,),
               SizedBox(height: height*.1,child: Image.asset("lib/assets/photos/logo.png"),),
-              const Expanded(flex:1,child: SizedBox()),
+              const SizedBox(height: 10,),
+              //Getting user info
               FutureBuilder(
                 future: readUser(context, getUserId()),
                 builder: (context, snapshot) {
@@ -40,7 +52,8 @@ class AdminTab extends StatelessWidget {
                   else{return const Center(child: CircularProgressIndicator());}
                 },
               ),
-              const Expanded(flex:1,child: SizedBox()),
+              const SizedBox(height: 10,),
+              //Admin functions
               const SingleChildScrollView(
                 child: Column(
                   children: [
@@ -53,6 +66,11 @@ class AdminTab extends StatelessWidget {
           ),
         )
     );
+  }
+  signOut(BuildContext context) {
+    FirebaseAuth.instance.signOut()
+        .then((value) => Navigator.pop(context, const Home()))
+        .then((value) {showSnackBar(context, "لقد تم تسجيل الخروج بنجاح!");});
   }
   String getUserFirstName(FirebaseUser user) => user.firstName;
 }

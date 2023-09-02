@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../users/user.dart';
+import '../../users/users.dart';
 
 Future<FirebaseUser?> readUser(BuildContext context, String uid) async{
   final docUser = FirebaseFirestore.instance.collection('users').doc(uid);

@@ -1,15 +1,14 @@
 import 'package:daralarkam_main_app/debug-main.dart';
-import 'package:daralarkam_main_app/ui/Adhkar/after-salah.dart';
-import 'package:daralarkam_main_app/ui/Adhkar/main-adhkar.dart';
-import 'package:daralarkam_main_app/ui/Adhkar/morning-evening.dart';
-import 'package:daralarkam_main_app/ui/Authenticate/signUpTab.dart';
-import 'package:daralarkam_main_app/ui/Quran/Quranmain.dart';
 import 'package:daralarkam_main_app/ui/home/home.dart';
-import 'package:daralarkam_main_app/ui/home/main-tab.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 
-void main() {
+void main() async {
+  // Initialize Firebase before runApp
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 
@@ -19,6 +18,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return Directionality(
         textDirection: TextDirection.rtl,
         child: MaterialApp(

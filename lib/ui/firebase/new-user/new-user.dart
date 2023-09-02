@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/firebase/navigator.dart';
 import 'package:daralarkam_main_app/backend/firebase/users/get-user.dart';
-import 'package:daralarkam_main_app/backend/users/user.dart';
+import 'package:daralarkam_main_app/backend/users/users.dart';
 import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
