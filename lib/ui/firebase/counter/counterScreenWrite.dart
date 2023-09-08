@@ -1,17 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daralarkam_main_app/backend/firebase/users/get-user.dart';
+import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
-import 'counter.dart'; // Import your Counter class
+import '../../../backend/counter/counter.dart';
+import '../../../backend/counter/getCounter.dart'; // Import your Counter class
 
-class CounterScreen extends StatefulWidget {
+class CounterScreenWrite extends StatefulWidget {
   final Counter counter;
 
-  CounterScreen({required this.counter});
+  CounterScreenWrite({required this.counter});
 
   @override
-  _CounterScreenState createState() => _CounterScreenState();
+  _CounterScreenWriteState createState() => _CounterScreenWriteState();
 }
 
-class _CounterScreenState extends State<CounterScreen> {
+class _CounterScreenWriteState extends State<CounterScreenWrite> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -19,6 +23,19 @@ class _CounterScreenState extends State<CounterScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: coloredArabicText('برنامج المحاسبة'),
+          actions: [
+            ElevatedButton(
+                onPressed: () async {
+                  final docUser = FirebaseFirestore.instance.collection('users').doc(getUserId());
+                  final docCounter = docUser.collection('counter').doc(getFormattedDate());
+                  final json = widget.counter.toJson();
+
+                  await docCounter.set(json).onError((error, stackTrace) {showSnackBar(context, error.toString());});
+
+                },
+                child: Text("حفظ")
+            )
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),

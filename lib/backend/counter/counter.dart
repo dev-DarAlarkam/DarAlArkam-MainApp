@@ -155,7 +155,6 @@ class KhairCounter {
 }
 
 class Counter {
-  final String id;
   final String date;
   final SalahCounter salah;
   final NawafelCounter nawafel;
@@ -163,7 +162,6 @@ class Counter {
   final KhairCounter khair;
 
   Counter({
-    required this.id,
     required this.date,
     required this.salah,
     required this.nawafel,
@@ -173,7 +171,6 @@ class Counter {
 
 
   Map<String, dynamic> toJson() => {
-    "id": id,
     "date": date,
     "counter": {
       "salah": salah.toJson(),
@@ -186,7 +183,6 @@ class Counter {
   factory Counter.fromJson(Map<String, dynamic> json) {
     final counterData = json["counter"];
     return Counter(
-      id: json["id"],
       date: json["date"],
       salah: SalahCounter.fromJson(counterData["salah"]),
       nawafel: NawafelCounter.fromJson(counterData["nawafel"]),
