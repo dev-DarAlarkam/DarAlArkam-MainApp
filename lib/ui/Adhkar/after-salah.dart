@@ -1,10 +1,10 @@
-import 'package:daralarkam_main_app/ui/widgets/my-flutter-app-icons.dart';
-import 'package:daralarkam_main_app/ui/widgets/text.dart';
+import 'package:DarAlarkam/ui/widgets/my-flutter-app-icons.dart';
+import 'package:DarAlarkam/ui/widgets/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:daralarkam_main_app/backend/dhekr/dhekrViewer.dart' as adhkar;
-import 'package:daralarkam_main_app/backend/dhekr/adhkar.dart' as txt;
-import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
+import 'package:DarAlarkam/backend/dhekr/dhekrViewer.dart' as adhkar;
+import 'package:DarAlarkam/backend/dhekr/adhkar.dart' as txt;
+import 'package:DarAlarkam/globals/globalColors.dart' as colors;
 
 class AfterSalah extends StatefulWidget {
   const AfterSalah({Key? key}) : super(key: key);

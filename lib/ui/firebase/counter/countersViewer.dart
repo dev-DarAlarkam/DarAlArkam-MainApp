@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daralarkam_main_app/backend/users/users.dart';
-import 'package:daralarkam_main_app/ui/firebase/admin/user-profile.dart';
-import 'package:daralarkam_main_app/ui/firebase/counter/counterScreenRead.dart';
+import 'package:DarAlarkam/backend/users/users.dart';
+import 'package:DarAlarkam/ui/firebase/admin/user-profile.dart';
+import 'package:DarAlarkam/ui/firebase/counter/counterScreenRead.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../backend/counter/counter.dart';
+import '../../widgets/text.dart';
 
 class CountersViewer extends StatefulWidget {
   const CountersViewer({Key? key}) : super(key: key);
@@ -20,7 +21,9 @@ class _CountersViewerState extends State<CountersViewer> {
     return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
-          appBar: AppBar(title: const Text("counters"),),
+          appBar: AppBar(
+            title: coloredArabicText('برنامج المحاسبة - الأيام السابقة', c:Colors.white),
+          ),
           body:  Center(
             child: StreamBuilder(
               stream: readCounters(),

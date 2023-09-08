@@ -1,8 +1,8 @@
-import 'package:daralarkam_main_app/backend/firebase/navigator.dart';
-import 'package:daralarkam_main_app/ui/Authenticate/authenticationTab.dart';
+import 'package:DarAlarkam/backend/firebase/navigator.dart';
+import 'package:DarAlarkam/ui/Authenticate/authenticationTab.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
+import 'package:DarAlarkam/globals/globalColors.dart' as colors;
 import '../widgets/my-flutter-app-icons.dart';
 import 'aboutus.dart';
 import 'main-tab.dart';

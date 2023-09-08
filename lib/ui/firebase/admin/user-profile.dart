@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daralarkam_main_app/backend/firebase/users/get-user.dart';
-import 'package:daralarkam_main_app/backend/users/users.dart';
-import 'package:daralarkam_main_app/ui/widgets/text.dart';
+import 'package:DarAlarkam/backend/firebase/users/get-user.dart';
+import 'package:DarAlarkam/backend/users/users.dart';
+import 'package:DarAlarkam/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
-import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
+import 'package:DarAlarkam/globals/globalColors.dart' as colors;
 
 import '../../../services/utils/showSnackBar.dart';
 

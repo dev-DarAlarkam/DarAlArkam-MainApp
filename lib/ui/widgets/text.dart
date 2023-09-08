@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
+import 'package:DarAlarkam/globals/globalColors.dart' as colors;
 import 'package:flutter/widgets.dart';
 var myGroup = AutoSizeGroup();
 Widget boldColoredArabicText(String text, {Color c = Colors.black ,int maxLines = 1, double maxSize = 40, double minSize = 20}) {

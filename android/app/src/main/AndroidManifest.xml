@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.daralarkam_main_app">
+    package="com.example.DarAlarkam">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
 
@@ -17,7 +17,7 @@
     </queries>
 
     <application
-        android:label="daralarkam_main_app"
+        android:label="DarAlarkam"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity android:name="io.flutter.plugins.urllauncher.WebViewActivity"

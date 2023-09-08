@@ -1,6 +1,6 @@
-import 'package:daralarkam_main_app/services/firebaseAuthMethods.dart';
-import 'package:daralarkam_main_app/ui/Authenticate/signUpTab.dart';
-import 'package:daralarkam_main_app/ui/widgets/text.dart';
+import 'package:DarAlarkam/services/firebaseAuthMethods.dart';
+import 'package:DarAlarkam/ui/Authenticate/signUpTab.dart';
+import 'package:DarAlarkam/ui/widgets/text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../backend/firebase/navigator.dart';

@@ -1,4 +1,4 @@
-import 'package:daralarkam_main_app/ui/widgets/text.dart';
+import 'package:DarAlarkam/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 import '../../../backend/counter/counter.dart'; // Import your Counter class
 
@@ -18,7 +18,7 @@ class _CounterScreenReadState extends State<CounterScreenRead> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: coloredArabicText('برنامج المحاسبة'),
+          title: coloredArabicText('برنامج المحاسبة', c:Colors.white),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -26,7 +26,7 @@ class _CounterScreenReadState extends State<CounterScreenRead> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // coloredArabicText('التاريخ: ${widget.counter.date}'),
+                coloredArabicText('التاريخ: ${widget.counter.date}'),
                 const Divider(),
                 boldColoredArabicText('الصلوات الخمس'),
                 ListTile(

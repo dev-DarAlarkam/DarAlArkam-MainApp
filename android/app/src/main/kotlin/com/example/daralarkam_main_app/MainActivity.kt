@@ -1,4 +1,4 @@
-package com.example.daralarkam_main_app
+package com.example.DarAlarkam
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,12 +1,12 @@
 import 'dart:core';
-import 'package:daralarkam_main_app/backend/firebase/users/get-user.dart';
-import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
-import 'package:daralarkam_main_app/ui/firebase/admin/users-tab.dart';
-import 'package:daralarkam_main_app/ui/home/home.dart';
-import 'package:daralarkam_main_app/ui/widgets/text.dart';
+import 'package:DarAlarkam/backend/firebase/users/get-user.dart';
+import 'package:DarAlarkam/services/utils/showSnackBar.dart';
+import 'package:DarAlarkam/ui/firebase/admin/users-tab.dart';
+import 'package:DarAlarkam/ui/home/home.dart';
+import 'package:DarAlarkam/ui/widgets/text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
+import 'package:DarAlarkam/globals/globalColors.dart' as colors;
 
 import '../../../backend/users/users.dart';
 import '../../widgets/navigate-to-tab-button.dart';

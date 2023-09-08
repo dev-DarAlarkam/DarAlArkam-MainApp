@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:220867444623:android:30d40995b5644b2114d5fa",
         "android_client_info": {
-          "package_name": "com.example.daralarkam_main_app"
+          "package_name": "com.example.DarAlarkam"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "220867444623-b8v40riij05a5d3jmq4vnn84auq0efaf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.daralarkam_main_app",
+            "package_name": "com.example.DarAlarkam",
             "certificate_hash": "b917a6bfd9761874b083a8ae57cf46c2db84cb44"
           }
         },

@@ -1,12 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:daralarkam_main_app/ui/widgets/my-flutter-app-icons.dart';
-import 'package:daralarkam_main_app/ui/widgets/text.dart';
+import 'package:DarAlarkam/ui/widgets/my-flutter-app-icons.dart';
+import 'package:DarAlarkam/ui/widgets/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
+import 'package:DarAlarkam/globals/globalColors.dart' as colors;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:daralarkam_main_app/ui/widgets/designs.dart';
+import 'package:DarAlarkam/ui/widgets/designs.dart';
 
 
 class AboutUs extends StatelessWidget {

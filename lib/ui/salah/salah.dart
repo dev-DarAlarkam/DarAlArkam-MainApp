@@ -1,6 +1,6 @@
-import 'package:daralarkam_main_app/ui/widgets/text.dart';
+import 'package:DarAlarkam/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
-import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
+import 'package:DarAlarkam/globals/globalColors.dart' as colors;
 import '../../backend/salah/hijri-date.dart';
 import '../../backend/salah/salah.dart';
 

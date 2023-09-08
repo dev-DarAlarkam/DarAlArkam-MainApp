@@ -1,7 +1,7 @@
-import 'package:daralarkam_main_app/ui/widgets/text.dart';
+import 'package:DarAlarkam/ui/widgets/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
+import 'package:DarAlarkam/globals/globalColors.dart' as colors;
 
 class NavigateToStatefulTabButton extends StatelessWidget {
   final String icon,text;
@@ -83,4 +83,42 @@ class NavigateToStatelessTabButton extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget navigationButtonFul(BuildContext context, String text, StatefulWidget nextScreen){
+  final double height = MediaQuery.of(context).size.height;
+  final double width = MediaQuery.of(context).size.width;
+  return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> nextScreen));
+      },
+      child: Container(
+        height: height*0.1,
+        width: width*0.35,
+        decoration: BoxDecoration(
+          color: colors.green,
+          borderRadius: BorderRadiusDirectional.circular(10),
+        ),
+        child: Center(child: boldColoredArabicText(text, c:Colors.white)),
+      )
+  );
+}
+
+Widget navigationButtonLess(BuildContext context, String text, StatelessWidget nextScreen){
+  final double height = MediaQuery.of(context).size.height;
+  final double width = MediaQuery.of(context).size.width;
+  return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> nextScreen));
+      },
+      child: Container(
+        height: height*0.1,
+        width: width*0.35,
+        decoration: BoxDecoration(
+          color: colors.green,
+          borderRadius: BorderRadiusDirectional.circular(10),
+        ),
+        child: Center(child: boldColoredArabicText(text, c:Colors.white)),
+      )
+  );
 }
