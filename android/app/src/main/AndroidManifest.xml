@@ -1,5 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.DarAlarkam">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
 
@@ -17,9 +16,9 @@
     </queries>
 
     <application
-        android:label="DarAlarkam"
+        android:label="دار الأرقم"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity android:name="io.flutter.plugins.urllauncher.WebViewActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:exported="false"/>

@@ -1,11 +1,11 @@
 import 'dart:core';
-import 'package:DarAlarkam/ui/Adhkar/main-adhkar.dart';
-import 'package:DarAlarkam/ui/Quran/Quranmain.dart';
-import 'package:DarAlarkam/ui/activities/activities.dart';
-import 'package:DarAlarkam/ui/salah/salah.dart';
-import 'package:DarAlarkam/ui/widgets/navigate-to-tab-button.dart';
+import 'package:daralarkam_main_app/ui/Adhkar/main-adhkar.dart';
+import 'package:daralarkam_main_app/ui/Quran/Quranmain.dart';
+import 'package:daralarkam_main_app/ui/activities/activities.dart';
+import 'package:daralarkam_main_app/ui/salah/salah.dart';
+import 'package:daralarkam_main_app/ui/widgets/navigate-to-tab-button.dart';
 import 'package:flutter/material.dart';
-import 'package:DarAlarkam/globals/globalColors.dart' as colors;
+import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
 
 
 class MainTab extends StatelessWidget {

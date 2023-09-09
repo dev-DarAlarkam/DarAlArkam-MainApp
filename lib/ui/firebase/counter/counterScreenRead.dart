@@ -1,4 +1,4 @@
-import 'package:DarAlarkam/ui/widgets/text.dart';
+import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 import '../../../backend/counter/counter.dart'; // Import your Counter class
 

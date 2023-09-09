@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:DarAlarkam/backend/users/users.dart';
-import 'package:DarAlarkam/ui/firebase/admin/user-profile.dart';
-import 'package:DarAlarkam/ui/firebase/counter/counterScreenRead.dart';
+import 'package:daralarkam_main_app/backend/users/users.dart';
+import 'package:daralarkam_main_app/ui/firebase/admin/user-profile.dart';
+import 'package:daralarkam_main_app/ui/firebase/counter/counterScreenRead.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

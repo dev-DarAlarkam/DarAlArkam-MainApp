@@ -1,7 +1,7 @@
-import 'package:DarAlarkam/ui/widgets/text.dart';
+import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:DarAlarkam/globals/globalColors.dart' as colors;
+import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
 
 class NavigateToStatefulTabButton extends StatelessWidget {
   final String icon,text;

@@ -1,11 +1,11 @@
 import 'dart:core';
-import 'package:DarAlarkam/ui/Adhkar/after-salah.dart';
-import 'package:DarAlarkam/ui/Adhkar/morning-evening.dart';
-import 'package:DarAlarkam/ui/widgets/navigate-to-tab-button.dart';
-import 'package:DarAlarkam/ui/widgets/text.dart';
+import 'package:daralarkam_main_app/ui/Adhkar/after-salah.dart';
+import 'package:daralarkam_main_app/ui/Adhkar/morning-evening.dart';
+import 'package:daralarkam_main_app/ui/widgets/navigate-to-tab-button.dart';
+import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:DarAlarkam/globals/globalColors.dart' as colors;
+import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
 
 
 class MainAdhkar extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:DarAlarkam/backend/counter/counter.dart';
+import 'package:daralarkam_main_app/backend/counter/counter.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'defaultCounter.dart';
