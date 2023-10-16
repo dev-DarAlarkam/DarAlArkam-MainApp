@@ -30,4 +30,4 @@ class MyApp extends StatelessWidget {
       );
   }
 }
-
+//todo:  add directionality to each tab in the app

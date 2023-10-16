@@ -85,7 +85,7 @@ class TeacherTab extends StatelessWidget {
                           children: [
                             boldColoredArabicText("الدورة التربوية", minSize: 22),
                             const SizedBox(height: 10,),
-                            navigationButtonLess(context,"ملخص حضوري",Activities()),
+                            navigationButtonLess(context,"إدارة المجموعات",Activities()),
                             const SizedBox(height: 10,),
                             navigationButtonLess(context,"ملخص اللقاءات",Activities()),
                           ],
