@@ -77,7 +77,7 @@ class TeacherTab extends StatelessWidget {
                               },
                             ),
                             const SizedBox(height: 10,),
-                            navigationButtonFul(context,"الأيام السابقة",CountersViewer()),
+                            navigationButtonFul(context,"الأيام السابقة",CountersViewer(uid: getUserId(),)),
                           ],
                         ),
 

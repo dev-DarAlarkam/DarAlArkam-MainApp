@@ -53,7 +53,7 @@ class _ClassroomsTabState extends State<ClassroomsTab> {
     title: Text(classroom.title),
     subtitle: Text("الصف ${classroom.grade}"),
     onTap: (){
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> UserProfile(uid:user.id)));
+      // Navigator.push(context, MaterialPageRoute(builder: (context)=> UserProfile(uid:user.id)));
     },
   );
 
