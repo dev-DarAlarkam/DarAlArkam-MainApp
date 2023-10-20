@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import '../../../backend/counter/getCounter.dart';
 import '../../../backend/users/users.dart';
 import '../../widgets/navigate-to-tab-button.dart';
+import '../classrooms/classrooms-tab.dart';
 
 
 class TeacherTab extends StatelessWidget {
@@ -85,9 +86,9 @@ class TeacherTab extends StatelessWidget {
                           children: [
                             boldColoredArabicText("الدورة التربوية", minSize: 22),
                             const SizedBox(height: 10,),
-                            navigationButtonLess(context,"إدارة المجموعات",Activities()),
+                            navigationButtonFul(context,"إدارة المجموعات",ClassroomsTab()),
                             const SizedBox(height: 10,),
-                            navigationButtonLess(context,"ملخص اللقاءات",Activities()),
+                            navigationButtonLess(context,"إحصائيات",Activities()),
                           ],
                         ),
                       ]

@@ -8,7 +8,7 @@ import '../../../../services/utils/showSnackBar.dart';
 enum SortOrder { ascending, descending }
 
 class AddStudentsToClassroomTab extends StatefulWidget {
-  const AddStudentsToClassroomTab({Key? key, this.classId}) : super(key: key);
+  const AddStudentsToClassroomTab({Key? key,required this.classId}) : super(key: key);
   final classId;
 
   @override
@@ -45,7 +45,7 @@ class _AddStudentsToClassroomTabState extends State<AddStudentsToClassroomTab> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Users"),
+          title: const Text("أضف طلاب لمجموعتك"),
           actions: [
             // Sort button in the app bar
             IconButton(
@@ -96,7 +96,7 @@ class _AddStudentsToClassroomTabState extends State<AddStudentsToClassroomTab> {
         addStudentToClass(widget.classId, student.id);
         // setState(() {});
       },
-      child: coloredArabicText("أضف"),
+      child: coloredArabicText("أضف",c: Colors.white),
     ),
   );
 

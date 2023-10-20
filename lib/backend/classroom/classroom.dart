@@ -1,10 +1,12 @@
 class Classroom {
+  String classId;
   String title;
-  int grade;
+  String grade;
   String teacherId;
   List<String> studentIds;
 
   Classroom({
+    required this.classId,
     required this.title,
     required this.grade,
     required this.teacherId,
@@ -15,8 +17,9 @@ class Classroom {
 
   factory Classroom.fromJson(Map<String, dynamic> json) {
     return Classroom(
+      classId: json['classId'] as String,
       title: json['title'] as String,
-      grade: json['grade'] as int,
+      grade: json['grade'] as String,
       teacherId: json['teacherId'] as String,
       studentIds: (json['studentIds'] as List<dynamic>).map((e) => e as String).toList(),
     );
@@ -24,6 +27,7 @@ class Classroom {
 
   Map<String, dynamic> toJson() {
     return {
+      'classId': classId,
       'title': title,
       'grade' : grade,
       'teacherId': teacherId,

@@ -90,6 +90,7 @@ class UserProfile extends StatelessWidget {
     final double width = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () async {
+        //todo: add the additional fields to each type
         final docUser = FirebaseFirestore.instance
             .collection('users')
             .doc(uid);

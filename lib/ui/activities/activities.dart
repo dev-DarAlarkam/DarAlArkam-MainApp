@@ -10,25 +10,28 @@ class Activities extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    return Scaffold(
-        appBar:AppBar(
-          iconTheme: IconThemeData(
-            color: colors.green, //change your color here
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+          appBar:AppBar(
+            iconTheme: IconThemeData(
+              color: colors.green, //change your color here
+            ),
+            backgroundColor: Colors.transparent, //for hiding the appBar
+            elevation: 0, //for hiding the shadows
           ),
-          backgroundColor: Colors.transparent, //for hiding the appBar
-          elevation: 0, //for hiding the shadows
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: height*.1,child: Image.asset("lib/assets/photos/logo.png"),),
-              const Expanded(flex:1,child: SizedBox()),
-              boldColoredArabicText("عذرا، هذه الخاصية غير مفعلة حالياً", c: colors.green),
-              const Expanded(flex:4,child: SizedBox()),
-            ],
-          ),
-        )
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: height*.1,child: Image.asset("lib/assets/photos/logo.png"),),
+                const Expanded(flex:1,child: SizedBox()),
+                boldColoredArabicText("عذرا، هذه الخاصية غير مفعلة حالياً", c: colors.green),
+                const Expanded(flex:4,child: SizedBox()),
+              ],
+            ),
+          )
+      ),
     );
   }
 }

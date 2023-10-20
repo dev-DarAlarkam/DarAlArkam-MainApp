@@ -2,6 +2,7 @@ import 'dart:core';
 import 'package:daralarkam_main_app/backend/firebase/users/get-user.dart';
 import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
 import 'package:daralarkam_main_app/ui/firebase/admin/users-tab.dart';
+import 'package:daralarkam_main_app/ui/firebase/classrooms/createAClassroom.dart';
 import 'package:daralarkam_main_app/ui/home/home.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,7 +12,7 @@ import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
 import '../../../backend/users/users.dart';
 import '../../widgets/navigate-to-tab-button.dart';
 
-
+//todo:translate this tab
 class AdminTab extends StatelessWidget {
   const AdminTab({Key? key}) : super(key: key);
 
@@ -58,6 +59,7 @@ class AdminTab extends StatelessWidget {
                 child: Column(
                   children: [
                     NavigateToStatefulTabButton(text: "users",icon: "lib/assets/icons/salat.png", nextScreen: UsersTab()),
+                    NavigateToStatefulTabButton(text: "create a classroom", icon: "lib/assets/icons/salat.png", nextScreen: CreateAClassroomTab())
                   ]
                 ),
               ),

@@ -3,6 +3,7 @@ import 'package:daralarkam_main_app/backend/classroom/classroom.dart';
 import 'package:daralarkam_main_app/backend/firebase/users/get-user.dart';
 import 'package:daralarkam_main_app/backend/users/users.dart';
 import 'package:daralarkam_main_app/ui/firebase/admin/user-profile.dart';
+import 'package:daralarkam_main_app/ui/firebase/classrooms/classroomProfile.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,7 @@ class _ClassroomsTabState extends State<ClassroomsTab> {
     return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
-          appBar: AppBar(title: boldColoredArabicText("مجموعاتك"),),
+          appBar: AppBar(title: boldColoredArabicText("مجموعاتك", c: Colors.white),),
           body:  Center(
             child: StreamBuilder(
               stream: readClassrooms(),
@@ -53,7 +54,7 @@ class _ClassroomsTabState extends State<ClassroomsTab> {
     title: Text(classroom.title),
     subtitle: Text("الصف ${classroom.grade}"),
     onTap: (){
-      // Navigator.push(context, MaterialPageRoute(builder: (context)=> UserProfile(uid:user.id)));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> ClassroomProfileTab(cid:classroom.classId)));
     },
   );
 

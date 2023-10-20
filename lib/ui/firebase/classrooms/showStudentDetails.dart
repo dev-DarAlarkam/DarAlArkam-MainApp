@@ -15,54 +15,57 @@ class ShowStudentDetailsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("User Profile"),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            const SizedBox(height: 10,),
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("ملف الطالب الشخصي"),
+        ),
+        body: Center(
+          child: Column(
+            children: [
+              const SizedBox(height: 10,),
 
-            const Icon(Icons.person),
-            FutureBuilder(
-                future: readUser(context, uid),
-                builder: (context, snapshot){
-                  if(snapshot.hasError){return Text(snapshot.error.toString());}
-                  else if (snapshot.hasData) {
-                    final dynamic user = snapshot.data;
-                    // final user = FirebaseUser.fromJson(userDoc);
-                    return Center(
-                      child: SizedBox(
-                        height: height*0.8,
-                        child: Column(
-                          children: [
-                            //username
-                            coloredArabicText(user.firstName + " " + user.secondName + " " + user.thirdName),
-                            const SizedBox(height: 10,),
-                            //type
-                            coloredArabicText(user.type),
-                            const SizedBox(height: 10,),
-                            //birthday
-                            coloredArabicText(user.birthday),
-                            const Expanded(child: SizedBox()),
-                            //action buttons rows
-                            ElevatedButton(onPressed: (){
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CountersViewer(uid: uid,)));
-                            }, child: coloredArabicText("برنامج المحاسبة"))
-                          ],
+              const Icon(Icons.person),
+              FutureBuilder(
+                  future: readUser(context, uid),
+                  builder: (context, snapshot){
+                    if(snapshot.hasError){return Text(snapshot.error.toString());}
+                    else if (snapshot.hasData) {
+                      final dynamic user = snapshot.data;
+                      // final user = FirebaseUser.fromJson(userDoc);
+                      return Center(
+                        child: SizedBox(
+                          height: height*0.8,
+                          child: Column(
+                            children: [
+                              //username
+                              coloredArabicText(user.firstName + " " + user.secondName + " " + user.thirdName),
+                              const SizedBox(height: 10,),
+                              //type
+                              coloredArabicText(user.type),
+                              const SizedBox(height: 10,),
+                              //birthday
+                              coloredArabicText(user.birthday),
+                              const Expanded(child: SizedBox()),
+                              //action buttons rows
+                              ElevatedButton(onPressed: (){
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => CountersViewer(uid: uid,)));
+                              }, child: coloredArabicText("برنامج المحاسبة", c: Colors.white))
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  }
-                  else{return const Center(child: CircularProgressIndicator());}
+                      );
+                    }
+                    else{return const Center(child: CircularProgressIndicator());}
 
-                }
-            ),
-          ],
+                  }
+              ),
+            ],
+          ),
         ),
       ),
     );

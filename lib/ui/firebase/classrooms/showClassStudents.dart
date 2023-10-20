@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/users/users.dart';
+import 'package:daralarkam_main_app/ui/firebase/classrooms/showStudentDetails.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 import '../../../../services/utils/showSnackBar.dart';
@@ -8,7 +9,7 @@ import '../../../../services/utils/showSnackBar.dart';
 enum SortOrder { ascending, descending }
 
 class ShowClassStudentsTab extends StatefulWidget {
-  const ShowClassStudentsTab({Key? key, this.classId}) : super(key: key);
+  const ShowClassStudentsTab({Key? key,required this.classId}) : super(key: key);
   final classId;
 
   @override
@@ -32,22 +33,25 @@ class _ShowClassStudentsTabState extends State<ShowClassStudentsTab> {
 
   // Function to sort students based on their first names
   void sortStudents(SortOrder order) {
-    setState(() {
       if (order == SortOrder.ascending) {
         students.sort((a, b) => a.firstName.compareTo(b.firstName));
       } else {
         students.sort((a, b) => b.firstName.compareTo(a.firstName));
       }
-    });
   }
-
+  @override
+  void initState() {
+    super.initState();
+    // Fetch and sort the counters when the widget is initialized
+    sortStudents(_currentSortOrder);
+  }
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Users"),
+          title: const Text("الطلاب"),
           actions: [
             // Sort button in the app bar
             IconButton(
@@ -93,6 +97,8 @@ class _ShowClassStudentsTabState extends State<ShowClassStudentsTab> {
   Widget buildStudent(Student student) => ListTile(
     title: Text(student.firstName + " " + student.secondName + " " + student.thirdName),
     subtitle: Text(student.birthday),
-    onTap: () {},
+    onTap: () {
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> ShowStudentDetailsTab(uid:student.id)));
+    },
   );
 }
