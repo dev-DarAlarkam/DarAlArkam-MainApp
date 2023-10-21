@@ -23,7 +23,7 @@ class _ShowClassStudentsTabState extends State<ShowClassStudentsTab> {
   List<Student> students = [];
 
   // Stream to read students who are not in any classroom
-  Stream<List<FirebaseUser>> readStudentsOutsideAClassroom(String classId) =>
+  Stream<List<FirebaseUser>> readStudentsInsideAClassroom(String classId) =>
       FirebaseFirestore.instance
           .collection('users')
           .where('type', isEqualTo: 'student')
@@ -71,7 +71,7 @@ class _ShowClassStudentsTabState extends State<ShowClassStudentsTab> {
         ),
         body: Center(
           child: StreamBuilder(
-            stream: readStudentsOutsideAClassroom(widget.classId),
+            stream: readStudentsInsideAClassroom(widget.classId),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Text(snapshot.error.toString());

@@ -112,7 +112,7 @@ class _CounterScreenReadState extends State<CounterScreenRead> {
   String translateSalahCounterTypes(SalahCounterTypes x) {
     switch (x.index) {
       case 0 :
-        return "لم تصلّي";
+        return "لم تصلّ";
       case 1 :
         return "قضاء";
       case 2 :

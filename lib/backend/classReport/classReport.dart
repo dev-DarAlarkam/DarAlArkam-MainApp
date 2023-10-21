@@ -23,9 +23,9 @@ String translateAttendanceCounterTypes (AttendanceCounterTypes x) {
 
 class ClassReport {
   final String date;
-  final String title;
-  final String content;
-  final Map<String, dynamic> attendanceReport;
+  String title;
+  String content;
+  Map<String, dynamic> attendanceReport;
 
   ClassReport({
     required this.date,
@@ -35,9 +35,19 @@ class ClassReport {
   });
 
 
-  updateStudent(String id){
+  updateStudent(String id) {
     attendanceReport[id] =  _getNextEnumValue(attendanceReport[id]);
   }
+
+  updateTitle(String _title) {
+    title = _title;
+  }
+
+  updateSummary(String _summary) {
+    content = _summary;
+  }
+
+  AttendanceCounterTypes getStudentInfo(String id) => attendanceReport[id];
 
   AttendanceCounterTypes _getNextEnumValue(AttendanceCounterTypes current) {
     const values = AttendanceCounterTypes.values;

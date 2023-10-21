@@ -18,7 +18,8 @@ class ClassroomProfileTab extends StatefulWidget {
 class _ClassroomProfileTabState extends State<ClassroomProfileTab> {
   @override
   Widget build(BuildContext context) {
-  double height = MediaQuery.of(context).size.height;
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
