@@ -1,5 +1,7 @@
 import 'package:daralarkam_main_app/backend/classroom/classroom.dart';
 import 'package:daralarkam_main_app/backend/classroom/classroomUtils.dart';
+import 'package:daralarkam_main_app/backend/counter/getCounter.dart';
+import 'package:daralarkam_main_app/ui/firebase/classReport/classReportWrite.dart';
 import 'package:daralarkam_main_app/ui/firebase/classrooms/addStudentsToClass.dart';
 import 'package:daralarkam_main_app/ui/firebase/classrooms/showClassStudents.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +39,7 @@ class _ClassroomProfileTabState extends State<ClassroomProfileTab> {
                 const SizedBox(height: 10,),
                 //Getting user info
                 FutureBuilder(
-                  future: readClassroom(context, widget.cid),
+                  future: readClassroom(widget.cid),
                   builder: (context, snapshot) {
                     if (snapshot.hasError){return Text(snapshot.error.toString());}
                     else if(snapshot.hasData) {
@@ -67,7 +69,7 @@ class _ClassroomProfileTabState extends State<ClassroomProfileTab> {
                             const SizedBox(height: 10,),
                             navigationButtonLess(context,"التقارير",Activities()),
                             const SizedBox(height: 10,),
-                            navigationButtonLess(context,"اضافة تقرير",Activities()),
+                            navigationButtonFul(context,"اضافة تقرير",ClassReportWriteTab(classId: widget.cid, date: getFormattedDate(), )),
                           ],
                         ),
                       ]

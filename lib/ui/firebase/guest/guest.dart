@@ -42,7 +42,7 @@ class GuestTab extends StatelessWidget {
               const SizedBox(height: 10,),
               //Getting user info
               FutureBuilder(
-                future: readUser(context, getUserId()),
+                future: readUser(getUserId()),
                 builder: (context, snapshot) {
                   if (snapshot.hasError){return Text(snapshot.error.toString());}
                   else if(snapshot.hasData) {

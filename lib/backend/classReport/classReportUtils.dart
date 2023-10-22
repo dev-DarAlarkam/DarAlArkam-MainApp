@@ -5,9 +5,9 @@ import 'package:daralarkam_main_app/backend/classroom/classroom.dart';
 import '../counter/getCounter.dart';
 import 'defaultReport.dart';
 
-Future<ClassReport?> getReport(Classroom classroom) async {
-  final docUser = FirebaseFirestore.instance.collection('classrooms').doc(classroom.classId);
-  final docCounter = docUser.collection('classreports').doc(getFormattedDate());
+Future<ClassReport?> getReport(String classId, String date) async {
+  final docUser = FirebaseFirestore.instance.collection('classrooms').doc(classId);
+  final docCounter = docUser.collection('classReports').doc(date);
 
   final docSnapshot = await docCounter.get();
 
@@ -15,7 +15,10 @@ Future<ClassReport?> getReport(Classroom classroom) async {
     return ClassReport.fromJson(docSnapshot.data()!);
   } else {
     // The document does not exist, create a new one
-    await docCounter.set(defaultReport(classroom));
+    final newReport = await defaultReport(classId);
+
+    await docCounter.set(newReport);
     return ClassReport.fromJson(docSnapshot.data()!);
   }
 }
+

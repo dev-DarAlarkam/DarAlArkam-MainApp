@@ -47,23 +47,31 @@ class ClassReport {
     content = _summary;
   }
 
-  AttendanceCounterTypes getStudentInfo(String id) => attendanceReport[id];
-
-  AttendanceCounterTypes _getNextEnumValue(AttendanceCounterTypes current) {
+  AttendanceCounterTypes getStudentInfo(String id) {
     const values = AttendanceCounterTypes.values;
-    final nextIndex = (current.index + 1) % values.length;
-    return values[nextIndex];
+    return values[attendanceReport[id]];
   }
 
-  factory ClassReport.fromJson(Map<String,dynamic> json) {
+  int _getNextEnumValue(int current) {
+    const values = AttendanceCounterTypes.values;
+    final nextIndex = (current + 1) % values.length;
+    return nextIndex;
+  }
+
+  factory ClassReport.fromJson(Map<String, dynamic> json) {
+    // Parse attendanceReport as a Map<String, int>
+    final Map<String, int> attendanceMap = Map<String, int>.from(json['attendanceReport']);
+
+    // Create a ClassReport instance using the parsed data
     final report = ClassReport(
-        date: json['date'],
-        title: json['title'],
-        content: json['content'],
-        attendanceReport: json['attendanceReport']
+      date: json['date'],
+      title: json['title'],
+      content: json['content'],
+      attendanceReport: attendanceMap,
     );
     return report;
   }
+
 
   Map<String, dynamic> toJson() => {
     'date' : date,

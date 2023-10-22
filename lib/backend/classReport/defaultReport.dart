@@ -1,24 +1,34 @@
 import 'package:daralarkam_main_app/backend/classReport/classReport.dart';
+import 'package:daralarkam_main_app/backend/classroom/classroomUtils.dart';
 import 'package:daralarkam_main_app/backend/counter/getCounter.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
+import '../../ui/firebase/classrooms/classroomProfile.dart';
+import '../../ui/widgets/text.dart';
 import '../classroom/classroom.dart';
 
-Map<String, dynamic> defaultReport(Classroom classroom) {
+Future<Map<String, dynamic>> defaultReport(String classId) async {
   ClassReport report = ClassReport(
       date: getFormattedDate(),
       title: "",
       content: "",
-      attendanceReport: createAttendanceMap(classroom.getStudentIds())
+      attendanceReport: await createAttendanceMap(classId)
   );
 
   return report.toJson();
 }
 
-Map<String, dynamic> createAttendanceMap(List<String> studentIds) {
-  final attendanceMap = <String, AttendanceCounterTypes>{};
+Future<Map<String, dynamic>> createAttendanceMap(String cid) async {
+  final attendanceMap = <String, dynamic>{};
 
-  for (var studentId in studentIds) {
-    attendanceMap[studentId] = AttendanceCounterTypes.DidntAttend;
+  try {
+    final Classroom? classroom = await readClassroom(cid);
+    for (var studentId in classroom!.getStudentIds()) {
+      attendanceMap[studentId] = 0;
+    }
+  } catch (e) {
+    print("Error while creating attendance map: $e");
   }
 
   return attendanceMap;
