@@ -7,6 +7,8 @@ import 'package:daralarkam_main_app/ui/firebase/classrooms/addStudentsToClass.da
 import 'package:daralarkam_main_app/ui/firebase/classrooms/showClassStudents.dart';
 import 'package:flutter/material.dart';
 
+import '../../../backend/userManagement/usersUtils.dart';
+import '../../../backend/users/users.dart';
 import '../../activities/activities.dart';
 import '../../widgets/navigate-to-tab-button.dart';
 import '../../widgets/text.dart';
@@ -45,8 +47,23 @@ class _ClassroomProfileTabState extends State<ClassroomProfileTab> {
                     if (snapshot.hasError){return Text(snapshot.error.toString());}
                     else if(snapshot.hasData) {
                       final dynamic classroom = snapshot.data!;
-                      return coloredArabicText("مجموعة " + getClassroomTitle(classroom));
-                    }
+                      return Column(
+                          children: [
+                            coloredArabicText("مجموعة " + getClassroomTitle(classroom)),
+                            const SizedBox(height: 10,),
+                            coloredArabicText('الصف: ${classroom.grade}'),
+                            FutureBuilder(
+                                future: readUser(classroom.teacherId),
+                                builder: (context, snapshot) {
+                                  if(snapshot.hasError) {return Text('');}
+                                  else if(snapshot.hasData) {
+                                    final FirebaseUser user = snapshot.data! as FirebaseUser;
+                                    return coloredArabicText('المربي: ' + getUsername(user));
+                                  }
+                                  else{return Text("");}
+                                })
+                          ]
+                      );                    }
                     else{return const Center(child: CircularProgressIndicator());}
                   },
                 ),

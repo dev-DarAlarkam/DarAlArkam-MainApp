@@ -35,74 +35,76 @@ class _CreateAClassroomTabState extends State<CreateAClassroomTab> {
               elevation: 0,
             ),
             body: Center(
-                child: SizedBox(
-                    width: width * 0.8,
-                    height: height,
-                    child: Column(
-                        children: <Widget>[
-                          const Expanded(flex: 1, child: SizedBox()),
-                          SizedBox(
-                            height: height * .1,
-                            child: Image.asset("lib/assets/photos/main-logo.png"),
-                          ),
-                          SizedBox(height: 16.0),
-                          boldColoredArabicText("انشئ مجموعة تربوية جديدة"),
-                          const Expanded(flex: 1, child: SizedBox()),
-                          TextFormField(
-                            controller: _textController,
-                            decoration: InputDecoration(labelText: 'إسم المجموعة'),
-                          ),
-                          SizedBox(height: 16.0),
-                          Row(
-                            children: [
-                              coloredArabicText("الصف:"),
-                              SizedBox(width: 30,),
-                              DropdownButton<String>(
-                                value: selectedNumber,
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    selectedNumber = newValue!;
-                                  });
-                                },
-                                items: List<String>.generate(12, (index) => (index + 1).toString())
-                                    .map((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 16.0),
-                          ElevatedButton(
-                            onPressed: () async {
-                              final cid = 'Classroom_${DateTime.now().millisecondsSinceEpoch}';
-                              final classroom  = Classroom(
-                                  classId: cid,
-                                  title: _textController.text,
-                                  grade: selectedNumber,
-                                  teacherId: '',
-                                  studentIds: []
-                              );
-                              final json = classroom.toJson();
-                              final docClass = FirebaseFirestore.instance
-                                .collection('classrooms')
-                                .doc(cid);
-                              await docClass.set(json).then((value) {
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                MaterialPageRoute(builder: (context) => SelectATeacherTab(classId: cid,)),
-                                (route) => route.isFirst);
-                              }).onError((error, stackTrace) {
-                                showSnackBar(context, error.toString());
-                              });
-                            },
-                            child: Text('Submit'),
-                          ),
-                          const Expanded(flex: 3, child: SizedBox())
-                        ]
-                    )
+                child: SingleChildScrollView(
+                  child: SizedBox(
+                      width: width * 0.8,
+                      height: height,
+                      child: Column(
+                          children: <Widget>[
+                            const Expanded(flex: 1, child: SizedBox()),
+                            SizedBox(
+                              height: height * .1,
+                              child: Image.asset("lib/assets/photos/main-logo.png"),
+                            ),
+                            SizedBox(height: 16.0),
+                            boldColoredArabicText("انشئ مجموعة تربوية جديدة"),
+                            const Expanded(flex: 1, child: SizedBox()),
+                            TextFormField(
+                              controller: _textController,
+                              decoration: InputDecoration(labelText: 'إسم المجموعة'),
+                            ),
+                            SizedBox(height: 16.0),
+                            Row(
+                              children: [
+                                coloredArabicText("الصف:"),
+                                SizedBox(width: 30,),
+                                DropdownButton<String>(
+                                  value: selectedNumber,
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedNumber = newValue!;
+                                    });
+                                  },
+                                  items: List<String>.generate(12, (index) => (index + 1).toString())
+                                      .map((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 16.0),
+                            ElevatedButton(
+                              onPressed: () async {
+                                final cid = 'Classroom_${DateTime.now().millisecondsSinceEpoch}';
+                                final classroom  = Classroom(
+                                    classId: cid,
+                                    title: _textController.text,
+                                    grade: selectedNumber,
+                                    teacherId: '',
+                                    studentIds: []
+                                );
+                                final json = classroom.toJson();
+                                final docClass = FirebaseFirestore.instance
+                                  .collection('classrooms')
+                                  .doc(cid);
+                                await docClass.set(json).then((value) {
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                  MaterialPageRoute(builder: (context) => SelectATeacherTab(classId: cid,)),
+                                  (route) => route.isFirst);
+                                }).onError((error, stackTrace) {
+                                  showSnackBar(context, error.toString());
+                                });
+                              },
+                              child: Text('انشئ'),
+                            ),
+                            const Expanded(flex: 3, child: SizedBox())
+                          ]
+                      )
+                  ),
                 )
             )
         )

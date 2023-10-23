@@ -45,6 +45,12 @@ Future<bool> checkUserExist(BuildContext context, String uid) async{
   return false;
 }
 
+String getUsername(FirebaseUser user) {
+  if (user != null) {
+    return user.firstName + " " + user.secondName + " " + user.thirdName;
+  }
+  return '';
+}
 
 String getCurrentUserId() {
   return FirebaseAuth.instance.currentUser!.uid;
@@ -55,10 +61,10 @@ Future<void> updateUser(BuildContext context, String uid, String oldType, String
       .collection('users')
       .doc(uid);
 
-  if(oldType == 'guest'){
-
+  if(oldType == 'guest' || oldType == 'admin'){
     switch (newType) {
       case "student":
+        //adding the 'classid' field which is
         await docUser.update({"type": newType}).onError((error, stackTrace) {
           showSnackBar(context, error.toString());
         });
@@ -68,11 +74,12 @@ Future<void> updateUser(BuildContext context, String uid, String oldType, String
         showSnackBar(context, "تم التحويل بنجاح");
         break;
 
+        //adding the 'classids' field
       case "teacher":
         await docUser.update({"type": newType}).onError((error, stackTrace) {
           showSnackBar(context, error.toString());
         });
-        await docUser.update({"classIds": {}}).onError((error, stackTrace) {
+        await docUser.update({"classIds": []}).onError((error, stackTrace) {
           showSnackBar(context, error.toString());
         });
         showSnackBar(context, "تم التحويل بنجاح");
@@ -84,7 +91,62 @@ Future<void> updateUser(BuildContext context, String uid, String oldType, String
         });
         showSnackBar(context, "تم التحويل بنجاح");
     }
-  } else {
+  }
+  else if(oldType == 'student') {
+    switch (newType) {
+      //we don't need to change it
+      case "student":
+        break;
+
+      case "teacher":
+
+        removeStudentFromClassroom(context, await getClassIdFromStudentId(uid), uid);
+
+        await docUser.update({"type": newType}).onError((error, stackTrace) {
+          showSnackBar(context, error.toString());
+        });
+
+        await docUser.update({"classIds": []}).onError((error, stackTrace) {
+          showSnackBar(context, error.toString());
+        });
+        showSnackBar(context, "تم التحويل بنجاح");
+
+        break;
+
+      default:
+        removeStudentFromClassroom(context, await getClassIdFromStudentId(uid), uid);
+        await docUser.update({"type": newType}).onError((error, stackTrace) {
+          showSnackBar(context, error.toString());
+        });
+        showSnackBar(context, "تم التحويل بنجاح");
+    }
+  }
+  else if(oldType == 'teacher') {
+    switch (newType) {
+      case "student":
+        removeTeacherFromClassrooms(context, uid);
+        await docUser.update({"type": newType}).onError((error, stackTrace) {
+          showSnackBar(context, error.toString());
+        });
+        await docUser.update({"classId": ""}).onError((error, stackTrace) {
+          showSnackBar(context, error.toString());
+        });
+        showSnackBar(context, "تم التحويل بنجاح");
+        break;
+
+        //there's no need to change anything in this situation
+      case "teacher":
+        break;
+
+      default:
+        await docUser.update({"type": newType}).onError((error, stackTrace) {
+          showSnackBar(context, error.toString());
+        });
+        removeTeacherFromClassrooms(context, uid);
+        showSnackBar(context, "تم التحويل بنجاح");
+    }
+  }
+  else {
     showSnackBar(context, "لا يمكن القيام بهذه العملية حالياً، تواصل مع المطوّر");
   }
 

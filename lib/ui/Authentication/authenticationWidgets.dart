@@ -1,3 +1,4 @@
+import 'package:daralarkam_main_app/ui/Authentication/resetPassword.dart';
 import 'package:daralarkam_main_app/ui/Authentication/signUpTab.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ Widget line() {
 
 Widget signUpOption(BuildContext context) {
   return Row(
-    mainAxisAlignment: MainAxisAlignment.start,
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       GestureDetector(
         onTap: () {
@@ -43,6 +44,15 @@ Widget signUpOption(BuildContext context) {
         child: boldColoredArabicText(
             "لا تملك حسابًا؟ قم بإنشاء حساب", maxSize: 15, minSize: 10),
       ),
+      GestureDetector(
+        onTap: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const ResetPasswordTab()));
+        },
+        child: boldColoredArabicText(
+            "أعد ضبط كلمة المرور", maxSize: 15, minSize: 10),
+      ),
+
     ],
   );
 }
