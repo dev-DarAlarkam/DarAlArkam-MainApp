@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daralarkam_main_app/backend/firebase/navigator.dart';
-import 'package:daralarkam_main_app/backend/firebase/users/usersUtils.dart';
+import 'package:daralarkam_main_app/backend/userManagement/navigator.dart';
 import 'package:daralarkam_main_app/backend/users/users.dart';
 import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
+
+import '../../../backend/userManagement/usersUtils.dart';
 
 class NewUserTab extends StatefulWidget {
   const NewUserTab({Key? key}) : super(key: key);

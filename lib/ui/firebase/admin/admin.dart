@@ -1,18 +1,17 @@
 import 'dart:core';
-import 'package:daralarkam_main_app/backend/firebase/users/usersUtils.dart';
 import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
 import 'package:daralarkam_main_app/ui/firebase/userManagement/users-tab.dart';
-import 'package:daralarkam_main_app/ui/firebase/classrooms/classroom-tab-for-admin.dart';
-import 'package:daralarkam_main_app/ui/firebase/classrooms/createAClassroom.dart';
+import 'package:daralarkam_main_app/ui/firebase/admin/classrooms/classroom-tab-for-admin.dart';
 import 'package:daralarkam_main_app/ui/home/home.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'classrooms/createAClassroom.dart';
+import '../../../backend/userManagement/usersUtils.dart';
 import '../../../backend/users/users.dart';
 import '../../widgets/navigate-to-tab-button.dart';
 
-//todo:translate this tab
 class AdminTab extends StatelessWidget {
   const AdminTab({Key? key}) : super(key: key);
 

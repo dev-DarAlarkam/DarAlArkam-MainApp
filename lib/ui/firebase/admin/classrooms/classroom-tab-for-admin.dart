@@ -4,6 +4,8 @@ import 'package:daralarkam_main_app/ui/firebase/classrooms/classroomProfile.dart
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 
+import 'classroomProfileForAdmin.dart';
+
 class ClassroomsTabForAdmin extends StatefulWidget {
   const ClassroomsTabForAdmin({Key? key}) : super(key: key);
 
@@ -50,7 +52,7 @@ class _ClassroomsTabForAdminState extends State<ClassroomsTabForAdmin> {
     title: Text(classroom.title),
     subtitle: Text("الصف ${classroom.grade}"),
     onTap: (){
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> ClassroomProfileTab(cid:classroom.classId)));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> ClassroomProfileForAdminTab(cid:classroom.classId)));
     },
   );
 

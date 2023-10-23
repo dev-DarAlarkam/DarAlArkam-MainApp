@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/classroom/classroom.dart';
-import 'package:daralarkam_main_app/backend/firebase/users/usersUtils.dart';
-import 'package:daralarkam_main_app/backend/users/users.dart';
-import 'package:daralarkam_main_app/ui/firebase/userManagement/user-profile.dart';
 import 'package:daralarkam_main_app/ui/firebase/classrooms/classroomProfile.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
+
+import '../../../backend/userManagement/usersUtils.dart';
 
 class ClassroomsTab extends StatefulWidget {
   const ClassroomsTab({Key? key}) : super(key: key);

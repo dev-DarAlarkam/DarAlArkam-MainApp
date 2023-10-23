@@ -1,5 +1,4 @@
 import 'dart:core';
-import 'package:daralarkam_main_app/backend/firebase/users/usersUtils.dart';
 import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
 import 'package:daralarkam_main_app/ui/firebase/userManagement/users-tab.dart';
 import 'package:daralarkam_main_app/ui/home/home.dart';
@@ -8,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
 
+import '../../../backend/userManagement/usersUtils.dart';
 import '../../../backend/users/users.dart';
 import '../../widgets/navigate-to-tab-button.dart';
 
@@ -55,12 +55,7 @@ class GuestTab extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 10,),
-                //Admin functions
-                const SingleChildScrollView(
-                  child: Column(
-                      children: []
-                  ),
-                ),
+                coloredArabicText("سيتم إضافتك لمجموعة قريباً"),
                 const Expanded(flex:2,child: SizedBox()),
               ],
             ),

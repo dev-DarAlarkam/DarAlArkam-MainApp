@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/classroom/classroom.dart';
-import 'package:daralarkam_main_app/ui/firebase/classrooms/selectATeacher.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
-import '../../../globals/globalColors.dart' as color;
-import '../../../services/utils/showSnackBar.dart';
+
+import 'selectATeacher.dart';
+import '../../../../globals/globalColors.dart' as color;
+import '../../../../services/utils/showSnackBar.dart';
 
 class CreateAClassroomTab extends StatefulWidget {
   const CreateAClassroomTab({Key? key}) : super(key: key);

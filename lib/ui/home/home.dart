@@ -1,8 +1,9 @@
-import 'package:daralarkam_main_app/backend/firebase/navigator.dart';
-import 'package:daralarkam_main_app/ui/Authenticate/authenticationTab.dart';
+import 'package:daralarkam_main_app/backend/userManagement/navigator.dart';
+import 'package:daralarkam_main_app/ui/Authentication/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
+import '../../backend/userManagement/navigator.dart';
 import '../widgets/my-flutter-app-icons.dart';
 import 'aboutus.dart';
 import 'main-tab.dart';
@@ -45,7 +46,7 @@ class _HomeState extends State<Home> {
                       child: FloatingActionButton(
                       onPressed: (){
                         if(FirebaseAuth.instance.currentUser == null) {
-                          Navigator.push(context,MaterialPageRoute(builder: (context) => const SignInTab()));
+                          Navigator.push(context,MaterialPageRoute(builder: (context) => const AuthenticationTab()));
                         }
                         else {
                           navigateBasedOnType(context, FirebaseAuth.instance.currentUser!.uid);

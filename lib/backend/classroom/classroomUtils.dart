@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/classroom/classroom.dart';
+import 'package:daralarkam_main_app/backend/userManagement/usersUtils.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/utils/showSnackBar.dart';
@@ -77,3 +78,32 @@ Future<void> removeStudentFromClassroom(BuildContext context, String cid, String
   });
 }
 
+Future<String> getClassIdFromStudentId(String uid) async{
+  final student = await readStudent(uid);
+
+  if (student!= null) {
+    return student.classId;
+  }
+  return '';
+}
+
+Future<void> removeTeacherFromClassrooms(BuildContext context, String uid) async {
+
+  final teacher = await readTeacher(uid);
+
+  //removing the userId from the 'teacherId' field in the classroom
+  if (teacher != null ) {
+    for(String cid in teacher.classIds){
+      final docClass = FirebaseFirestore.instance.collection('classrooms').doc(cid);
+
+      docClass.get().then((classSnapshot) => {
+        if(classSnapshot.exists) {
+          docClass.update({'teacherId':''}).onError((error, stackTrace) {
+            showSnackBar(context, error.toString());
+          })
+        }
+      });
+    }
+  }
+
+}

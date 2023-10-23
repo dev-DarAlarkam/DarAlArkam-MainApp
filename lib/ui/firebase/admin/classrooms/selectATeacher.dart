@@ -9,7 +9,7 @@ enum SortOrder { ascending, descending }
 
 class SelectATeacherTab extends StatefulWidget {
   const SelectATeacherTab({Key? key,required this.classId}) : super(key: key);
-  final classId;
+  final String classId;
 
   @override
   State<SelectATeacherTab> createState() => _SelectATeacherTabState();
@@ -44,7 +44,7 @@ class _SelectATeacherTabState extends State<SelectATeacherTab> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: boldColoredArabicText("إختر مربي للمجموعة"),
+          title: boldColoredArabicText("إختر مربي للمجموعة", c:Colors.white),
           actions: [
             // Sort button in the app bar
             IconButton(

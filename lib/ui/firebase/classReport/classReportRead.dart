@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/classReport/classReport.dart';
 import 'package:daralarkam_main_app/backend/classReport/classReportUtils.dart';
-import 'package:daralarkam_main_app/backend/classroom/classroom.dart';
-import 'package:daralarkam_main_app/backend/firebase/users/usersUtils.dart';
 import 'package:daralarkam_main_app/backend/users/users.dart';
-import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
+
+import '../../../backend/userManagement/usersUtils.dart';
 final GlobalKey<FormState> _titleFormKey = GlobalKey<FormState>();
 final GlobalKey<FormState> _summaryFormKey = GlobalKey<FormState>();
 final TextEditingController _title = TextEditingController();

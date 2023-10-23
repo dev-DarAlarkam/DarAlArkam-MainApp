@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../../ui/firebase/admin/admin.dart';
-import '../../ui/firebase/guest/guest.dart';
-import '../../ui/firebase/new-user/new-user.dart';
-import '../../ui/firebase/student/student.dart';
-import '../../ui/firebase/teacher/teacher.dart';
+import '../../../ui/firebase/admin/admin.dart';
+import '../../../ui/firebase/guest/guest.dart';
+import '../../../ui/firebase/new-user/new-user.dart';
+import '../../../ui/firebase/student/student.dart';
+import '../../../ui/firebase/teacher/teacher.dart';
 
 void navigateBasedOnType(BuildContext context, String uid) {
   Navigator.pushAndRemoveUntil(
