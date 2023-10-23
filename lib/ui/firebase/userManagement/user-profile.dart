@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daralarkam_main_app/backend/firebase/users/get-user.dart';
-import 'package:daralarkam_main_app/backend/users/users.dart';
+import 'package:daralarkam_main_app/backend/firebase/users/usersUtils.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
@@ -46,31 +45,22 @@ class UserProfile extends StatelessWidget {
                             coloredArabicText(user.birthday),
                             const Expanded(child: SizedBox()),
                             //action buttons rows
-                            SizedBox(
-                              width: width*0.9,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            SingleChildScrollView(
+                              child: Column(
                                 children: [
                                   _firebaseActionButton(context, user.id, "admin"),
                                   const SizedBox(height: 10,),
                                   _firebaseActionButton(context, user.id, "teacher"),
-
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 10,),
-                            SizedBox(
-                              width: width*0.9,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
+                                  const SizedBox(height: 10,),
                                   _firebaseActionButton(context, user.id, "student"),
                                   const SizedBox(height: 10,),
                                   _firebaseActionButton(context, user.id, "guest"),
-
+                                  const SizedBox(height: 10,),
+                                  _deleteUserButton(context, uid, user.type)
                                 ],
                               ),
-                            )
+                            ),
+                            
                           ],
                         ),
                       ),
@@ -89,15 +79,7 @@ class UserProfile extends StatelessWidget {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return GestureDetector(
-      onTap: () async {
-        //todo: add the additional fields to each type
-        final docUser = FirebaseFirestore.instance
-            .collection('users')
-            .doc(uid);
-        await docUser.update({"type" : type})
-            .onError((error, stackTrace) {showSnackBar(context, error.toString());
-            });
-        },
+      onTap: () async {updateUser(context, uid, type);},
 
       child: Container(
         height: height*0.1,
@@ -110,4 +92,60 @@ class UserProfile extends StatelessWidget {
       ),
     );
   }
+  
+  Widget _deleteUserButton(BuildContext context, String uid, String type){
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
+    return GestureDetector(
+      onTap: () async {
+        //todo: remove student from classroom
+        final docUser = FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid);
+        await docUser.delete();
+        Navigator.pop(context);
+      },
+
+      child: Container(
+        height: height*0.1,
+        width: width*0.4,
+        decoration: BoxDecoration(
+          color: colors.green,
+          borderRadius: BorderRadiusDirectional.circular(10),
+        ),
+        child: Center(child: coloredArabicText("delete user", c: Colors.white)),
+      ),
+    );
+  }
+
+  Future<void> updateUser(BuildContext context, String uid, String newType) async {
+    final docUser = FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid);
+    
+    switch (newType) {
+      case "student" :
+        await docUser.update({"type" : newType})
+            .onError((error, stackTrace) {showSnackBar(context, error.toString());});
+        await docUser.update({"classId" : ""})
+            .onError((error, stackTrace) {showSnackBar(context, error.toString());});
+        break;
+        
+      case "teacher" :
+        await docUser.update({"type" : newType})
+            .onError((error, stackTrace) {showSnackBar(context, error.toString());});
+        await docUser.update({"classIds" : {}})
+            .onError((error, stackTrace) {showSnackBar(context, error.toString());});
+        break;
+      
+      default :
+        await docUser.update({"type" : newType})
+            .onError((error, stackTrace) {showSnackBar(context, error.toString());});
+    }
+
+    //exiting the tab after executing the switch
+    Navigator.pop(context);
+
+  }
+
 }

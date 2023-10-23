@@ -39,40 +39,45 @@ class _SignInTabState extends State<SignInTab> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: color.green,
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: color.green,
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
         ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      body: Center(
-        child: SizedBox(
-          width: width * 0.8,
-          height: height,
-          child: Column(
-            children: <Widget>[
-              const Expanded(flex: 1, child: SizedBox()),
-              SizedBox(height: height * .1,
-                child: Image.asset("lib/assets/photos/main-logo.png"),),
-              const Expanded(flex: 1, child: SizedBox()),
-              boldColoredArabicText("تسجيل الدخول"),
-              const SizedBox(height: 10,),
-              signInTextField("أدخل البريد الإلكتروني", Icons.person_outline, false, emailTextController),
-              const SizedBox(height: 10,),
-              signInTextField("أدخل كلمة السر", Icons.lock_outline, true, passwordTextController),
-              const SizedBox(height: 10,),
-              signUpOption(),
-              const SizedBox(height: 10,),
-              signInButton(context, "تسجيل الدخول", emailTextController, passwordTextController),
-              const SizedBox(height: 10,),
-              line(),
-              const SizedBox(height: 10,),
-              googleButton(),
-              const Expanded(flex: 3, child: SizedBox()),
-            ],
+        body: Center(
+          child: SizedBox(
+            width: width * 0.8,
+            height: height,
+            child: Column(
+              children: <Widget>[
+                const Expanded(flex: 1, child: SizedBox()),
+                SizedBox(height: height * .1,
+                  child: Image.asset("lib/assets/photos/main-logo.png"),),
+                const Expanded(flex: 1, child: SizedBox()),
+                boldColoredArabicText("تسجيل الدخول"),
+                const SizedBox(height: 10,),
+                signInTextField("أدخل البريد الإلكتروني", Icons.person_outline, false, emailTextController),
+                const SizedBox(height: 10,),
+                signInTextField("أدخل كلمة السر", Icons.lock_outline, true, passwordTextController),
+                const SizedBox(height: 10,),
+                signUpOption(),
+                const SizedBox(height: 10,),
+                signInButton(context, "تسجيل الدخول", emailTextController, passwordTextController),
+                const SizedBox(height: 10,),
+                line(),
+                const SizedBox(height: 10,),
+                googleButton(),
+                const SizedBox(height: 10,),
+                facebookButton(),
+                const Expanded(flex: 3, child: SizedBox()),
+              ],
+            ),
           ),
         ),
       ),
@@ -103,7 +108,7 @@ class _SignInTabState extends State<SignInTab> {
 
   Widget signUpOption() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         GestureDetector(
           onTap: () {
@@ -163,6 +168,34 @@ class _SignInTabState extends State<SignInTab> {
               children: [
                 boldColoredArabicText("تسحيل الدخول بواسطة جوجل   ", c:Colors.white),
                 const Icon(MyFlutterApp.google, color: Colors.white)
+              ],
+            ),
+          )),
+    );
+  }
+  Widget facebookButton() {
+    double width = MediaQuery.of(context).size.width;
+    return Container(
+      height: 50,
+      width: width*0.8,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        color: color.green,
+      ),
+      child: GestureDetector(
+          onTap: () async {
+            FirebaseAuthMethods(FirebaseAuth.instance)
+                .signInWithFacebook(context)
+                .then((value) {navigateBasedOnType(context, FirebaseAuth.instance.currentUser!.uid);})
+                .onError((error, stackTrace) {showSnackBar(context, error.toString());});
+          },
+          child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                boldColoredArabicText("تسحيل الدخول بواسطة فيسبوك   ", c:Colors.white),
+                const Icon(MyFlutterApp.facebook_f, color: Colors.white)
               ],
             ),
           )),

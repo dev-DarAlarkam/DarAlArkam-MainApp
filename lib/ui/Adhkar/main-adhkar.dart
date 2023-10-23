@@ -14,29 +14,32 @@ class MainAdhkar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    return Scaffold(
-        appBar:AppBar(
-          iconTheme: IconThemeData(
-            color: colors.green, //change your color here
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+          appBar:AppBar(
+            iconTheme: IconThemeData(
+              color: colors.green, //change your color here
+            ),
+            backgroundColor: Colors.transparent, //for hiding the appBar
+            elevation: 0, //for hiding the shadows
           ),
-          backgroundColor: Colors.transparent, //for hiding the appBar
-          elevation: 0, //for hiding the shadows
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: height*.1,child: Image.asset("lib/assets/photos/logo.png"),),
+                const Expanded(flex:1,child: SizedBox()),
+                boldColoredArabicText("الأذكار", c: colors.green, minSize: 40, maxSize: 50),
+                const Expanded(flex:1,child: SizedBox()),
+                const NavigateToStatefulTabButton(text: "المأثورات",icon: "lib/assets/icons/beads.png", nextScreen: MorningEvening()),
+                const SizedBox(height: 10,),
+                const NavigateToStatefulTabButton(text: "ما بعد الصلاة",icon: "lib/assets/icons/pray.png", nextScreen: AfterSalah()),
+                const Expanded(flex:4,child: SizedBox()),
+              ],
+            ),
+          )
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: height*.1,child: Image.asset("lib/assets/photos/logo.png"),),
-              const Expanded(flex:1,child: SizedBox()),
-              boldColoredArabicText("الأذكار", c: colors.green, minSize: 40, maxSize: 50),
-              const Expanded(flex:1,child: SizedBox()),
-              const NavigateToStatefulTabButton(text: "المأثورات",icon: "lib/assets/icons/beads.png", nextScreen: MorningEvening()),
-              const SizedBox(height: 10,),
-              const NavigateToStatefulTabButton(text: "ما بعد الصلاة",icon: "lib/assets/icons/pray.png", nextScreen: AfterSalah()),
-              const Expanded(flex:4,child: SizedBox()),
-            ],
-          ),
-        )
-      );
+    );
   }
 }

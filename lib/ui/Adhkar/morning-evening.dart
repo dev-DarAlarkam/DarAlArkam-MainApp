@@ -27,71 +27,74 @@ class _MorningEveningState extends State<MorningEvening> {
     double width = MediaQuery.of(context).size.width;
 
 
-    return Scaffold(
-          appBar:AppBar(
-            iconTheme: IconThemeData(
-              color: colors.green, //change your color here
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+            appBar:AppBar(
+              iconTheme: IconThemeData(
+                color: colors.green, //change your color here
+              ),
+              backgroundColor: Colors.transparent, //for hiding the appBar
+              elevation: 0, //for hiding the shadows
             ),
-            backgroundColor: Colors.transparent, //for hiding the appBar
-            elevation: 0, //for hiding the shadows
-          ),
-          body: SizedBox(
-            height: height,
-            width: width,
+            body: SizedBox(
+              height: height,
+              width: width,
 
-            child: GestureDetector(
-              onHorizontalDragEnd: (dragDetail) {
-                if (dragDetail.velocity.pixelsPerSecond.dx < 0) {
-                  _previous();
-                } else {
-                  _next();
-                }
-              },
-              behavior: HitTestBehavior.translucent,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  boldColoredArabicText("المأثورات", c:colors.green,minSize: 40, maxSize: 40),
-                  const Expanded(child: SizedBox()),
-                  SizedBox(
-                    height: height*0.55,
-                    width: width*.95,
-                    child:Center(
-                      child: SingleChildScrollView(
-                        child: coloredArabicText(block.current()[0], c: Colors.black, maxLines: 20,minSize: 25, maxSize: 40),
-                        physics: const ClampingScrollPhysics(),
+              child: GestureDetector(
+                onHorizontalDragEnd: (dragDetail) {
+                  if (dragDetail.velocity.pixelsPerSecond.dx < 0) {
+                    _previous();
+                  } else {
+                    _next();
+                  }
+                },
+                behavior: HitTestBehavior.translucent,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    boldColoredArabicText("المأثورات", c:colors.green,minSize: 40, maxSize: 40),
+                    const Expanded(child: SizedBox()),
+                    SizedBox(
+                      height: height*0.55,
+                      width: width*.95,
+                      child:Center(
+                        child: SingleChildScrollView(
+                          child: coloredArabicText(block.current()[0], c: Colors.black, maxLines: 20,minSize: 25, maxSize: 40),
+                          physics: const ClampingScrollPhysics(),
+                        ),
                       ),
                     ),
-                  ),
-                  const Expanded(child: SizedBox()),
-                  coloredArabicText(block.current()[1], c: Colors.red),
-                  const Expanded(child: SizedBox()),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      TextButton.icon(
-                          onPressed: _next,
-                          icon: Icon(
-                            MyFlutterApp.arrow_alt_circle_left,
-                            color: colors.green,
+                    const Expanded(child: SizedBox()),
+                    coloredArabicText(block.current()[1], c: Colors.red),
+                    const Expanded(child: SizedBox()),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                          TextButton.icon(
+                              onPressed: _previous,
+                              icon: Icon(
+                                MyFlutterApp.arrow_alt_circle_right,
+                                color: colors.green,
+                              ),
+                              label: coloredArabicText("السابق", c: colors.green)
                           ),
-                          label: coloredArabicText("التالي", c:colors.green)
-                      ),
                         TextButton.icon(
-                            onPressed: _previous,
+                            onPressed: _next,
                             icon: Icon(
-                              MyFlutterApp.arrow_alt_circle_right,
+                              MyFlutterApp.arrow_alt_circle_left,
                               color: colors.green,
                             ),
-                            label: coloredArabicText("السابق", c: colors.green)
-                        )
-                    ]
+                            label: coloredArabicText("التالي", c:colors.green)
+                        ),
+                      ]
+                  ),
+                  ],
                 ),
-                ],
-              ),
-            )
-        )
+              )
+          )
+      ),
     );
   }
   void _next()

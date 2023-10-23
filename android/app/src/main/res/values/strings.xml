@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="facebook_app_id">4919210111526491</string>
-    <string name="fb_login_protocol_scheme">fb4919210111526491</string>
-    <string name="facebook_client_token">535261196c1e500834202730283e1142</string>
+    <string name="facebook_app_id">868365077821821</string>
+    <string name="fb_login_protocol_scheme">fb868365077821821</string>
+    <string name="facebook_client_token">51df2f86ac7cc85ad2707fbc35fc8f0c</string>
+    <string name="app_name">com.example.daralarkam_main_app</string>
 </resources>

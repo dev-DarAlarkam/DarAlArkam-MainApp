@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/firebase/navigator.dart';
-import 'package:daralarkam_main_app/backend/firebase/users/get-user.dart';
+import 'package:daralarkam_main_app/backend/firebase/users/usersUtils.dart';
 import 'package:daralarkam_main_app/backend/users/users.dart';
 import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
 
@@ -29,9 +30,14 @@ class _NewUserTabState extends State<NewUserTab> {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          iconTheme: IconThemeData(
-            color: colors.green,
-          ),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.green,), // You can use any icon or widget here
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+                Navigator.of(context).pop(); // This is the default behavior for going back.
+
+              },
+            ),
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
@@ -183,7 +189,7 @@ class _NewUserTabState extends State<NewUserTab> {
         child: GestureDetector(
           onTap: () async {
               final user = FirebaseUser(
-                  id: getUserId(),
+                  id: getCurrentUserId(),
                   firstName: firstName.text,
                   secondName: secondName.text,
                   thirdName: thirdName.text,
@@ -192,9 +198,9 @@ class _NewUserTabState extends State<NewUserTab> {
               final json = user.toJson();
               final docUser = FirebaseFirestore.instance
                   .collection('users')
-                  .doc(getUserId());
+                  .doc(getCurrentUserId());
               await docUser.set(json).then((value) {
-                navigateBasedOnType(context, getUserId());
+                navigateBasedOnType(context, getCurrentUserId());
               }).onError((error, stackTrace) {
                 showSnackBar(context, error.toString());
               });

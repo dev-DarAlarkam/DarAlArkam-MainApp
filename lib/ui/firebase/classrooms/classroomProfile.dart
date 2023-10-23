@@ -2,6 +2,7 @@ import 'package:daralarkam_main_app/backend/classroom/classroom.dart';
 import 'package:daralarkam_main_app/backend/classroom/classroomUtils.dart';
 import 'package:daralarkam_main_app/backend/counter/getCounter.dart';
 import 'package:daralarkam_main_app/ui/firebase/classReport/classReportWrite.dart';
+import 'package:daralarkam_main_app/ui/firebase/classReport/classReportsViewer.dart';
 import 'package:daralarkam_main_app/ui/firebase/classrooms/addStudentsToClass.dart';
 import 'package:daralarkam_main_app/ui/firebase/classrooms/showClassStudents.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +68,7 @@ class _ClassroomProfileTabState extends State<ClassroomProfileTab> {
                         Column(
                           children: [
                             const SizedBox(height: 10,),
-                            navigationButtonLess(context,"التقارير",Activities()),
+                            navigationButtonFul(context,"التقارير",ClassReportsViewerTab(classId: widget.cid)),
                             const SizedBox(height: 10,),
                             navigationButtonFul(context,"اضافة تقرير",ClassReportWriteTab(classId: widget.cid, date: getFormattedDate(), )),
                           ],

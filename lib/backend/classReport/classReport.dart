@@ -1,19 +1,22 @@
 enum AttendanceCounterTypes {
+  Unknown,
   DidntAttend,
   WithExuse,
   Late,
-  Attented
+  Attented,
 }
 
 String translateAttendanceCounterTypes (AttendanceCounterTypes x) {
   switch (x.index) {
     case 0 :
-      return "غائب";
+      return "لا توجد معلومات";
     case 1 :
-      return "غائب مع عذر";
+      return "غائب";
     case 2 :
-      return "تأخر";
+      return "غائب مع عذر";
     case 3 :
+      return "تأخر";
+    case 4 :
       return "حاضر";
     default :
       return "";
@@ -49,13 +52,19 @@ class ClassReport {
 
   AttendanceCounterTypes getStudentInfo(String id) {
     const values = AttendanceCounterTypes.values;
-    return values[attendanceReport[id]];
+    if (attendanceReport[id] != null){
+      return values[attendanceReport[id]];
+    }
+    else {
+      return AttendanceCounterTypes.Unknown;
+    }
+
   }
 
   int _getNextEnumValue(int current) {
     const values = AttendanceCounterTypes.values;
     final nextIndex = (current + 1) % values.length;
-    return nextIndex;
+    return nextIndex == 0 ? 1 : nextIndex;
   }
 
   factory ClassReport.fromJson(Map<String, dynamic> json) {

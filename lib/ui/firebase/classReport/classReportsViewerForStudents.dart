@@ -1,43 +1,45 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daralarkam_main_app/backend/classReport/classReport.dart';
 import 'package:daralarkam_main_app/backend/users/users.dart';
+import 'package:daralarkam_main_app/ui/firebase/classReport/classReportWrite.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 import '../../../../services/utils/showSnackBar.dart';
-import '../../../backend/classroom/classroomUtils.dart';
+import 'classReportRead.dart';
 
 // Enum to determine the sort order for students' list
 enum SortOrder { ascending, descending }
 
-class AddStudentsToClassroomTab extends StatefulWidget {
-  const AddStudentsToClassroomTab({Key? key,required this.classId}) : super(key: key);
-  final classId;
+class ClassReportsViewerForStudents extends StatefulWidget {
+  const ClassReportsViewerForStudents({Key? key,required this.classId}) : super(key: key);
+  final String classId;
 
   @override
-  State<AddStudentsToClassroomTab> createState() => _AddStudentsToClassroomTabState();
+  State<ClassReportsViewerForStudents> createState() => _ClassReportsViewerForStudentsState();
 }
 
-class _AddStudentsToClassroomTabState extends State<AddStudentsToClassroomTab> {
+class _ClassReportsViewerForStudentsState extends State<ClassReportsViewerForStudents> {
   // Keeps track of the current sort order (ascending by default)
   SortOrder _currentSortOrder = SortOrder.ascending;
   // List to store students data
-  List<Student> students = [];
+  List<ClassReport> reports = [];
 
   // Stream to read students who are not in any classroom
-  Stream<List<FirebaseUser>> readStudentsOutsideAClassroom(String classId) =>
+  Stream<List<ClassReport>> readReportsFromAClassRoom(String classId) =>
       FirebaseFirestore.instance
-          .collection('users')
-          .where('type', isEqualTo: 'student')
-          .where('classId', isEqualTo: "")
+          .collection('classrooms')
+          .doc(classId)
+          .collection('classReports')
           .snapshots()
-          .map((event) => event.docs.map((e) => Student.fromJson(e.data())).toList());
+          .map((event) => event.docs.map((e) => ClassReport.fromJson(e.data())).toList());
 
   // Function to sort students based on their first names
-  void sortStudents(SortOrder order) {
+  void sortReports(SortOrder order) {
     if (order == SortOrder.ascending) {
-        students.sort((a, b) => a.firstName.compareTo(b.firstName));
-      } else {
-        students.sort((a, b) => b.firstName.compareTo(a.firstName));
-      }
+      reports.sort((a, b) => a.date.compareTo(b.date));
+    } else {
+      reports.sort((a, b) => b.date.compareTo(a.date));
+    }
   }
 
   @override
@@ -46,7 +48,7 @@ class _AddStudentsToClassroomTabState extends State<AddStudentsToClassroomTab> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("أضف طلاب لمجموعتك"),
+          title: const Text("التقارير"),
           actions: [
             // Sort button in the app bar
             IconButton(
@@ -56,7 +58,7 @@ class _AddStudentsToClassroomTabState extends State<AddStudentsToClassroomTab> {
                 final newOrder = _currentSortOrder == SortOrder.ascending
                     ? SortOrder.descending
                     : SortOrder.ascending;
-                sortStudents(newOrder);
+                sortReports(newOrder);
                 setState(() {
                   _currentSortOrder = newOrder;
                 });
@@ -66,16 +68,16 @@ class _AddStudentsToClassroomTabState extends State<AddStudentsToClassroomTab> {
         ),
         body: Center(
           child: StreamBuilder(
-            stream: readStudentsOutsideAClassroom(widget.classId),
+            stream: readReportsFromAClassRoom(widget.classId),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Text(snapshot.error.toString());
               } else if (snapshot.hasData) {
-                students = snapshot.data as List<Student>;
-                sortStudents(_currentSortOrder);
+                reports = snapshot.data as List<ClassReport>;
+                sortReports(_currentSortOrder);
                 return Center(
                   child: ListView(
-                    children: students.map(buildStudent).toList(),
+                    children: reports.map(buildReport).toList(),
                   ),
                 );
               } else {
@@ -89,17 +91,10 @@ class _AddStudentsToClassroomTabState extends State<AddStudentsToClassroomTab> {
   }
 
   // Build a list tile for a student
-  Widget buildStudent(Student student) => ListTile(
-    title: Text(student.firstName + " " + student.secondName + " " + student.thirdName),
-    subtitle: Text(student.birthday),
-    trailing: ElevatedButton(
-      onPressed: () {
-        addStudentToClass(context,widget.classId, student.id);
-        // setState(() {});
-      },
-      child: coloredArabicText("أضف",c: Colors.white),
-    ),
+  Widget buildReport(ClassReport report) => ListTile(
+    title: Text(report.date),
+    onTap: () {
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> ClassReportReadTab(classId: widget.classId, date: report.date)));
+    },
   );
-
-
 }

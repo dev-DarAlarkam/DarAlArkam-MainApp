@@ -25,7 +25,7 @@ Future<Map<String, dynamic>> createAttendanceMap(String cid) async {
   try {
     final Classroom? classroom = await readClassroom(cid);
     for (var studentId in classroom!.getStudentIds()) {
-      attendanceMap[studentId] = 0;
+      attendanceMap[studentId] = 1;
     }
   } catch (e) {
     print("Error while creating attendance map: $e");

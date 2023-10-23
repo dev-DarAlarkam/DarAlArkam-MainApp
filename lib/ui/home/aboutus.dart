@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:daralarkam_main_app/ui/widgets/designs.dart';
 
 
 class AboutUs extends StatelessWidget {
@@ -36,7 +35,6 @@ class AboutUs extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: colors.green,
                       borderRadius: BorderRadius.circular(15),
-                      boxShadow: Shadow()
                   ),
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),

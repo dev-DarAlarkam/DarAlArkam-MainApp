@@ -13,6 +13,16 @@ Future<FirebaseUser?>  readUser(String uid) async{
   return null;
 }
 
+Future<Student?>  readStudent(String uid) async{
+  final docUser = FirebaseFirestore.instance.collection('users').doc(uid);
+  final snapshot = await docUser.get();
+
+  if(snapshot.exists) {
+    return Student.fromJson(snapshot.data()!);
+  }
+  return null;
+}
+
 Future<bool> checkUserExist(BuildContext context, String uid) async{
   final docUser = FirebaseFirestore.instance.collection('users').doc(uid);
   final snapshot = await docUser.get();
@@ -24,6 +34,6 @@ Future<bool> checkUserExist(BuildContext context, String uid) async{
 }
 
 
-String getUserId() {
+String getCurrentUserId() {
   return FirebaseAuth.instance.currentUser!.uid;
 }

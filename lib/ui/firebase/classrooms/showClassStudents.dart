@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daralarkam_main_app/backend/classroom/classroomUtils.dart';
 import 'package:daralarkam_main_app/backend/users/users.dart';
 import 'package:daralarkam_main_app/ui/firebase/classrooms/showStudentDetails.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
@@ -97,6 +98,13 @@ class _ShowClassStudentsTabState extends State<ShowClassStudentsTab> {
   Widget buildStudent(Student student) => ListTile(
     title: Text(student.firstName + " " + student.secondName + " " + student.thirdName),
     subtitle: Text(student.birthday),
+    trailing: ElevatedButton(
+      onPressed: () {
+        removeStudentFromClassroom(context,widget.classId, student.id);
+        // setState(() {});
+      },
+      child: coloredArabicText("حذف",c: Colors.white),
+    ),
     onTap: () {
       Navigator.push(context, MaterialPageRoute(builder: (context)=> ShowStudentDetailsTab(uid:student.id)));
     },

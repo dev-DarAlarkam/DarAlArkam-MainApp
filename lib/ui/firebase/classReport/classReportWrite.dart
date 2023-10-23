@@ -3,10 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/classReport/classReport.dart';
 import 'package:daralarkam_main_app/backend/classReport/classReportUtils.dart';
 import 'package:daralarkam_main_app/backend/classroom/classroom.dart';
-import 'package:daralarkam_main_app/backend/firebase/users/get-user.dart';
+import 'package:daralarkam_main_app/backend/firebase/users/usersUtils.dart';
 import 'package:daralarkam_main_app/backend/users/users.dart';
 import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
+final GlobalKey<FormState> _titleFormKey = GlobalKey<FormState>();
+final GlobalKey<FormState> _summaryFormKey = GlobalKey<FormState>();
+final TextEditingController _title = TextEditingController();
+final TextEditingController _summary = TextEditingController();
 
 class ClassReportWriteTab extends StatefulWidget {
   final String classId;
@@ -18,19 +22,6 @@ class ClassReportWriteTab extends StatefulWidget {
 }
 
 class _ClassReportWriteTabState extends State<ClassReportWriteTab> {
-  TextEditingController _title = TextEditingController();
-  TextEditingController _summary = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    // Initialize the text fields with existing report data if available.
-    // You can fetch the report data here and update the text controllers.
-    // For now, let's assume you fetch the data and set the controllers like this:
-    _title.text = ''; // Replace with actual data
-    _summary.text = ''; // Replace with actual data
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +48,8 @@ class _ClassReportWriteTabState extends State<ClassReportWriteTab> {
           );
         } else if (snapshot.hasData) {
           final ClassReport report = snapshot.data! as ClassReport;
+          _title.text = report.title;
+          _summary.text = report.content;
           return Directionality(
             textDirection: TextDirection.rtl,
             child: Scaffold(
@@ -98,21 +91,52 @@ class _ClassReportWriteTabState extends State<ClassReportWriteTab> {
                       const SizedBox(height: 10),
                       SizedBox(
                           width: MediaQuery.of(context).size.width * 0.9,
-                        child: TextFormField(
-                          controller: _title,
-                          decoration: InputDecoration(labelText: 'عنوان الدرس:'),
+                        child: Form(
+                          key: _titleFormKey,
+                          onChanged: () async {
+                              report.updateTitle(_title.text);
+
+                              final docClass =
+                              FirebaseFirestore.instance.collection('classrooms').doc(widget.classId);
+                              final docReport = docClass.collection('classReports').doc(report.date);
+                              final json = report.toJson();
+
+                              await docReport.set(json).onError((error, stackTrace) {
+                                showSnackBar(context, error.toString());
+                              });
+                          },
+                          child: TextFormField(
+                            controller: _title,
+                            decoration: InputDecoration(labelText: 'عنوان الدرس:'),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 10),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.9,
-                        child: TextFormField(
-                          controller: _summary,
-                          maxLines: null, // This allows multiple lines of text input.
-                          keyboardType: TextInputType.multiline, // Sets the keyboard to a multiline input mode.
-                          decoration: const InputDecoration(
-                            labelText: 'ملخص الدرس:', // A label for the field.
-                            border: OutlineInputBorder(), // A border around the field.
+                        child: Form(
+                          key: _summaryFormKey,
+                          onChanged: () async {
+                            report.updateSummary(_summary.text);
+                            final docClass =
+                            FirebaseFirestore.instance.collection('classrooms').doc(widget
+                                .classId);
+                            final docReport = docClass.collection('classReports').doc(report
+                                .date);
+                            final json = report.toJson();
+
+                            await docReport.set(json).onError((error, stackTrace) {
+                              showSnackBar(context, error.toString());
+                            });
+                          },
+                          child: TextFormField(
+                            controller: _summary,
+                            maxLines: null, // This allows multiple lines of text input.
+                            keyboardType: TextInputType.multiline, // Sets the keyboard to a multiline input mode.
+                            decoration: const InputDecoration(
+                              labelText: 'ملخص الدرس:', // A label for the field.
+                              border: OutlineInputBorder(), // A border around the field.
+                            ),
                           ),
                         ),
                       ),
@@ -131,7 +155,7 @@ class _ClassReportWriteTabState extends State<ClassReportWriteTab> {
                         ),
                         width: MediaQuery.of(context).size.width * 0.9,
                         height: MediaQuery.of(context).size.height * 0.7,
-                        child: buildStudent(report),
+                        child: buildCustomTiles(report),
                       ),
                       const SizedBox(height: 10),
                     ],
@@ -152,9 +176,10 @@ class _ClassReportWriteTabState extends State<ClassReportWriteTab> {
         }
       },
     );
+
   }
 
-  Widget buildStudent(ClassReport report) {
+  Widget buildCustomTiles(ClassReport report) {
     List<Widget> listTiles = [];
 
     for (dynamic uid in report.attendanceReport.keys) {
@@ -182,13 +207,8 @@ class _ClassReportWriteTabState extends State<ClassReportWriteTab> {
       children: listTiles,
     );
   }
-  @override
-  void dispose() {
-    // Dispose the text controllers when this widget is disposed.
-    _title.dispose();
-    _summary.dispose();
-    super.dispose();
-  }
+
+
 }
 
 
@@ -219,10 +239,6 @@ class _CustomListTileState extends State<CustomListTile> {
         onPressed: () {
           setState(() {
             widget.report.updateStudent(widget.student.id);
-            // Update the subtitle here without changing the whole state.
-            // You can access and update the subtitle of this tile here.
-            // For example:
-            // widget.report.updateSubtitleForStudent(widget.student.id, 'New Subtitle');
           });
         },
         child: const Text('غيّر'),

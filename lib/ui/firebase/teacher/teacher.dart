@@ -1,5 +1,5 @@
 import 'dart:core';
-import 'package:daralarkam_main_app/backend/firebase/users/get-user.dart';
+import 'package:daralarkam_main_app/backend/firebase/users/usersUtils.dart';
 import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
 import 'package:daralarkam_main_app/ui/activities/activities.dart';
 import 'package:daralarkam_main_app/ui/firebase/counter/counterScreenWrite.dart';
@@ -46,7 +46,7 @@ class TeacherTab extends StatelessWidget {
                 const SizedBox(height: 10,),
                 //Getting user info
                 FutureBuilder(
-                  future: readUser(getUserId()),
+                  future: readUser(getCurrentUserId()),
                   builder: (context, snapshot) {
                     if (snapshot.hasError){return Text(snapshot.error.toString());}
                     else if(snapshot.hasData) {
@@ -67,7 +67,7 @@ class TeacherTab extends StatelessWidget {
                             boldColoredArabicText("برنامج المحاسبة", minSize: 22),
                             const SizedBox(height: 10,),
                             FutureBuilder(
-                              future: getCounter(getUserId()),
+                              future: getCounter(getCurrentUserId()),
                               builder: (context, snapshot) {
                                 if (snapshot.hasError){return SizedBox(height: height*0.1,);}
                                 else if(snapshot.hasData) {
@@ -78,7 +78,7 @@ class TeacherTab extends StatelessWidget {
                               },
                             ),
                             const SizedBox(height: 10,),
-                            navigationButtonFul(context,"الأيام السابقة",CountersViewer(uid: getUserId(),)),
+                            navigationButtonFul(context,"الأيام السابقة",CountersViewer(uid: getCurrentUserId(),)),
                           ],
                         ),
 

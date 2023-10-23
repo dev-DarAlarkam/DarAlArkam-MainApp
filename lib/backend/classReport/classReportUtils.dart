@@ -18,7 +18,7 @@ Future<ClassReport?> getReport(String classId, String date) async {
     final newReport = await defaultReport(classId);
 
     await docCounter.set(newReport);
-    return ClassReport.fromJson(docSnapshot.data()!);
+    return getReport(classId, date);
   }
 }
 
