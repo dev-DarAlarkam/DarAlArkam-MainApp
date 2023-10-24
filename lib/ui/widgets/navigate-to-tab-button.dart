@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
 
+
+// Widget for Navigation Button to a stateless Widget *With an Icon*
 class NavigateToStatefulTabButton extends StatelessWidget {
   final String icon,text;
   final StatefulWidget nextScreen;
@@ -44,6 +46,7 @@ class NavigateToStatefulTabButton extends StatelessWidget {
   }
 }
 
+// Widget for Navigation Button to a stateFul Widget *With an Icon*
 class NavigateToStatelessTabButton extends StatelessWidget {
   final String icon,text;
   final StatelessWidget nextScreen;
@@ -85,6 +88,7 @@ class NavigateToStatelessTabButton extends StatelessWidget {
   }
 }
 
+// Widget for Navigation Button to a stateFul Widget *Without an Icon*
 Widget navigationButtonFul(BuildContext context, String text, StatefulWidget nextScreen){
   final double height = MediaQuery.of(context).size.height;
   final double width = MediaQuery.of(context).size.width;
@@ -104,6 +108,7 @@ Widget navigationButtonFul(BuildContext context, String text, StatefulWidget nex
   );
 }
 
+// Widget for Navigation Button to a stateless Widget *Without an Icon*
 Widget navigationButtonLess(BuildContext context, String text, StatelessWidget nextScreen){
   final double height = MediaQuery.of(context).size.height;
   final double width = MediaQuery.of(context).size.width;

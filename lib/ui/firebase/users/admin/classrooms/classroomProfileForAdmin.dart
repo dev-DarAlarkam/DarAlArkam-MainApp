@@ -3,16 +3,16 @@ import 'package:daralarkam_main_app/backend/classroom/classroom.dart';
 import 'package:daralarkam_main_app/backend/classroom/classroomUtils.dart';
 import 'package:daralarkam_main_app/backend/counter/getCounter.dart';
 import 'package:daralarkam_main_app/backend/users/users.dart';
-import 'package:daralarkam_main_app/ui/firebase/admin/classrooms/selectATeacher.dart';
 import 'package:daralarkam_main_app/ui/firebase/classReport/classReportWrite.dart';
 import 'package:daralarkam_main_app/ui/firebase/classReport/classReportsViewer.dart';
 import 'package:daralarkam_main_app/ui/firebase/classrooms/addStudentsToClass.dart';
 import 'package:daralarkam_main_app/ui/firebase/classrooms/showClassStudents.dart';
+import 'package:daralarkam_main_app/ui/firebase/users/admin/classrooms/selectATeacher.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../backend/userManagement/usersUtils.dart';
-import '../../../widgets/navigate-to-tab-button.dart';
-import '../../../widgets/text.dart';
+import '../../../../../backend/userManagement/usersUtils.dart';
+import '../../../../widgets/navigate-to-tab-button.dart';
+import '../../../../widgets/text.dart';
 
 class ClassroomProfileForAdminTab extends StatefulWidget {
   const ClassroomProfileForAdminTab({Key? key, required this.cid}) : super(key: key);

@@ -10,6 +10,7 @@ import '../../services/utils/showSnackBar.dart';
 import '../widgets/my-flutter-app-icons.dart';
 import '../widgets/text.dart';
 
+// Widget to seperate sections in the Authentication tab
 Widget line() {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -32,23 +33,31 @@ Widget line() {
   );
 }
 
+// Widget for the Sign Up and Reset Password Options
 Widget signUpOption(BuildContext context) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
+
+      //Sign Up Line
       GestureDetector(
         onTap: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const SignUpTab()));
         },
-        child: boldColoredArabicText(
-            "لا تملك حسابًا؟ قم بإنشاء حساب", maxSize: 15, minSize: 10),
+
+        //Text Label
+        child: boldColoredArabicText("لا تملك حسابًا؟ قم بإنشاء حساب", maxSize: 15, minSize: 10),
       ),
+
+      // Reset Password Line
       GestureDetector(
         onTap: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const ResetPasswordTab()));
         },
+
+        //Text Label
         child: boldColoredArabicText(
             "أعد ضبط كلمة المرور", maxSize: 15, minSize: 10),
       ),
@@ -57,6 +66,7 @@ Widget signUpOption(BuildContext context) {
   );
 }
 
+// Widget for the Google Sign In Button
 Widget googleButton(BuildContext context) {
   double width = MediaQuery.of(context).size.width;
   return Container(
@@ -86,6 +96,7 @@ Widget googleButton(BuildContext context) {
   );
 }
 
+// Widget for the Facebook Sign in Button
 Widget facebookButton(BuildContext context) {
   double width = MediaQuery.of(context).size.width;
   return Container(

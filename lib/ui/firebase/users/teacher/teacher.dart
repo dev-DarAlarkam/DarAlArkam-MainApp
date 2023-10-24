@@ -7,11 +7,12 @@ import 'package:daralarkam_main_app/ui/home/home.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../../backend/counter/getCounter.dart';
-import '../../../backend/userManagement/usersUtils.dart';
-import '../../../backend/users/users.dart';
-import '../../widgets/navigate-to-tab-button.dart';
-import '../classrooms/classrooms-tab.dart';
+
+import '../../../../backend/counter/getCounter.dart';
+import '../../../../backend/userManagement/usersUtils.dart';
+import '../../../../backend/users/users.dart';
+import '../../../widgets/navigate-to-tab-button.dart';
+import '../../classrooms/classrooms-tab.dart';
 
 
 class TeacherTab extends StatelessWidget {
@@ -24,10 +25,13 @@ class TeacherTab extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
           appBar:AppBar(
-            iconTheme: const IconThemeData(
+
+            // Back Button theme
+          iconTheme: const IconThemeData(
               color: Colors.white, //change your color here
             ),
             actions: [
+
               //Sign-out button
               IconButton(
                 icon: const Icon(Icons.logout),

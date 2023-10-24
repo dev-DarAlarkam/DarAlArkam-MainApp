@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daralarkam_main_app/backend/classroom/classroomUtils.dart';
 import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
 
@@ -13,6 +12,7 @@ class StatisticsForStudentTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
@@ -24,58 +24,63 @@ class StatisticsForStudentTab extends StatelessWidget {
 
           body: classId == ''
               ? Center(child: boldColoredArabicText("لا تنتمي لمجموعة حالياً"))
-              : StreamBuilder(
-                  stream: readReportsFromAClassRoom(classId),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return Center(child: Text("Error: ${snapshot.error}"));
-                    } else if (snapshot.hasData) {
-                      final List<ClassReport> reports =
-                          snapshot.data as List<ClassReport>;
-                      List<Widget> rows = [];
-                      Map<AttendanceCounterTypes, int> stats = {
-                        AttendanceCounterTypes.Unknown : 0,
-                        AttendanceCounterTypes.DidntAttend: 0,
-                        AttendanceCounterTypes.WithExuse: 0,
-                        AttendanceCounterTypes.Late: 0,
-                        AttendanceCounterTypes.Attented: 0
-                      };
+              : Column(
+                children: [
+                  const SizedBox(height: 10,),
+                  SizedBox(height: height*.1,child: Image.asset("lib/assets/photos/logo.png"),),
+                  const SizedBox(height: 10,),
+                  //Getting user info
+                  coloredArabicText("ملخص الحضور"),
+                  const Expanded(child: SizedBox()),
+                  StreamBuilder(
+                      stream: readReportsFromAClassRoom(classId),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(child: Text("Error: ${snapshot.error}"));
+                        } else if (snapshot.hasData) {
+                          final List<ClassReport> reports =
+                              snapshot.data as List<ClassReport>;
+                          List<Widget> rows = [];
+                          Map<AttendanceCounterTypes, int> stats = {
+                            AttendanceCounterTypes.Unknown : 0,
+                            AttendanceCounterTypes.DidntAttend: 0,
+                            AttendanceCounterTypes.WithExuse: 0,
+                            AttendanceCounterTypes.Late: 0,
+                            AttendanceCounterTypes.Attented: 0
+                          };
 
-                      for (ClassReport report in reports) {
-                        AttendanceCounterTypes info =
-                            report.getStudentInfo(studentId);
-                        if (stats[info] != null) {
-                          stats[info] = stats[info]! + 1;
-                        }
-                      }
-                      for (AttendanceCounterTypes value in AttendanceCounterTypes.values) {
-                        if (stats[value] != null) {
-                          if (value != AttendanceCounterTypes.Unknown){
-                            rows.add(infoRow(
-                                translateAttendanceCounterTypes(value),
-                                stats[value]!,
-                                context));
-                            rows.add(const SizedBox(
-                              height: 10,
-                            ));
+                          for (ClassReport report in reports) {
+                            AttendanceCounterTypes info = report.getStudentInfo(studentId);
+                            if (stats[info] != null) {
+                              stats[info] = stats[info]! + 1;
+                            }
                           }
-                        }
-                      }
+                          for (AttendanceCounterTypes value in AttendanceCounterTypes.values) {
+                            if (stats[value] != null) {
+                              if (value != AttendanceCounterTypes.Unknown){
+                                rows.add(infoRow(translateAttendanceCounterTypes(value), stats[value]!, context));
+                                rows.add(const SizedBox(height: 10,));
+                              }
+                            }
+                          }
 
-                      return Center(
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height *0.4,
-                          child: Column(
-                            children: rows,
-                          ),
-                        ),
-                      );
-                    } else {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
+                          return Center(
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height *0.4,
+                              child: Column(
+                                children: rows,
+                              ),
+                            ),
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                  ),
+                  const Expanded(child: SizedBox())
+                ],
               ),
         )
     );

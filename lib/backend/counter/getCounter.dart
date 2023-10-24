@@ -15,7 +15,7 @@ Future<Counter?> getCounter(String uid) async {
   } else {
     // The document does not exist, create a new one
     await docCounter.set(defaultCounter(uid).toJson());
-    return Counter.fromJson(docSnapshot.data()!);
+    return getCounter(uid);
   }
 }
 

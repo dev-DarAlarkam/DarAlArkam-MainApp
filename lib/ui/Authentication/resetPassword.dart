@@ -1,4 +1,3 @@
-import 'package:daralarkam_main_app/services/firebaseAuthMethods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import '../../globals/globalColors.dart' as color;
@@ -15,10 +14,10 @@ class ResetPasswordTab extends StatefulWidget {
 }
 
 class _ResetPasswordTabState extends State<ResetPasswordTab> {
-  TextEditingController passwordTextController = TextEditingController();
   TextEditingController emailTextController = TextEditingController();
 
-  Container resetPasswordButton(BuildContext context, String title, TextEditingController email, TextEditingController password) {
+  // Widget for the Reset Button
+  Container resetPasswordButton(BuildContext context, String title, TextEditingController email) {
     return Container(
       width: MediaQuery
           .of(context)
@@ -44,6 +43,7 @@ class _ResetPasswordTabState extends State<ResetPasswordTab> {
     );
   }
 
+  // Function for Resetting the password
   void resetPassword() {
     FirebaseAuth.instance
         .sendPasswordResetEmail(
@@ -59,20 +59,19 @@ class _ResetPasswordTabState extends State<ResetPasswordTab> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
+
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
+            // Back Button theme
             iconTheme: IconThemeData(color: color.green,),
+
+            // Hiding the App Bar
             backgroundColor: Colors.transparent,
             elevation: 0,
           ),
@@ -85,13 +84,22 @@ class _ResetPasswordTabState extends State<ResetPasswordTab> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         const Expanded(flex: 1, child: SizedBox()),
+
+                        // Logo
                         SizedBox(height: height * 0.1, child: Image.asset("lib/assets/photos/main-logo.png"),),
                         const Expanded(flex: 1, child: SizedBox()),
+
+                        // Title
                         boldColoredArabicText("إعادة ضبط كلمة المرور"),
                         const Expanded(flex: 1, child: SizedBox()),
+
+                        // Email Text Field
                         signInTextField("أدخل البريد الإلكتروني", Icons.person_outline, false, emailTextController),
                         const SizedBox(height: 10,),
-                        resetPasswordButton(context, "أعد الضبط", emailTextController, passwordTextController),
+
+                        // Reset Password Button
+                        resetPasswordButton(context, "أعد الضبط", emailTextController),
+
                         const Expanded(flex: 3, child: SizedBox()),
                       ]
                   )

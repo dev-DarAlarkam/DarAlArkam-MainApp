@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daralarkam_main_app/ui/activities/activities.dart';
 import 'package:flutter/material.dart';
-import '../../../ui/firebase/admin/admin.dart';
-import '../../../ui/firebase/guest/guest.dart';
-import '../../../ui/firebase/new-user/new-user.dart';
-import '../../../ui/firebase/student/student.dart';
-import '../../../ui/firebase/teacher/teacher.dart';
+import '../../../ui/firebase/users/admin/admin.dart';
+import '../../../ui/firebase/users/guest/guest.dart';
+import '../../../ui/firebase/users/new-user/new-user.dart';
+import '../../../ui/firebase/users/student/student.dart';
+import '../../../ui/firebase/users/teacher/teacher.dart';
 
 void navigateBasedOnType(BuildContext context, String uid) {
   Navigator.pushAndRemoveUntil(
@@ -29,8 +30,10 @@ void navigateBasedOnType(BuildContext context, String uid) {
                 return const TeacherTab();
               case "admin":
                 return const AdminTab();
-              default:
+              case "new":
                 return const NewUserTab();
+              default :
+                return const Activities();
             }
           }
         },

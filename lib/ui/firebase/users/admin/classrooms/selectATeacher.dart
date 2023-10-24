@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/users/users.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
-import '../../../../services/utils/showSnackBar.dart';
+import '../../../../../services/utils/showSnackBar.dart';
 
 // Enum to determine the sort order for students' list
 enum SortOrder { ascending, descending }
