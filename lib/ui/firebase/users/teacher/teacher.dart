@@ -48,7 +48,7 @@ class TeacherTab extends StatelessWidget {
                 const SizedBox(height: 10,),
                 SizedBox(height: height*.1,child: Image.asset("lib/assets/photos/logo.png"),),
                 const SizedBox(height: 10,),
-                //Getting user info
+                //greeting message
                 FutureBuilder(
                   future: readUser(getCurrentUserId()),
                   builder: (context, snapshot) {
@@ -61,15 +61,19 @@ class TeacherTab extends StatelessWidget {
                   },
                 ),
                 const Expanded(child: SizedBox()),
-                //Student functions
+                //teacher functions
                 SingleChildScrollView(
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Column(
                           children: [
+
+                            //Title
                             boldColoredArabicText("برنامج المحاسبة", minSize: 22),
                             const SizedBox(height: 10,),
+
+                            //getting counter info for the day
                             FutureBuilder(
                               future: getCounter(getCurrentUserId()),
                               builder: (context, snapshot) {
@@ -82,16 +86,23 @@ class TeacherTab extends StatelessWidget {
                               },
                             ),
                             const SizedBox(height: 10,),
+
+                            //Navigation button to the Counters Viewer Tab
                             navigationButtonFul(context,"الأيام السابقة",CountersViewer(uid: getCurrentUserId(),)),
                           ],
                         ),
 
                         Column(
                           children: [
+                            //Title
                             boldColoredArabicText("الدورة التربوية", minSize: 22),
                             const SizedBox(height: 10,),
+
+                            //Navigation button to the classrooms tab
                             navigationButtonFul(context,"إدارة المجموعات",ClassroomsTab()),
                             const SizedBox(height: 10,),
+
+                            //disabled feature
                             navigationButtonLess(context,"إحصائيات",Activities()),
                           ],
                         ),

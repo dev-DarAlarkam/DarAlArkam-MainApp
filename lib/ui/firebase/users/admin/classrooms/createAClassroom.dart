@@ -76,6 +76,8 @@ class _CreateAClassroomTabState extends State<CreateAClassroomTab> {
                               ],
                             ),
                             SizedBox(height: 16.0),
+
+                            //create a classroom button
                             ElevatedButton(
                               onPressed: () async {
                                 final cid = 'Classroom_${DateTime.now().millisecondsSinceEpoch}';

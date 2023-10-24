@@ -33,8 +33,7 @@ class AdminTab extends StatelessWidget {
       child: Scaffold(
           appBar:AppBar(
 
-            // Back Button theme
-            iconTheme: const IconThemeData(
+             iconTheme: const IconThemeData(
               color: Colors.white, //change your color here
             ),
 
@@ -90,7 +89,7 @@ class AdminTab extends StatelessWidget {
                       navigationButtonFul(context, "انشئ مجموعة", CreateAClassroomTab()),
                       const SizedBox(height: 10,),
 
-                      //A button to naivigate to the "Classrooms Tab For Admin"
+                      //A button to navigate to the "Classrooms Tab For Admin"
                       navigationButtonFul(context, "المجموعات", ClassroomsTabForAdmin()),
                     ]
                   ),
