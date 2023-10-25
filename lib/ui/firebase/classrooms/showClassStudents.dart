@@ -106,7 +106,7 @@ class _ShowClassStudentsTabState extends State<ShowClassStudentsTab> {
       child: coloredArabicText("حذف",c: Colors.white),
     ),
     onTap: () {
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> ShowStudentDetailsTab(uid:student.id)));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> ShowStudentDetailsTab(uid:student.id, cid: widget.classId,)));
     },
   );
 }

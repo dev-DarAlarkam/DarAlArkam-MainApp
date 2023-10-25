@@ -15,7 +15,7 @@ import '../../../widgets/navigate-to-tab-button.dart';
 
 
 class StudentTab extends StatelessWidget {
-  const StudentTab({Key? key}) : super(key: key);
+  const StudentTab({super.key});
 
   // Function to sign the user out
   signOut(BuildContext context) {
@@ -31,103 +31,103 @@ class StudentTab extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return Directionality(
-      textDirection: TextDirection.rtl,
+        textDirection: TextDirection.rtl,
+        child: Scaffold(
+            appBar:AppBar(
 
-      //getting Student Info to build the tab based on it
-      child: FutureBuilder(
-        future: readStudent(getCurrentUserId()),
-        builder: (context, snapshot) {
-          if (snapshot.hasError){return Text(snapshot.error.toString());}
-          else if(snapshot.hasData) {
-            final Student user = snapshot.data! as Student;
-            return Scaffold(
-                appBar:AppBar(
+              iconTheme: const IconThemeData(
+                color: Colors.white, //change your color here
+              ),
 
-                  // Back Button theme
-                  iconTheme: const IconThemeData(
-                    color: Colors.white, //change your color here
-                  ),
-                  actions: [
+              actions: [
 
-                    //Sign-out button
-                    IconButton(
-                      icon: const Icon(Icons.logout),
-                      onPressed: () {
-                        signOut(context);
-                      },
-                    ),
-                  ], //for hiding the shadows
+                //Sign-out button
+                IconButton(
+                  icon: const Icon(Icons.logout),
+                  onPressed: () {
+                    signOut(context);
+                  },
                 ),
-                body: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const SizedBox(height: 10,),
-                      SizedBox(height: height*.1,child: Image.asset("lib/assets/photos/logo.png"),),
-                      const SizedBox(height: 10,),
+              ], //for hiding the shadows
+            ),
 
-                      //greeting message
-                      coloredArabicText("السلام عليكم" +" "+ getUserFirstName(user)),
-                      const Expanded(child: SizedBox()),
+            body: FutureBuilder(
+              future: readStudent(getCurrentUserId()),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                } else if (snapshot.hasData){
+                  final Student user = snapshot.data! as Student;
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        const SizedBox(height: 10,),
+                        SizedBox(height: height*.1,child: Image.asset("lib/assets/photos/logo.png"),),
+                        const SizedBox(height: 10,),
 
-                      //Student
-                      SingleChildScrollView(
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Column(
-                                children: [
+                        //greeting message
+                        coloredArabicText("السلام عليكم" +" "+ getUserFirstName(user)),
+                        const Expanded(child: SizedBox()),
 
-                                  // Title
-                                  boldColoredArabicText("برنامج المحاسبة", minSize: 22),
-                                  const SizedBox(height: 10,),
+                        //Student
+                        SingleChildScrollView(
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  children: [
 
-                                  //getting counter info for the day
-                                  FutureBuilder(
-                                    future: getCounter(getCurrentUserId()),
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasError){return SizedBox(height: height*0.1,);}
-                                      else if(snapshot.hasData) {
-                                        final dynamic counter = snapshot.data!;
-                                        return navigationButtonFul(context,"برنامج اليوم",CounterScreenWrite(counter: counter));
-                                      }
-                                      else{return Center(child: SizedBox(height: height*0.1, child: const CircularProgressIndicator()));}
-                                    },
-                                  ),
-                                  const SizedBox(height: 10,),
+                                    // Title
+                                    boldColoredArabicText("برنامج المحاسبة", minSize: 22),
+                                    const SizedBox(height: 10,),
 
-                                  //Navigation button to the Counters Viewer Tab
-                                  navigationButtonFul(context,"الأيام السابقة",CountersViewer(uid: getCurrentUserId(),)),
-                                ],
-                              ),
+                                    //getting counter info for the day
+                                    FutureBuilder(
+                                      future: getCounter(getCurrentUserId()),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasError){return SizedBox(height: height*0.1,);}
+                                        else if(snapshot.hasData) {
+                                          final dynamic counter = snapshot.data!;
+                                          return navigationButtonFul(context,"برنامج اليوم",CounterScreenWrite(counter: counter));
+                                        }
+                                        else{return Center(child: SizedBox(height: height*0.1, child: const CircularProgressIndicator()));}
+                                      },
+                                    ),
+                                    const SizedBox(height: 10,),
 
-                              Column(
-                                children: [
-                                  // Title
-                                  boldColoredArabicText("الدورة التربوية", minSize: 22),
-                                  const SizedBox(height: 10,),
+                                    //Navigation button to the Counters Viewer Tab
+                                    navigationButtonFul(context,"الأيام السابقة",CountersViewer(uid: getCurrentUserId(),)),
+                                  ],
+                                ),
 
-                                  // Navigation button to the stats Tab
-                                  navigationButtonLess(context,"ملخص حضوري",StatisticsForStudentTab(classId: user.classId, studentId: user.id)),
-                                  const SizedBox(height: 10,),
+                                Column(
+                                  children: [
+                                    // Title
+                                    boldColoredArabicText("الدورة التربوية", minSize: 22),
+                                    const SizedBox(height: 10,),
 
-                                  // Navigation button to the ClassReports Viewer For Student
-                                  navigationButtonFul(context,"ملخص اللقاءات",ClassReportsViewerForStudents(classId: user.classId)),
-                                ],
-                              ),
-                            ]
+                                    // Navigation button to the stats Tab
+                                    navigationButtonLess(context,"ملخص حضوري",StatisticsForStudentTab(classId: user.classId, studentId: user.id)),
+                                    const SizedBox(height: 10,),
+
+                                    // Navigation button to the ClassReports Viewer For Student
+                                    navigationButtonFul(context,"ملخص اللقاءات",ClassReportsViewerForStudents(classId: user.classId)),
+                                  ],
+                                ),
+                              ]
+                          ),
                         ),
-                      ),
-                      const Expanded(flex:2,child: SizedBox()),
-                    ],
-                  ),
-                )
-            );
-          }
-          else{return const Center(child: CircularProgressIndicator());}
-        },
-      ),
-
+                        const Expanded(flex:2,child: SizedBox()),
+                      ],
+                    ),
+                  );
+                } else {
+                  return const Center(child: CircularProgressIndicator(),);
+                }
+              },
+            )
+        )
     );
   }
 }

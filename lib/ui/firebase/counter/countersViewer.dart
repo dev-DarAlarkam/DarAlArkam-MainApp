@@ -10,7 +10,7 @@ enum SortOrder { ascending, descending }
 
 class CountersViewer extends StatefulWidget {
   const CountersViewer({Key? key, required this.uid}) : super(key: key);
-  final uid;
+  final String uid;
 
   @override
   State<CountersViewer> createState() => _CountersViewerState();

@@ -1,3 +1,4 @@
+import 'package:daralarkam_main_app/ui/firebase/statistics/statisticsForStudent.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 
@@ -5,8 +6,9 @@ import '../../../backend/userManagement/usersUtils.dart';
 import '../counter/countersViewer.dart';
 
 class ShowStudentDetailsTab extends StatelessWidget {
-  const ShowStudentDetailsTab({Key? key, required this.uid}) : super(key: key);
-  final uid;
+  const ShowStudentDetailsTab({Key? key, required this.uid, required this.cid}) : super(key: key);
+  final String uid;
+  final String cid;
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -44,13 +46,22 @@ class ShowStudentDetailsTab extends StatelessWidget {
                               //birthday
                               coloredArabicText(user.birthday),
                               const Expanded(child: SizedBox()),
-                              //action buttons rows
+                              //action buttons
+
+                              //counter viewer button
                               ElevatedButton(onPressed: (){
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => CountersViewer(uid: uid,)));
-                              }, child: coloredArabicText("برنامج المحاسبة", c: Colors.white))
+                              }, child: coloredArabicText("برنامج المحاسبة", c: Colors.white)),
+                              const SizedBox(height: 10,),
+                              ElevatedButton(onPressed: (){
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => StatisticsForStudentTab(classId:cid,studentId: uid,)));
+                              }, child: coloredArabicText("حضور الطالب", c: Colors.white)),
                             ],
                           ),
                         ),

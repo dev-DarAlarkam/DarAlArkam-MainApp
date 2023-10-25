@@ -15,9 +15,17 @@ void navigateBasedOnType(BuildContext context, String uid) {
         future: getUserType(uid),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return Directionality(
+              textDirection: TextDirection.rtl,
+              child: Scaffold(
+                appBar: AppBar(iconTheme: const IconThemeData(color: Colors.white,),),
+                body: const Center(child: CircularProgressIndicator())
+              ),
+            );
           } else if (snapshot.hasError) {
-            return Center(child: Text("Error: ${snapshot.error}"));
+            return Scaffold(
+              appBar: AppBar(iconTheme: const IconThemeData(color: Colors.white,),),
+              body:  Center(child: Text("Error: ${snapshot.error}")));
           } else {
             final String userType = snapshot.data.toString();
 
