@@ -2,7 +2,7 @@
 
 ## DarAlarkam Main App
 
-![Project Logo](./lib/assets/logo.png)
+![Project Logo](./lib/assets/photos/logo.png)
 
 The DarAlarkam Main App is a Flutter-based mobile application designed for educational institutions. It offers a user-friendly interface to manage classrooms, users, and class reports.
 
