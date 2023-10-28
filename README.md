@@ -1,4 +1,6 @@
-# DarAlarkam Main App
+بسم الله الرحمن الرحيم
+
+## DarAlarkam Main App
 
 ![Project Logo](https://drive.google.com/file/d/18_cxRI5zhz4bIoJtrrE_x_jDuvtVeD_F/view?usp=sharing)
 
