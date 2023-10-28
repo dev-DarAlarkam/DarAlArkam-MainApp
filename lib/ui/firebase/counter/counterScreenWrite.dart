@@ -23,6 +23,15 @@ class _CounterScreenWriteState extends State<CounterScreenWrite> {
       child: Scaffold(
         appBar: AppBar(
           title: coloredArabicText('برنامج المحاسبة', c:Colors.white),
+
+          leading: IconButton(
+              onPressed:() async {
+                await _showDeleteConfirmationDialog();
+                Navigator.of(context).pop();
+              },
+              icon: const Icon(Icons.arrow_back)
+          ),
+
           actions: [
             ElevatedButton(
                 onPressed: () async {
@@ -260,4 +269,45 @@ class _CounterScreenWriteState extends State<CounterScreenWrite> {
         return "";
     }
   }
+  Future<void> _showDeleteConfirmationDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // Dialog cannot be dismissed by tapping outside
+      builder: (BuildContext dialogContext) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: AlertDialog(
+            title: Text('تأكيد الحذف'),
+            content: const SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('هل تريد حفظ البرنامج قبل الخروج؟'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('إلغاء'),
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
+                },
+              ),
+              TextButton(
+                child: Text('حفظ'),
+                onPressed: () async {
+                  final docUser = FirebaseFirestore.instance.collection('users').doc(getCurrentUserId());
+                  final docCounter = docUser.collection('counter').doc(getFormattedDate());
+                  final json = widget.counter.toJson();
+
+                  await docCounter.set(json).onError((error, stackTrace) {showSnackBar(context, error.toString());});
+                  Navigator.of(dialogContext).pop(); // Close the dialog
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
 }

@@ -66,7 +66,9 @@ class _ClassReportsViewerForStudentsState extends State<ClassReportsViewerForStu
             )
           ],
         ),
-        body: Center(
+        body: widget.classId == ''
+            ? Center(child: boldColoredArabicText("لا تنتمي لمجموعة حالياً"))
+            :  Center(
           child: StreamBuilder(
             stream: readReportsFromAClassRoom(widget.classId),
             builder: (context, snapshot) {

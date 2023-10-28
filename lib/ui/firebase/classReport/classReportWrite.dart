@@ -37,7 +37,8 @@ class _ClassReportWriteTabState extends State<ClassReportWriteTab> {
             ),
             body: Center(child: CircularProgressIndicator()),
           );
-        } else if (snapshot.hasError) {
+        }
+        else if (snapshot.hasError) {
           return Scaffold(
             appBar: AppBar(
               iconTheme: const IconThemeData(
@@ -46,7 +47,8 @@ class _ClassReportWriteTabState extends State<ClassReportWriteTab> {
             ),
             body: Center(child: Text('Error: ${snapshot.error.toString()}')),
           );
-        } else if (snapshot.hasData) {
+        }
+        else if (snapshot.hasData) {
           final ClassReport report = snapshot.data! as ClassReport;
           _title.text = report.title;
           _summary.text = report.content;
@@ -54,8 +56,12 @@ class _ClassReportWriteTabState extends State<ClassReportWriteTab> {
             textDirection: TextDirection.rtl,
             child: Scaffold(
               appBar: AppBar(
-                iconTheme: const IconThemeData(
-                  color: Colors.white, //change your color here
+                leading: IconButton(
+                    onPressed:() async {
+                      await _showDeleteConfirmationDialog(report, widget.classId);
+                      Navigator.of(context).pop();
+                    },
+                    icon: const Icon(Icons.arrow_back)
                 ),
                 actions: [
                   ElevatedButton(
@@ -164,7 +170,8 @@ class _ClassReportWriteTabState extends State<ClassReportWriteTab> {
               ),
             ),
           );
-        } else {
+        }
+        else {
           return Scaffold(
             appBar: AppBar(
               iconTheme: const IconThemeData(
@@ -208,6 +215,49 @@ class _ClassReportWriteTabState extends State<ClassReportWriteTab> {
     );
   }
 
+  Future<void> _showDeleteConfirmationDialog(ClassReport report, String classId) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // Dialog cannot be dismissed by tapping outside
+      builder: (BuildContext dialogContext) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: AlertDialog(
+            title: Text('تأكيد الحذف'),
+            content: const SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('هل تريد حقًا حذف هذه المجموعة؟'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('إلغاء'),
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
+                },
+              ),
+              TextButton(
+                child: Text('حذف'),
+                onPressed: () async  {
+                  final docClass =
+                  FirebaseFirestore.instance.collection('classrooms').doc(classId);
+                  final docReport = docClass.collection('classReports').doc(report.date);
+                  final json = report.toJson();
+
+                  await docReport.set(json).onError((error, stackTrace) {
+                    showSnackBar(context, error.toString());
+                  });
+                  Navigator.of(dialogContext).pop(); // Close the dialog
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
 }
 
@@ -245,4 +295,5 @@ class _CustomListTileState extends State<CustomListTile> {
       ),
     );
   }
+
 }

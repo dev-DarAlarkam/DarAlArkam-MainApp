@@ -100,13 +100,51 @@ class _ShowClassStudentsTabState extends State<ShowClassStudentsTab> {
     subtitle: Text(student.birthday),
     trailing: ElevatedButton(
       onPressed: () {
-        removeStudentFromClassroom(context,widget.classId, student.id);
+        _showDeleteConfirmationDialog(context,widget.classId, student.id);
         // setState(() {});
       },
       child: coloredArabicText("حذف",c: Colors.white),
     ),
     onTap: () {
       Navigator.push(context, MaterialPageRoute(builder: (context)=> ShowStudentDetailsTab(uid:student.id, cid: widget.classId,)));
+    },
+  );
+}
+
+
+Future<void> _showDeleteConfirmationDialog(BuildContext context, String classId, String studentId) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // Dialog cannot be dismissed by tapping outside
+    builder: (BuildContext dialogContext) {
+      return Directionality(
+        textDirection: TextDirection.rtl,
+        child: AlertDialog(
+          title: Text('تأكيد الحذف'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('هل تريد حقًا حذف الطالب من المجموعة؟'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('إلغاء'),
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+              },
+            ),
+            TextButton(
+              child: Text('حذف'),
+              onPressed: () {
+                removeStudentFromClassroom(context,classId, studentId);
+                Navigator.of(dialogContext).pop(); // Close the dialog
+              },
+            ),
+          ],
+        ),
+      );
     },
   );
 }

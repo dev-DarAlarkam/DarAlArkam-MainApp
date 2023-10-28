@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../services/utils/showSnackBar.dart';
 
+//Function to read classroom details from Firebase
 Future<Classroom?> readClassroom(String cid) async{
   final docClass = FirebaseFirestore.instance.collection('classrooms').doc(cid);
   final snapshot = await docClass.get();
@@ -33,6 +34,7 @@ Future<void> addStudentToClass(BuildContext context, String classId, String stud
   });
 }
 
+//Function to remove a Student from a Classroom
 Future<void> removeStudentFromClassroom(BuildContext context, String cid, String uid) async {
   final docClass = FirebaseFirestore.instance.collection('classrooms').doc(cid);
   final docUser = FirebaseFirestore.instance.collection('users').doc(uid);
@@ -78,6 +80,7 @@ Future<void> removeStudentFromClassroom(BuildContext context, String cid, String
   });
 }
 
+//Function to get Class Id from a Student Id
 Future<String> getClassIdFromStudentId(String uid) async{
   final student = await readStudent(uid);
 
@@ -87,6 +90,7 @@ Future<String> getClassIdFromStudentId(String uid) async{
   return '';
 }
 
+//Function to remove a Teacher from his classrooms
 Future<void> removeTeacherFromClassrooms(BuildContext context, String uid) async {
 
   final teacher = await readTeacher(uid);
@@ -104,6 +108,65 @@ Future<void> removeTeacherFromClassrooms(BuildContext context, String uid) async
         }
       });
     }
+  }
+}
+
+//Function to remove a teacher from a specific Classroom
+Future<void> removeATeacherFromAClassroom(BuildContext context, String classId, String teacherId) async {
+  final teacher = await readTeacher(teacherId);
+
+  if (teacher != null ) {
+    //check if the if the teacher is actually the teacher of the class
+    if (teacher.classIds.contains(classId)){
+      final docClass = FirebaseFirestore.instance.collection('classrooms').doc(classId);
+
+      //remove the teacher from the classroom
+      docClass.get().then((classSnapshot) => {
+        if(classSnapshot.exists) {
+          docClass.update({'teacherId':''}).onError((error, stackTrace) {
+            showSnackBar(context, error.toString());
+          })
+        }
+      });
+
+      //remove the class id from the teacher's profile
+      final classIds = teacher.classIds;
+      classIds.remove(classId);
+
+      final docTeacher = FirebaseFirestore.instance.collection('users').doc(teacherId);
+
+      docTeacher.get().then((teacherSnapshot) {
+        if(teacherSnapshot.exists){
+          docTeacher.update({'classIds': classIds}).onError((error, stackTrace) {
+            showSnackBar(context, error.toString());
+          });
+        }
+      });
+
+    }
+
+
+  }
+}
+
+
+// Function to delete a Classroom
+Future<void> deleteAClassroom(BuildContext context, String classId) async{
+
+  final Classroom? classroom = await readClassroom(classId);
+
+  if(classroom != null) {
+    //removing the students in the classroom
+    for(String studentId in classroom.studentIds){
+      removeStudentFromClassroom(context, classId, studentId);
+    }
+
+    //removing the teacher
+    removeATeacherFromAClassroom(context, classId, classroom.teacherId);
+
+    //deleting the document
+    final docClass = FirebaseFirestore.instance.collection('classrooms').doc(classroom.classId);
+    docClass.delete().onError((error, stackTrace) {showSnackBar(context, error.toString());});
   }
 
 }

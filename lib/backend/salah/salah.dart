@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:xml/xml.dart' as xml;
 import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:timezone/data/latest.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
 
 Future<String> loadAsset() async {
   return await rootBundle.loadString('lib/assets/files/prayers.xml');
@@ -57,4 +54,25 @@ bool compareDates(String dateString) {
   } else {
     return false;
   }
+}
+
+String adjustTimeForDST(String timeStr, bool isDST) {
+  final timeParts = timeStr.split(":");
+  if (timeParts.length == 2) {
+    final hour = int.tryParse(timeParts[0]);
+    final minute = int.tryParse(timeParts[1]);
+
+    if (hour != null && minute != null) {
+      if (isDST) {
+        final adjustedHour = (hour + 1) % 24;
+        return "${adjustedHour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}";
+      }
+
+      // If not DST or DST adjustment not needed, return the original time
+      return "$hour:${minute.toString().padLeft(2, '0')}";
+    }
+  }
+
+  // Return the input time if parsing failed
+  return timeStr;
 }

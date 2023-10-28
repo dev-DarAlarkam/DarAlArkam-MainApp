@@ -71,30 +71,50 @@ Widget googleButton(BuildContext context) {
   double width = MediaQuery.of(context).size.width;
   return Container(
     height: 50,
-    width: width*0.8,
+    width: width * 0.8,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(25),
       color: color.green,
     ),
-    child: GestureDetector(
-        onTap: () async {
-          FirebaseAuthMethods(FirebaseAuth.instance)
-              .signInWithGoogle(context)
-              .then((value) {navigateBasedOnType(context, FirebaseAuth.instance.currentUser!.uid);})
-              .onError((error, stackTrace) {showSnackBar(context, error.toString());});
-        },
-        child: Directionality(
-          textDirection: TextDirection.rtl,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              boldColoredArabicText("تسحيل الدخول بواسطة جوجل   ", c:Colors.white),
-              const Icon(MyFlutterApp.google, color: Colors.white)
-            ],
+    child: ElevatedButton(
+      onPressed: () async {
+        FirebaseAuthMethods(FirebaseAuth.instance)
+            .signInWithGoogle(context)
+            .then((value) {
+          navigateBasedOnType(context, FirebaseAuth.instance.currentUser!.uid);
+        }).onError((error, stackTrace) {
+          showSnackBar(context, error.toString());
+        });
+      },
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.resolveWith(
+              (states) {
+            if (states.contains(MaterialState.pressed)) {
+              return Colors.black26;
+            }
+            return color.green;
+          },
+        ),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
           ),
-        )),
+        ),
+      ),
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            boldColoredArabicText("تسحيل الدخول بواسطة جوجل   ", c: Colors.white),
+            const Icon(MyFlutterApp.google, color: Colors.white),
+          ],
+        ),
+      ),
+    ),
   );
 }
+
 
 // Widget for the Facebook Sign in Button
 Widget facebookButton(BuildContext context) {
@@ -106,13 +126,28 @@ Widget facebookButton(BuildContext context) {
       borderRadius: BorderRadius.circular(25),
       color: color.green,
     ),
-    child: GestureDetector(
-        onTap: () async {
+    child: ElevatedButton(
+        onPressed: () async {
           FirebaseAuthMethods(FirebaseAuth.instance)
               .signInWithFacebook(context)
               .then((value) {navigateBasedOnType(context, FirebaseAuth.instance.currentUser!.uid);})
               .onError((error, stackTrace) {showSnackBar(context, error.toString());});
         },
+        style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.resolveWith(
+            (states) {
+          if (states.contains(MaterialState.pressed)) {
+            return Colors.black26;
+          }
+          return color.green;
+        },
+      ),
+      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+      ),
+    ),
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: Row(

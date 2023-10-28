@@ -11,19 +11,13 @@ import 'package:flutter/material.dart';
 import '../../../../backend/counter/getCounter.dart';
 import '../../../../backend/userManagement/usersUtils.dart';
 import '../../../../backend/users/users.dart';
+import '../../../../services/firebaseAuthMethods.dart';
 import '../../../widgets/navigate-to-tab-button.dart';
 import '../../classrooms/classrooms-tab.dart';
 
 
 class TeacherTab extends StatelessWidget {
   const TeacherTab({super.key});
-
-  // Function to sign the user out
-  signOut(BuildContext context) {
-    FirebaseAuth.instance.signOut()
-        .then((value) => Navigator.pop(context, const Home()))
-        .then((value) {showSnackBar(context, "لقد تم تسجيل الخروج بنجاح!");});
-  }
 
   // Function to get the user's first name
   String getUserFirstName(FirebaseUser user) => user.firstName;

@@ -6,6 +6,7 @@ import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../services/firebaseAuthMethods.dart';
 import 'classrooms/classroom-tab-for-admin.dart';
 import 'classrooms/createAClassroom.dart';
 import '../../../../backend/userManagement/usersUtils.dart';
@@ -15,12 +16,6 @@ import '../../../widgets/navigate-to-tab-button.dart';
 class AdminTab extends StatelessWidget {
   const AdminTab({super.key});
 
-  // Function to sign the user out
-  signOut(BuildContext context) {
-    FirebaseAuth.instance.signOut()
-        .then((value) => Navigator.pop(context, const Home()))
-        .then((value) {showSnackBar(context, "لقد تم تسجيل الخروج بنجاح!");});
-  }
 
   // Function to get the user's first name
   String getUserFirstName(FirebaseUser user) => user.firstName;

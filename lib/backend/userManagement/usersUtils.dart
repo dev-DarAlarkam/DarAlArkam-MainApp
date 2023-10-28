@@ -5,6 +5,27 @@ import 'package:flutter/material.dart';
 import '../../services/utils/showSnackBar.dart';
 import '../users/users.dart';
 
+String translateUserTypes(String type){
+
+  switch (type) {
+    case "guest" :
+      return "ضيف";
+
+    case "student" :
+      return "طالب";
+
+    case "teacher" :
+      return "مربي";
+
+    case "admin" :
+      return "مشرف عام";
+
+    default :
+      return "";
+  }
+}
+
+
 Future<FirebaseUser?>  readUser(String uid) async{
   final docUser = FirebaseFirestore.instance.collection('users').doc(uid);
   final snapshot = await docUser.get();

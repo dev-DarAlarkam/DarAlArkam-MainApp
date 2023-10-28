@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/classroom/classroom.dart';
+import 'package:daralarkam_main_app/backend/classroom/classroomUtils.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 
@@ -58,6 +59,50 @@ class _ClassroomsTabForAdminState extends State<ClassroomsTabForAdmin> {
     onTap: () {
       // Navigate to the classroom profile page for admins.
       Navigator.push(context, MaterialPageRoute(builder: (context) => ClassroomProfileForAdminTab(cid: classroom.classId)));
+    },
+    trailing: ElevatedButton(
+        onPressed: (){
+          _showDeleteConfirmationDialog(context, classroom.classId);
+        },
+        child: coloredArabicText("حذف", c:Colors.white)
+    ),
+  );
+}
+
+
+Future<void> _showDeleteConfirmationDialog(BuildContext context, String classroomId) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // Dialog cannot be dismissed by tapping outside
+    builder: (BuildContext dialogContext) {
+      return Directionality(
+        textDirection: TextDirection.rtl,
+        child: AlertDialog(
+          title: Text('تأكيد الحذف'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('هل تريد حقًا حذف هذه المجموعة؟'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('إلغاء'),
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+              },
+            ),
+            TextButton(
+              child: Text('حذف'),
+              onPressed: () {
+                deleteAClassroom(context, classroomId);
+                Navigator.of(dialogContext).pop(); // Close the dialog
+              },
+            ),
+          ],
+        ),
+      );
     },
   );
 }

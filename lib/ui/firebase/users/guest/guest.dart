@@ -7,17 +7,11 @@ import 'package:flutter/material.dart';
 
 import '../../../../backend/userManagement/usersUtils.dart';
 import '../../../../backend/users/users.dart';
+import '../../../../services/firebaseAuthMethods.dart';
 
 
 class GuestTab extends StatelessWidget {
   const GuestTab({Key? key}) : super(key: key);
-
-  // Function to sign the user out
-  signOut(BuildContext context) {
-    FirebaseAuth.instance.signOut()
-        .then((value) => Navigator.pop(context, const Home()))
-        .then((value) {showSnackBar(context, "لقد تم تسجيل الخروج بنجاح!");});
-  }
 
   // Function to get the user's first name
   String getUserFirstName(FirebaseUser user) => user.firstName;

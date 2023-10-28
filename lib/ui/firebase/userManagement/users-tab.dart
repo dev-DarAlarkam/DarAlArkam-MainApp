@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daralarkam_main_app/backend/userManagement/usersUtils.dart';
 import 'package:daralarkam_main_app/backend/users/users.dart';
 import 'package:daralarkam_main_app/ui/firebase/userManagement/user-profile.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
@@ -99,7 +100,7 @@ class _UsersTabState extends State<UsersTab> {
 
   Widget buildUser(FirebaseUser user) => ListTile(
     title: Text(user.firstName+" "+user.secondName+" "+user.thirdName),
-    subtitle: Text(user.birthday + " - " + user.type),
+    subtitle: Text(user.birthday + " - " + translateUserTypes(user.type)),
     onTap: (){
       Navigator.push(context, MaterialPageRoute(builder: (context)=> UserProfile(uid:user.id)));
     },

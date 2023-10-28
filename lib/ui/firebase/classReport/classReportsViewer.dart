@@ -5,6 +5,7 @@ import 'package:daralarkam_main_app/ui/firebase/classReport/classReportWrite.dar
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 import '../../../../services/utils/showSnackBar.dart';
+import '../../../backend/classReport/classReportUtils.dart';
 import 'classReportRead.dart';
 
 // Enum to determine the sort order for students' list
@@ -103,7 +104,7 @@ class _ClassReportsViewerTabState extends State<ClassReportsViewerTab> {
         children: [
           ElevatedButton(
             onPressed: () {
-              deleteReport(widget.classId, report.date);
+              _showDeleteConfirmationDialog(context, widget.classId, report.date);
               // setState(() {});
             },
             child: const Text("حذف", style: TextStyle(color: Colors.white),),
@@ -118,17 +119,41 @@ class _ClassReportsViewerTabState extends State<ClassReportsViewerTab> {
       ),
     ),
   );
+}
 
-  // Function to add a student to a classroom
-  Future<void> deleteReport(String classId, String date) async {
-    final docClass = FirebaseFirestore.instance.collection('classrooms').doc(classId);
-    final docReport = docClass.collection('classReports').doc(date);
-
-    await docReport.delete().then((_) {
-      showSnackBar(context, "تم حذف التقرير بنجاح");
-    }).catchError((error) {
-      showSnackBar(context, "حدث خطأ أثناء حذف التقرير: $error");
-    });
-
-  }
+Future<void> _showDeleteConfirmationDialog(BuildContext context, String classId, String date) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // Dialog cannot be dismissed by tapping outside
+    builder: (BuildContext dialogContext) {
+      return Directionality(
+        textDirection: TextDirection.rtl,
+        child: AlertDialog(
+          title: Text('تأكيد الحذف'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('هل تريد حقًا حذف هذا التقرير؟'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('إلغاء'),
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+              },
+            ),
+            TextButton(
+              child: Text('حذف'),
+              onPressed: () {
+                deleteReport(context, classId, date);
+                Navigator.of(dialogContext).pop(); // Close the dialog
+              },
+            ),
+          ],
+        ),
+      );
+    },
+  );
 }

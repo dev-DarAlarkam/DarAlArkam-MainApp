@@ -53,12 +53,15 @@ class _ClassroomProfileForAdminTabState extends State<ClassroomProfileForAdminTa
                   if (snapshot.hasError) {
                     return Text(snapshot.error.toString());
                   } else if (snapshot.hasData) {
-                    final dynamic classroom = snapshot.data!;
+                    final Classroom classroom = snapshot.data! as Classroom;
                     return Column(
                       children: [
                         coloredArabicText("مجموعة " + getClassroomTitle(classroom)),
                         const SizedBox(height: 10,),
                         coloredArabicText('الصف: ${classroom.grade}'),
+                        const SizedBox(height: 10,),
+                        coloredArabicText('عدد الطلاب: ${classroom.studentIds.length}'),
+                        const SizedBox(height: 10,),
                         FutureBuilder(
                           future: readUser(classroom.teacherId),
                           builder: (context, snapshot) {

@@ -30,28 +30,41 @@ class _NewUserTabState extends State<NewUserTab> {
         borderRadius: BorderRadius.circular(25),
         color: colors.green,
       ),
-      child: Center(
-        child: GestureDetector(
-          onTap: () async {
-            final user = FirebaseUser(
-                id: getCurrentUserId(),
-                firstName: firstName.text,
-                secondName: secondName.text,
-                thirdName: thirdName.text,
-                birthday: birthday,
-                type: "guest");
-            final json = user.toJson();
-            final docUser = FirebaseFirestore.instance
-                .collection('users')
-                .doc(getCurrentUserId());
-            await docUser.set(json).then((value) {
-              navigateBasedOnType(context, getCurrentUserId());
-            }).onError((error, stackTrace) {
-              showSnackBar(context, error.toString());
-            });
-          },
-          child: coloredArabicText("انشئ حساب", c:Colors.white),
+      child: ElevatedButton(
+        onPressed: () async {
+          final user = FirebaseUser(
+              id: getCurrentUserId(),
+              firstName: firstName.text,
+              secondName: secondName.text,
+              thirdName: thirdName.text,
+              birthday: birthday,
+              type: "guest");
+          final json = user.toJson();
+          final docUser = FirebaseFirestore.instance
+              .collection('users')
+              .doc(getCurrentUserId());
+          await docUser.set(json).then((value) {
+            navigateBasedOnType(context, getCurrentUserId());
+          }).onError((error, stackTrace) {
+            showSnackBar(context, error.toString());
+          });
+        },
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith(
+                (states) {
+              if (states.contains(MaterialState.pressed)) {
+                return Colors.black26;
+              }
+              return colors.green;
+            },
+          ),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+          ),
         ),
+        child: coloredArabicText("انشئ حساب", c:Colors.white),
       ),
     );
   }
