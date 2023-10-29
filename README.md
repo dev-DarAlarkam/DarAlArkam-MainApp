@@ -31,7 +31,7 @@ To get started with the Daralarkam Main App, follow the steps below:
 ## Installation
 
 1. Clone the repository:
-   git clone https://github.com/your-username/daralarkam-main-app.git
+   git clone https://github.com/davdaralarkam/DarAlArkam-MainApp.git
 2. Install the project dependencies:
 ```flutter pub get```
 - Android Installation:
