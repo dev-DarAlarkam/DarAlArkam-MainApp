@@ -16,7 +16,7 @@ The DarAlarkam Main App simplifies administrative tasks for educational institut
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
-- [Team Collaboration](#team collaboration)
+- [Team Collaboration](#TeamCollaboration)
 - [License](#license)
 
 ## Getting Started
