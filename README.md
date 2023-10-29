@@ -25,8 +25,7 @@ To get started with the Daralarkam Main App, follow the steps below:
 
 1. Clone the repository.
 2. Install the required dependencies using Flutter.
-3. Configure the Firebase project with your credentials.
-4. Run the app on your local machine or a physical device.
+3. Run the app on your local machine or a physical device.
 
 ## Installation
 
