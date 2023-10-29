@@ -16,7 +16,7 @@ The DarAlarkam Main App simplifies administrative tasks for educational institut
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
-- [Team Collaboration](#TeamCollaboration)
+- [Team Collaboration](#Team Collaboration)
 - [License](#license)
 
 ## Getting Started
@@ -36,7 +36,7 @@ To get started with the Daralarkam Main App, follow the steps below:
 ```flutter pub get```
 - Android Installation:
   1. run this code:
-  ``` flutter build apk --release```
+  ```flutter build apk --release```
   2. Install the apk file which located in:
   ```DarAlArkam-MainApp\build\app\outputs\apk\release```   
 - IOS installation:
