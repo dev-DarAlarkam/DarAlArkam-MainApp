@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import '../../../../services/firebaseAuthMethods.dart';
 import 'classrooms/classroom-tab-for-admin.dart';
 import 'classrooms/createAClassroom.dart';
-import '../../../../backend/userManagement/usersUtils.dart';
+import '../../../../backend/userManagement/firebaseUserUtils.dart';
 import '../../../../backend/users/users.dart';
 import '../../../widgets/navigate-to-tab-button.dart';
 

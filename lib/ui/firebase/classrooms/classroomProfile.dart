@@ -7,7 +7,7 @@ import 'package:daralarkam_main_app/ui/firebase/classrooms/addStudentsToClass.da
 import 'package:daralarkam_main_app/ui/firebase/classrooms/showClassStudents.dart';
 import 'package:flutter/material.dart';
 
-import '../../../backend/userManagement/usersUtils.dart';
+import '../../../backend/userManagement/firebaseUserUtils.dart';
 import '../../../backend/users/users.dart';
 import '../../activities/activities.dart';
 import '../../widgets/navigate-to-tab-button.dart';

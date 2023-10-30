@@ -23,7 +23,7 @@ Future<Map<String, dynamic>> createAttendanceMap(String cid) async {
   final attendanceMap = <String, dynamic>{};
 
   try {
-    final Classroom? classroom = await readClassroom(cid);
+    final Classroom? classroom = await ClassroomMethods(cid).fetchClassroomFromFirebase();
     for (var studentId in classroom!.getStudentIds()) {
       attendanceMap[studentId] = 1;
     }

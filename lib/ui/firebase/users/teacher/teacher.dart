@@ -9,7 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../backend/counter/getCounter.dart';
-import '../../../../backend/userManagement/usersUtils.dart';
+import '../../../../backend/userManagement/firebaseUserUtils.dart';
 import '../../../../backend/users/users.dart';
 import '../../../../services/firebaseAuthMethods.dart';
 import '../../../widgets/navigate-to-tab-button.dart';

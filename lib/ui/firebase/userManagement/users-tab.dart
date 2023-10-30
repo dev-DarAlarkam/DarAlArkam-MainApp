@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daralarkam_main_app/backend/userManagement/usersUtils.dart';
+import 'package:daralarkam_main_app/backend/userManagement/firebaseUserUtils.dart';
 import 'package:daralarkam_main_app/backend/users/users.dart';
 import 'package:daralarkam_main_app/ui/firebase/userManagement/user-profile.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';

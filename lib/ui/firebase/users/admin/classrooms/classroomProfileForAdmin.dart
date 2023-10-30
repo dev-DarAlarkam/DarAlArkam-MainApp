@@ -10,7 +10,7 @@ import 'package:daralarkam_main_app/ui/firebase/classrooms/showClassStudents.dar
 import 'package:daralarkam_main_app/ui/firebase/users/admin/classrooms/selectATeacher.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../backend/userManagement/usersUtils.dart';
+import '../../../../../backend/userManagement/firebaseUserUtils.dart';
 import '../../../../widgets/navigate-to-tab-button.dart';
 import '../../../../widgets/text.dart';
 

@@ -4,7 +4,7 @@ import 'package:daralarkam_main_app/ui/firebase/userManagement/userManagementWid
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 
-import '../../../backend/userManagement/usersUtils.dart';
+import '../../../backend/userManagement/firebaseUserUtils.dart';
 
 class UserProfile extends StatelessWidget {
   const UserProfile({Key? key,required this.uid}) : super(key: key);
