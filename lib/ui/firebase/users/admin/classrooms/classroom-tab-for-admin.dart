@@ -96,7 +96,7 @@ Future<void> _showDeleteConfirmationDialog(BuildContext context, String classroo
             TextButton(
               child: Text('حذف'),
               onPressed: () {
-                deleteAClassroom(context, classroomId);
+                ClassroomMethods(classroomId).deleteAClassroom(context);
                 Navigator.of(dialogContext).pop(); // Close the dialog
               },
             ),

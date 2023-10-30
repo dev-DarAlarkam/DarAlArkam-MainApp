@@ -4,6 +4,7 @@ import 'package:daralarkam_main_app/ui/firebase/userManagement/userManagementWid
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 
+import '../../../backend/userManagement/firebaseUserMethods.dart';
 import '../../../backend/userManagement/firebaseUserUtils.dart';
 
 class UserProfile extends StatelessWidget {
@@ -26,7 +27,7 @@ class UserProfile extends StatelessWidget {
 
               const Icon(Icons.person),
               FutureBuilder(
-                  future: readUser(uid),
+                  future: FirebaseUserMethods(uid).fetchUserFromFirestore(),
                   builder: (context, snapshot){
                     if(snapshot.hasError){return Text(snapshot.error.toString());}
                     else if (snapshot.hasData) {
@@ -49,13 +50,13 @@ class UserProfile extends StatelessWidget {
                               SingleChildScrollView(
                                 child: Column(
                                   children: [
-                                    userTypeChangeButton(context, user.id, user.type, "admin", "حوّل لمشرف عام"),
+                                    userTypeChangeButton(context, user.id, "admin", "حوّل لمشرف عام"),
                                     const SizedBox(height: 10,),
-                                    userTypeChangeButton(context, user.id, user.type, "teacher", "حوّل لمربي"),
+                                    userTypeChangeButton(context, user.id, "teacher", "حوّل لمربي"),
                                     const SizedBox(height: 10,),
-                                    userTypeChangeButton(context, user.id, user.type, "student", "حوّل لطالب"),
+                                    userTypeChangeButton(context, user.id, "student", "حوّل لطالب"),
                                     const SizedBox(height: 10,),
-                                    userTypeChangeButton(context, user.id, user.type, "guest", "حوّل لضيف"),
+                                    userTypeChangeButton(context, user.id, "guest", "حوّل لضيف"),
                                     const SizedBox(height: 10,),
                                     deleteUserButton(context, uid, user.type)
                                   ],

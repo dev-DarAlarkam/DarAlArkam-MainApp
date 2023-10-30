@@ -94,8 +94,7 @@ class _AddStudentsToClassroomTabState extends State<AddStudentsToClassroomTab> {
     subtitle: Text(student.birthday),
     trailing: ElevatedButton(
       onPressed: () {
-        addStudentToClass(context,widget.classId, student.id);
-        // setState(() {});
+        ClassroomMethods(widget.classId).addStudentToClass(context, student.id);
       },
       child: coloredArabicText("أضف",c: Colors.white),
     ),

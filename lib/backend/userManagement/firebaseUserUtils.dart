@@ -1,4 +1,5 @@
 import 'package:daralarkam_main_app/backend/userManagement/firebaseUserMethods.dart';
+import 'package:daralarkam_main_app/backend/users/users.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +24,9 @@ String getCurrentUserId() {
   return FirebaseAuth.instance.currentUser!.uid;
 }
 
+String getUsername(FirebaseUser user) {
+  return user.firstName + " " + user.secondName + " " + user.thirdName;
+}
 
 /// Updates a user's role in Firestore.
 ///

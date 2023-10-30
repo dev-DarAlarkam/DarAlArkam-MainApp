@@ -1,15 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daralarkam_main_app/backend/userManagement/firebaseUserMethods.dart';
 import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
 
 import '../../../backend/userManagement/firebaseUserUtils.dart';
 import '../../widgets/text.dart';
 
-Widget userTypeChangeButton(BuildContext context, String uid,String oldType, String newType, String title){
+Widget userTypeChangeButton(BuildContext context, String uid, String newType, String title){
   final double height = MediaQuery.of(context).size.height;
   final double width = MediaQuery.of(context).size.width;
   return ElevatedButton(
-      onPressed: () async {updateUser(context, uid, oldType, newType);},
+      onPressed: () async {updateUser(context, uid, newType);},
       child: Container(
         height: height*0.1,
         width: width*0.4,
@@ -67,7 +68,7 @@ Future<void> _showDeleteConfirmationDialog(BuildContext context, String type, St
             TextButton(
               child: Text('حذف'),
               onPressed: () {
-                deleteUser(context, type, uid);
+                FirebaseUserMethods(uid).deleteUser(context);
                 Navigator.of(dialogContext).pop(); // Close the dialog
               },
             ),

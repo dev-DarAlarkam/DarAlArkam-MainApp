@@ -72,7 +72,9 @@ class _UsersTabState extends State<UsersTab> {
     );
   }
   Stream<List<FirebaseUser>> readUsers() => FirebaseFirestore.instance
-      .collection('users').snapshots()
+      .collection('users')
+      .where('id', isNotEqualTo: getCurrentUserId())
+      .snapshots()
       .map((event) => event.docs
       .map((e) => FirebaseUser.fromJson(e.data())).toList());
 

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/classroom/classroom.dart';
 import 'package:daralarkam_main_app/backend/classroom/classroomUtils.dart';
 import 'package:daralarkam_main_app/backend/counter/getCounter.dart';
+import 'package:daralarkam_main_app/backend/userManagement/firebaseUserMethods.dart';
 import 'package:daralarkam_main_app/backend/users/users.dart';
 import 'package:daralarkam_main_app/ui/firebase/classReport/classReportWrite.dart';
 import 'package:daralarkam_main_app/ui/firebase/classReport/classReportsViewer.dart';
@@ -48,7 +49,7 @@ class _ClassroomProfileForAdminTabState extends State<ClassroomProfileForAdminTa
               const SizedBox(height: 10,),
               // Getting user info
               FutureBuilder(
-                future: readClassroom(widget.cid),
+                future: ClassroomMethods(widget.cid).fetchClassroomFromFirebase(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Text(snapshot.error.toString());
@@ -63,7 +64,7 @@ class _ClassroomProfileForAdminTabState extends State<ClassroomProfileForAdminTa
                         coloredArabicText('عدد الطلاب: ${classroom.studentIds.length}'),
                         const SizedBox(height: 10,),
                         FutureBuilder(
-                          future: readUser(classroom.teacherId),
+                          future: FirebaseUserMethods(classroom.teacherId).fetchUserFromFirestore(),
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
                               return Text('');

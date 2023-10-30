@@ -1,3 +1,4 @@
+import 'package:daralarkam_main_app/backend/userManagement/firebaseUserMethods.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/classReport/classReport.dart';
@@ -192,7 +193,7 @@ class _ClassReportWriteTabState extends State<ClassReportWriteTab> {
     for (dynamic uid in report.attendanceReport.keys) {
       Widget tile = ListTile(
         title: FutureBuilder<FirebaseUser?>(
-          future: readUser(uid),
+          future: FirebaseUserMethods(uid).fetchUserFromFirestore(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Text('Loading...');
