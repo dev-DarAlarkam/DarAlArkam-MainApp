@@ -27,7 +27,7 @@ class _ClassReportWriteTabState extends State<ClassReportWriteTab> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getReport(widget.classId, widget.date),
+      future: fetchReportFromFirebase(widget.classId, widget.date),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Scaffold(

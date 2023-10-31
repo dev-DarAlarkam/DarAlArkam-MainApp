@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/classroom/classroom.dart';
-import 'package:daralarkam_main_app/backend/userManagement/firebaseUserMethods.dart';
-import 'package:daralarkam_main_app/backend/userManagement/firebaseUserUtils.dart';
 import 'package:daralarkam_main_app/backend/userManagement/studentMethods.dart';
 import 'package:daralarkam_main_app/backend/userManagement/teacherMethods.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/utils/showSnackBar.dart';
+import '../users/users.dart';
 
 
 class ClassroomMethods {
@@ -34,9 +33,91 @@ class ClassroomMethods {
    return false;
  }
 
- // Adds a student to a class in Firestore and updates the student's class ID.
- // This function checks if the classroom and student exist in Firestore before
- // attempting to make any updates.
+ /// Creates a new empty classroom in Firestore.
+ /// This function checks if the there's a document with the same id before
+ /// attempting to create a new one
+ Future<void> createANewClassroom(BuildContext context, String title, String grade) async {
+   //checks if the documnet doesn't exist in firestore
+   if(!(await doesClassroomExistInFirestore())){
+
+     //creating a new empty classroom
+     final classroom = Classroom(
+         classId: classId,
+         title: title,
+         grade: grade,
+         teacherId: '',
+         studentIds: []
+     );
+
+     final json = classroom.toJson();
+     final docClass = FirebaseFirestore.instance.collection('classrooms').doc(classId);
+     await docClass.set(json)
+         .onError((error, stackTrace) {
+           showSnackBar(context, error.toString());
+         });
+
+   }
+   else {
+     showSnackBar(context, "لا يمكن انشاء هذه المجموعة: المعرّف الخاص بالمجموعة تم استخدامه");
+   }
+ }
+
+
+ /// Adds a teacher as the classroom teacher, updates the teacherId in the classroom document,
+ /// and the classIds in the teacher's document.
+ ///
+ /// This function adds a teacher to a classroom as the teacher and ensures that the teacher is not
+ /// already the teacher of the classroom. If the classroom already has a teacher, the previous
+ /// teacher is removed from the classroom. It also checks if the teacher exists in Firestore
+ /// before making any updates.
+ Future<void> addTeacherToClass(BuildContext context, String teacherId) async {
+   final Classroom? classroom = await fetchClassroomFromFirebase();
+
+   // Check if the classroom exists in Firestore.
+   if (classroom != null) {
+
+     // Check if the teacher is already the teacher of the classroom.
+     if (classroom.teacherId == teacherId) {
+       showSnackBar(context, "هذا المربي هو المربي الحالي للمجموعة");
+       return;
+     }
+     // Check if the classroom has a previous teacher and remove them.
+     else if (classroom.teacherId != '') {
+       removeATeacherFromTheClassroom(context, classroom.teacherId);
+     }
+
+     final Teacher? teacher = await TeacherMethods(teacherId).fetchTeacherFromFirebase();
+     // Check if the teacher exists in Firestore.
+     if (teacher != null) {
+       final docUser =
+       FirebaseFirestore.instance.collection('users').doc(teacherId);
+       await docUser.update({'classIds': FieldValue.arrayUnion([classId]),})
+           .then((value) {
+             final docClass = FirebaseFirestore.instance.collection('classrooms').doc(classId);
+             docClass.update({'teacherId': teacherId,})
+                 .then((_) {
+                   showSnackBar(context, "تمت إضافة المربي بنجاح");
+                 }).catchError((error) {
+                   showSnackBar(context, "حدث خطأ أثناء إضافة المربي: $error");
+                 });
+           }).catchError((error) {
+             showSnackBar(context, "حدث خطأ أثناء تحديث معلومات المربي: $error");
+           });
+     }
+     else{
+       showSnackBar(context, "معلومات المربي غير موجودة");
+     }
+   }
+   // Display a message if the classroom doesn't exist in Firestore.
+   else {
+     showSnackBar(context, "معلومات المجموعة غير موجودة");
+   }
+ }
+
+
+ /// Adds a student to a class in Firestore and updates the student's class ID.
+ /// This function checks if the classroom and student exist in Firestore before
+ /// attempting to make any updates.
  Future<void> addStudentToClass(BuildContext context, String studentId) async {
    // Check if the classroom and student exist in Firestore.
    if (await doesClassroomExistInFirestore() && await StudentMethods(studentId).doesUserExistInFirestore()) {
@@ -110,7 +191,7 @@ class ClassroomMethods {
 
  //Function to remove a teacher from the specified Classroom
  Future<void> removeATeacherFromTheClassroom(BuildContext context, String teacherId) async {
-   final teacher = await TeacherMethods(teacherId).fetchTeacherFromFirebase();
+   final Teacher? teacher = await TeacherMethods(teacherId).fetchTeacherFromFirebase();
 
    if (teacher != null ) {
      //check if the if the teacher is actually the teacher of the class
@@ -133,17 +214,17 @@ class ClassroomMethods {
        final docTeacher = FirebaseFirestore.instance.collection('users').doc(teacherId);
 
        docTeacher.get().then((teacherSnapshot) {
-         if(teacherSnapshot.exists){
-           docTeacher.update({'classIds': classIds}).onError((error, stackTrace) {
-             showSnackBar(context, error.toString());
-           });
-         }
+         docTeacher.update({'classIds': classIds}).onError((error, stackTrace) {
+           showSnackBar(context, error.toString());
+         });
        });
 
      }
    }
+   else {
+     showSnackBar(context, "معلومات المربي غير موجودة");
+   }
  }
-
 
  // Function to delete a Classroom
  Future<void> deleteAClassroom(BuildContext context) async{

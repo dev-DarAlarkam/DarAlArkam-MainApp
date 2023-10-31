@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/classroom/classroom.dart';
 import 'package:daralarkam_main_app/backend/classroom/classroomUtils.dart';
 import 'package:daralarkam_main_app/backend/counter/getCounter.dart';
@@ -30,7 +29,6 @@ class _ClassroomProfileForAdminTabState extends State<ClassroomProfileForAdminTa
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -39,6 +37,14 @@ class _ClassroomProfileForAdminTabState extends State<ClassroomProfileForAdminTa
           iconTheme: const IconThemeData(
             color: Colors.white,
           ),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  setState(() {});
+                }
+                , icon: Icon(Icons.update)
+            )
+          ],
         ),
         body: Center(
           child: Column(

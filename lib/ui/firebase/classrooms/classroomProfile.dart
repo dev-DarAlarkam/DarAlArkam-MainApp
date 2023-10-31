@@ -6,6 +6,7 @@ import 'package:daralarkam_main_app/ui/firebase/classReport/classReportWrite.dar
 import 'package:daralarkam_main_app/ui/firebase/classReport/classReportsViewer.dart';
 import 'package:daralarkam_main_app/ui/firebase/classrooms/addStudentsToClass.dart';
 import 'package:daralarkam_main_app/ui/firebase/classrooms/showClassStudents.dart';
+import 'package:daralarkam_main_app/ui/widgets/my-flutter-app-icons.dart';
 import 'package:flutter/material.dart';
 
 import '../../../backend/userManagement/firebaseUserUtils.dart';
@@ -33,6 +34,14 @@ class _ClassroomProfileTabState extends State<ClassroomProfileTab> {
             iconTheme: const IconThemeData(
               color: Colors.white, //change your color here
             ),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    setState(() {});
+                    }
+                  , icon: Icon(Icons.update)
+              )
+            ],
           ),
           body: Center(
             child: Column(
