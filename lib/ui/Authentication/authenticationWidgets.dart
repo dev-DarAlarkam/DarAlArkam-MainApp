@@ -153,7 +153,7 @@ Widget facebookButton(BuildContext context) {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              boldColoredArabicText("تسحيل الدخول بواسطة فيسبوك   ", c:Colors.white),
+              boldColoredArabicText("تسجيل الدخول بواسطة فيسبوك", c:Colors.white),
               const Icon(MyFlutterApp.facebook_f, color: Colors.white)
             ],
           ),

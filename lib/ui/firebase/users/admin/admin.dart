@@ -1,15 +1,17 @@
 import 'dart:core';
 import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
+import 'package:daralarkam_main_app/ui/firebase/userManagement/guestManagement.dart';
 import 'package:daralarkam_main_app/ui/firebase/userManagement/users-tab.dart';
 import 'package:daralarkam_main_app/ui/home/home.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../backend/userManagement/firebaseUserMethods.dart';
 import '../../../../services/firebaseAuthMethods.dart';
 import 'classrooms/classroom-tab-for-admin.dart';
 import 'classrooms/createAClassroom.dart';
-import '../../../../backend/userManagement/usersUtils.dart';
+import '../../../../backend/userManagement/firebaseUserUtils.dart';
 import '../../../../backend/users/users.dart';
 import '../../../widgets/navigate-to-tab-button.dart';
 
@@ -45,7 +47,7 @@ class AdminTab extends StatelessWidget {
             ),
 
             body: FutureBuilder(
-              future: readUser(getCurrentUserId()),
+              future: FirebaseUserMethods(getCurrentUserId()).fetchUserFromFirestore(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Text("${snapshot.error}");
@@ -72,7 +74,11 @@ class AdminTab extends StatelessWidget {
                               children: [
 
                                 //A button to navigate to the "Users Tab"
-                                navigationButtonFul(context, "المستخدمين", UsersTab()),
+                                navigationButtonFul(context, "المستخدمون", UsersTab()),
+                                const SizedBox(height: 10,),
+
+                                //A button to navigate to the "Guest Management Tab"
+                                navigationButtonFul(context, "إدارة الضيوف", GuestManagementTab()),
                                 const SizedBox(height: 10,),
 
                                 //A button to navigate to the "Create A classroom tab"

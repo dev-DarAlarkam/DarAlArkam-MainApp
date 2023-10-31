@@ -7,7 +7,17 @@ import '../../services/utils/showSnackBar.dart';
 import '../counter/getCounter.dart';
 import 'defaultReport.dart';
 
-Future<ClassReport?> getReport(String classId, String date) async {
+/// Retrieves a class report from Firestore for a specified class and date.
+///
+/// This function fetches a class report document from Firestore based on the provided
+/// class ID and date. If the document exists, it is returned; otherwise, a new report
+/// is created and stored in Firestore, and the newly created report is returned.
+///
+/// - [classId]: The unique identifier of the class for which the report is fetched.
+/// - [date]: The date for which the report is retrieved.
+///
+/// Returns a [ClassReport] if found, or create a new one if document doesn't exist.
+Future<ClassReport?> fetchReportFromFirebase(String classId, String date) async {
   final docUser = FirebaseFirestore.instance.collection('classrooms').doc(classId);
   final docCounter = docUser.collection('classReports').doc(date);
 
@@ -20,11 +30,19 @@ Future<ClassReport?> getReport(String classId, String date) async {
     final newReport = await defaultReport(classId);
 
     await docCounter.set(newReport);
-    return getReport(classId, date);
+    return fetchReportFromFirebase(classId, date);
   }
 }
 
-// function to delete a report
+/// Deletes a class report from Firestore for a specified class and date.
+///
+/// This function removes a class report document from Firestore based on the provided
+/// class ID and date. It displays a success message if the deletion is successful or
+/// an error message if an error occurs during the deletion process.
+///
+/// - [context]: The current [BuildContext] used for displaying snackbar messages.
+/// - [classId]: The unique identifier of the class for which the report is deleted.
+/// - [date]: The date of the report to be deleted.
 Future<void> deleteReport(BuildContext context, String classId, String date) async {
   final docClass = FirebaseFirestore.instance.collection('classrooms').doc(classId);
   final docReport = docClass.collection('classReports').doc(date);
@@ -34,5 +52,4 @@ Future<void> deleteReport(BuildContext context, String classId, String date) asy
   }).catchError((error) {
     showSnackBar(context, "حدث خطأ أثناء حذف التقرير: $error");
   });
-
 }

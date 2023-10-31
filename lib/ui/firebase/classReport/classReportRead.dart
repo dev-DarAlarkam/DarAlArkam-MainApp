@@ -1,10 +1,11 @@
+import 'package:daralarkam_main_app/backend/userManagement/firebaseUserMethods.dart';
 import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/backend/classReport/classReport.dart';
 import 'package:daralarkam_main_app/backend/classReport/classReportUtils.dart';
 import 'package:daralarkam_main_app/backend/users/users.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 
-import '../../../backend/userManagement/usersUtils.dart';
+import '../../../backend/userManagement/firebaseUserUtils.dart';
 final GlobalKey<FormState> _titleFormKey = GlobalKey<FormState>();
 final GlobalKey<FormState> _summaryFormKey = GlobalKey<FormState>();
 final TextEditingController _title = TextEditingController();
@@ -24,7 +25,7 @@ class _ClassReportReadTabState extends State<ClassReportReadTab> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getReport(widget.classId, widget.date),
+      future: fetchReportFromFirebase(widget.classId, widget.date),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Scaffold(
@@ -144,7 +145,7 @@ class _ClassReportReadTabState extends State<ClassReportReadTab> {
     for (dynamic uid in report.attendanceReport.keys) {
       Widget tile = ListTile(
         title: FutureBuilder<FirebaseUser?>(
-          future: readUser(uid),
+          future: FirebaseUserMethods(uid).fetchUserFromFirestore(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Text('Loading...');

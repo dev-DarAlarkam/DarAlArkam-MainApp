@@ -1,13 +1,15 @@
 import 'package:daralarkam_main_app/backend/classroom/classroom.dart';
 import 'package:daralarkam_main_app/backend/classroom/classroomUtils.dart';
 import 'package:daralarkam_main_app/backend/counter/getCounter.dart';
+import 'package:daralarkam_main_app/backend/userManagement/firebaseUserMethods.dart';
 import 'package:daralarkam_main_app/ui/firebase/classReport/classReportWrite.dart';
 import 'package:daralarkam_main_app/ui/firebase/classReport/classReportsViewer.dart';
 import 'package:daralarkam_main_app/ui/firebase/classrooms/addStudentsToClass.dart';
 import 'package:daralarkam_main_app/ui/firebase/classrooms/showClassStudents.dart';
+import 'package:daralarkam_main_app/ui/widgets/my-flutter-app-icons.dart';
 import 'package:flutter/material.dart';
 
-import '../../../backend/userManagement/usersUtils.dart';
+import '../../../backend/userManagement/firebaseUserUtils.dart';
 import '../../../backend/users/users.dart';
 import '../../activities/activities.dart';
 import '../../widgets/navigate-to-tab-button.dart';
@@ -32,6 +34,14 @@ class _ClassroomProfileTabState extends State<ClassroomProfileTab> {
             iconTheme: const IconThemeData(
               color: Colors.white, //change your color here
             ),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    setState(() {});
+                    }
+                  , icon: Icon(Icons.update)
+              )
+            ],
           ),
           body: Center(
             child: Column(
@@ -42,7 +52,7 @@ class _ClassroomProfileTabState extends State<ClassroomProfileTab> {
                 const SizedBox(height: 10,),
                 //Getting user info
                 FutureBuilder(
-                  future: readClassroom(widget.cid),
+                  future: ClassroomMethods(widget.cid).fetchClassroomFromFirebase(),
                   builder: (context, snapshot) {
                     if (snapshot.hasError){return Text(snapshot.error.toString());}
                     else if(snapshot.hasData) {
@@ -57,7 +67,7 @@ class _ClassroomProfileTabState extends State<ClassroomProfileTab> {
                             const SizedBox(height: 10,),
 
                             FutureBuilder(
-                                future: readUser(classroom.teacherId),
+                                future: FirebaseUserMethods(classroom.teacherId).fetchUserFromFirestore(),
                                 builder: (context, snapshot) {
                                   if(snapshot.hasError) {return Text('');}
                                   else if(snapshot.hasData) {

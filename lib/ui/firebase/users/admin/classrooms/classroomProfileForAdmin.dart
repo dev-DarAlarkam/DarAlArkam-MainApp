@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/classroom/classroom.dart';
 import 'package:daralarkam_main_app/backend/classroom/classroomUtils.dart';
 import 'package:daralarkam_main_app/backend/counter/getCounter.dart';
+import 'package:daralarkam_main_app/backend/userManagement/firebaseUserMethods.dart';
 import 'package:daralarkam_main_app/backend/users/users.dart';
 import 'package:daralarkam_main_app/ui/firebase/classReport/classReportWrite.dart';
 import 'package:daralarkam_main_app/ui/firebase/classReport/classReportsViewer.dart';
@@ -10,7 +10,7 @@ import 'package:daralarkam_main_app/ui/firebase/classrooms/showClassStudents.dar
 import 'package:daralarkam_main_app/ui/firebase/users/admin/classrooms/selectATeacher.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../backend/userManagement/usersUtils.dart';
+import '../../../../../backend/userManagement/firebaseUserUtils.dart';
 import '../../../../widgets/navigate-to-tab-button.dart';
 import '../../../../widgets/text.dart';
 
@@ -29,7 +29,6 @@ class _ClassroomProfileForAdminTabState extends State<ClassroomProfileForAdminTa
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -38,6 +37,14 @@ class _ClassroomProfileForAdminTabState extends State<ClassroomProfileForAdminTa
           iconTheme: const IconThemeData(
             color: Colors.white,
           ),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  setState(() {});
+                }
+                , icon: Icon(Icons.update)
+            )
+          ],
         ),
         body: Center(
           child: Column(
@@ -48,7 +55,7 @@ class _ClassroomProfileForAdminTabState extends State<ClassroomProfileForAdminTa
               const SizedBox(height: 10,),
               // Getting user info
               FutureBuilder(
-                future: readClassroom(widget.cid),
+                future: ClassroomMethods(widget.cid).fetchClassroomFromFirebase(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Text(snapshot.error.toString());
@@ -63,7 +70,7 @@ class _ClassroomProfileForAdminTabState extends State<ClassroomProfileForAdminTa
                         coloredArabicText('عدد الطلاب: ${classroom.studentIds.length}'),
                         const SizedBox(height: 10,),
                         FutureBuilder(
-                          future: readUser(classroom.teacherId),
+                          future: FirebaseUserMethods(classroom.teacherId).fetchUserFromFirestore(),
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
                               return Text('');

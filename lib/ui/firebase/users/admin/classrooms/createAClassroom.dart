@@ -3,6 +3,7 @@ import 'package:daralarkam_main_app/backend/classroom/classroom.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../backend/classroom/classroomUtils.dart';
 import '../../../../../services/utils/showSnackBar.dart';
 import 'selectATeacher.dart';
 import '../../../../../globals/globalColors.dart' as color;
@@ -36,80 +37,75 @@ class _CreateAClassroomTabState extends State<CreateAClassroomTab> {
             ),
             body: Center(
                 child: SingleChildScrollView(
-                  child: SizedBox(
-                      width: width * 0.8,
-                      height: height,
-                      child: Column(
-                          children: <Widget>[
-                            const Expanded(flex: 1, child: SizedBox()),
-                            SizedBox(
-                              height: height * .1,
-                              child: Image.asset("lib/assets/photos/main-logo.png"),
-                            ),
-                            SizedBox(height: 16.0),
-                            boldColoredArabicText("انشئ مجموعة تربوية جديدة"),
-                            const Expanded(flex: 1, child: SizedBox()),
-                            TextFormField(
-                              controller: _textController,
-                              decoration: InputDecoration(labelText: 'إسم المجموعة'),
-                            ),
-                            SizedBox(height: 16.0),
-                            Row(
-                              children: [
-                                coloredArabicText("الصف:"),
-                                SizedBox(width: 30,),
-                                DropdownButton<String>(
-                                  value: selectedNumber,
-                                  onChanged: (String? newValue) {
-                                    setState(() {
-                                      selectedNumber = newValue!;
-                                    });
-                                  },
-                                  items: List<String>.generate(12, (index) => (index + 1).toString())
-                                      .map((String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(value),
-                                    );
-                                  }).toList(),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 16.0),
+              child: SizedBox(
+                  width: width * 0.8,
+                  height: height,
+                  child: Column(children: <Widget>[
+                    const Expanded(flex: 1, child: SizedBox()),
+                    SizedBox(
+                      height: height * .1,
+                      child: Image.asset("lib/assets/photos/main-logo.png"),
+                    ),
+                    SizedBox(height: 16.0),
+                    boldColoredArabicText("انشئ مجموعة تربوية جديدة"),
+                    const Expanded(flex: 1, child: SizedBox()),
+                    TextFormField(
+                      controller: _textController,
+                      decoration: InputDecoration(labelText: 'إسم المجموعة'),
+                    ),
+                    SizedBox(height: 16.0),
+                    Row(
+                      children: [
+                        coloredArabicText("الصف:"),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        DropdownButton<String>(
+                          value: selectedNumber,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              selectedNumber = newValue!;
+                            });
+                          },
+                          items: List<String>.generate(
+                                  12, (index) => (index + 1).toString())
+                              .map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16.0),
 
-                            //create a classroom button
-                            ElevatedButton(
-                              onPressed: () async {
-                                final cid = 'Classroom_${DateTime.now().millisecondsSinceEpoch}';
-                                final classroom  = Classroom(
-                                    classId: cid,
-                                    title: _textController.text,
-                                    grade: selectedNumber,
-                                    teacherId: '',
-                                    studentIds: []
-                                );
-                                final json = classroom.toJson();
-                                final docClass = FirebaseFirestore.instance
-                                  .collection('classrooms')
-                                  .doc(cid);
-                                await docClass.set(json).then((value) {
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                  MaterialPageRoute(builder: (context) => SelectATeacherTab(classId: cid,)),
-                                  (route) => route.isFirst);
-                                }).onError((error, stackTrace) {
-                                  showSnackBar(context, error.toString());
-                                });
-                              },
-                              child: Text('انشئ'),
-                            ),
-                            const Expanded(flex: 3, child: SizedBox())
-                          ]
-                      )
-                  ),
-                )
-            )
-        )
-    );
+                    //create a classroom button
+                    ElevatedButton(
+                      onPressed: () async {
+                        //creating a new classId
+                        final classId =
+                            'Classroom_${DateTime.now().millisecondsSinceEpoch}';
+
+
+                        await ClassroomMethods(classId)
+                            .createANewClassroom(
+                                context, _textController.text, selectedNumber)
+
+                            .then((value) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SelectATeacherTab(classId: classId,)
+                              ));
+                            }).onError((error, stackTrace) {
+                          showSnackBar(context, error.toString());
+                        });
+                      },
+                      child: Text('انشئ'),
+                    ),
+                    const Expanded(flex: 3, child: SizedBox())
+                  ])),
+            ))));
   }
 }

@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/classroom/classroomUtils.dart';
+import 'package:daralarkam_main_app/backend/userManagement/firebaseUserMethods.dart';
+import 'package:daralarkam_main_app/backend/userManagement/studentMethods.dart';
 import 'package:daralarkam_main_app/backend/users/users.dart';
 import 'package:daralarkam_main_app/ui/firebase/classrooms/showStudentDetails.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
@@ -138,7 +140,7 @@ Future<void> _showDeleteConfirmationDialog(BuildContext context, String classId,
             TextButton(
               child: Text('حذف'),
               onPressed: () {
-                removeStudentFromClassroom(context,classId, studentId);
+                StudentMethods(studentId).removeStudentFromHisClassroom(context);
                 Navigator.of(dialogContext).pop(); // Close the dialog
               },
             ),

@@ -1,8 +1,9 @@
+import 'package:daralarkam_main_app/backend/userManagement/firebaseUserMethods.dart';
 import 'package:daralarkam_main_app/ui/firebase/statistics/statisticsForStudent.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 
-import '../../../backend/userManagement/usersUtils.dart';
+import '../../../backend/userManagement/firebaseUserUtils.dart';
 import '../counter/countersViewer.dart';
 
 class ShowStudentDetailsTab extends StatelessWidget {
@@ -26,7 +27,7 @@ class ShowStudentDetailsTab extends StatelessWidget {
 
               const Icon(Icons.person),
               FutureBuilder(
-                  future: readUser(uid),
+                  future: FirebaseUserMethods(uid).fetchUserFromFirestore(),
                   builder: (context, snapshot){
                     if(snapshot.hasError){return Text(snapshot.error.toString());}
                     else if (snapshot.hasData) {

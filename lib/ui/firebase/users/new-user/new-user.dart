@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
 
-import '../../../../backend/userManagement/usersUtils.dart';
+import '../../../../backend/userManagement/firebaseUserUtils.dart';
 
 class NewUserTab extends StatefulWidget {
   const NewUserTab({Key? key}) : super(key: key);

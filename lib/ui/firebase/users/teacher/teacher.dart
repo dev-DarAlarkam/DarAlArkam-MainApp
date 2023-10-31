@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'package:daralarkam_main_app/backend/userManagement/firebaseUserMethods.dart';
 import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
 import 'package:daralarkam_main_app/ui/activities/activities.dart';
 import 'package:daralarkam_main_app/ui/firebase/counter/counterScreenWrite.dart';
@@ -9,7 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../backend/counter/getCounter.dart';
-import '../../../../backend/userManagement/usersUtils.dart';
+import '../../../../backend/userManagement/firebaseUserUtils.dart';
 import '../../../../backend/users/users.dart';
 import '../../../../services/firebaseAuthMethods.dart';
 import '../../../widgets/navigate-to-tab-button.dart';
@@ -48,7 +49,7 @@ class TeacherTab extends StatelessWidget {
             ),
 
             body: FutureBuilder(
-              future: readUser(getCurrentUserId()),
+              future: FirebaseUserMethods(getCurrentUserId()).fetchUserFromFirestore(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Text("${snapshot.error}");

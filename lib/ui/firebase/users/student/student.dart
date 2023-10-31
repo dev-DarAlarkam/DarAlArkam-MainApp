@@ -9,7 +9,8 @@ import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../../../backend/counter/getCounter.dart';
-import '../../../../backend/userManagement/usersUtils.dart';
+import '../../../../backend/userManagement/firebaseUserMethods.dart';
+import '../../../../backend/userManagement/firebaseUserUtils.dart';
 import '../../../../backend/users/users.dart';
 import '../../../../services/firebaseAuthMethods.dart';
 import '../../../widgets/navigate-to-tab-button.dart';
@@ -46,7 +47,7 @@ class StudentTab extends StatelessWidget {
             ),
 
             body: FutureBuilder(
-              future: readStudent(getCurrentUserId()),
+              future: FirebaseUserMethods(getCurrentUserId()).fetchUserFromFirestore(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Text("${snapshot.error}");

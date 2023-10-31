@@ -9,14 +9,14 @@ import 'package:flutter/material.dart';
 // Enum to determine the sort order for counters' list
 enum SortOrder { ascending, descending, byFirstName}
 
-class UsersTab extends StatefulWidget {
-  const UsersTab({Key? key}) : super(key: key);
+class GuestManagementTab extends StatefulWidget {
+  const GuestManagementTab({Key? key}) : super(key: key);
 
   @override
-  State<UsersTab> createState() => _UsersTabState();
+  State<GuestManagementTab> createState() => _GuestManagementTabState();
 }
 
-class _UsersTabState extends State<UsersTab> {
+class _GuestManagementTabState extends State<GuestManagementTab> {
   // Keeps track of the current sort order (ascending by default)
   String _currentSortOrder = 'تصاعدي'; // Initialize with a default sort order
   // List to store users data
@@ -35,13 +35,13 @@ class _UsersTabState extends State<UsersTab> {
         textDirection: TextDirection.rtl,
         child: Scaffold(
           appBar: AppBar(
-            title: const Text("المستخدمون"),
+            title: const Text("الضيف"),
             actions: [
               // Sort button in the app bar
               DropdownButton<String>(
                 value: _currentSortOrder,
                 onChanged: _onSortOrderChanged, // Call the function to update the chosen sort order
-                items: ['تصاعدي', 'تنازلي', "نوع المستخدم"].map((String sortOrder) {
+                items: ['تصاعدي', 'تنازلي'].map((String sortOrder) {
                   return DropdownMenuItem<String>(
                     value: sortOrder,
                     child: AutoSizeText(sortOrder, maxFontSize: 16, minFontSize: 5),
@@ -52,20 +52,20 @@ class _UsersTabState extends State<UsersTab> {
           ),
           body:  Center(
             child: StreamBuilder(
-                    stream: readUsers(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError){return Text(snapshot.error.toString());}
-                      else if(snapshot.hasData) {
-                        users = snapshot.data as List<FirebaseUser>;
-                        sortUsers(_currentSortOrder);
-                        return Center(
-                          child: ListView(
-                                children: users.map(buildUser).toList(),
-                            ),
-                        );
-                        }
-                      else{return const Center(child: CircularProgressIndicator());}
-                    },
+              stream: readUsers(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError){return Text(snapshot.error.toString());}
+                else if(snapshot.hasData) {
+                  users = snapshot.data as List<FirebaseUser>;
+                  sortUsers(_currentSortOrder);
+                  return Center(
+                    child: ListView(
+                      children: users.map(buildUser).toList(),
+                    ),
+                  );
+                }
+                else{return const Center(child: CircularProgressIndicator());}
+              },
             ),
           ),
         )
@@ -73,7 +73,7 @@ class _UsersTabState extends State<UsersTab> {
   }
   Stream<List<FirebaseUser>> readUsers() => FirebaseFirestore.instance
       .collection('users')
-      .where('id', isNotEqualTo: getCurrentUserId())
+      .where('type', isEqualTo: "guest")
       .snapshots()
       .map((event) => event.docs
       .map((e) => FirebaseUser.fromJson(e.data())).toList());

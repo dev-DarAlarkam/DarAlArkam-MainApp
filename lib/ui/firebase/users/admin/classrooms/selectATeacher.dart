@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daralarkam_main_app/backend/classroom/classroomUtils.dart';
 import 'package:daralarkam_main_app/backend/users/users.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
-import '../../../../../services/utils/showSnackBar.dart';
 
-// Enum to determine the sort order for students' list
+// Enum to determine the sort order for the list of teachers
 enum SortOrder { ascending, descending }
 
 class SelectATeacherTab extends StatefulWidget {
-  const SelectATeacherTab({Key? key,required this.classId}) : super(key: key);
+  const SelectATeacherTab({Key? key, required this.classId}) : super(key: key);
   final String classId;
 
   @override
@@ -18,10 +18,10 @@ class SelectATeacherTab extends StatefulWidget {
 class _SelectATeacherTabState extends State<SelectATeacherTab> {
   // Keeps track of the current sort order (ascending by default)
   SortOrder _currentSortOrder = SortOrder.ascending;
-  // List to store students data
+  // List to store teacher data
   List<Teacher> teachers = [];
 
-  // Stream to read students who are not in any classroom
+  // Stream to read teachers who are not assigned to any classroom
   Stream<List<FirebaseUser>> readTeachers() =>
       FirebaseFirestore.instance
           .collection('users')
@@ -44,7 +44,7 @@ class _SelectATeacherTabState extends State<SelectATeacherTab> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: boldColoredArabicText("إختر مربي للمجموعة", c:Colors.white),
+          title: boldColoredArabicText("إختر مربي للمجموعة", c: Colors.white),
           actions: [
             // Sort button in the app bar
             IconButton(
@@ -66,7 +66,6 @@ class _SelectATeacherTabState extends State<SelectATeacherTab> {
           child: StreamBuilder(
             stream: readTeachers(),
             builder: (context, snapshot) {
-
               if (snapshot.hasError) {
                 return Text(snapshot.error.toString());
               } else if (snapshot.connectionState == ConnectionState.waiting) {
@@ -89,42 +88,60 @@ class _SelectATeacherTabState extends State<SelectATeacherTab> {
     );
   }
 
-  // Build a list tile for a student
+  // Build a list tile for a teacher
   Widget buildTeacher(Teacher teacher) => ListTile(
-        title: Text(teacher.firstName +
-            " " +
-            teacher.secondName +
-            " " +
-            teacher.thirdName),
-        subtitle: Text(teacher.birthday),
-        trailing: ElevatedButton(
-          onPressed: () {
-            addTeacherToClass(widget.classId, teacher.id).then((value) {
-              Navigator.pop(context);
-            });
-          },
-          child: coloredArabicText("اختر", c: Colors.white),
-        ),
-      );
+    title: Text(teacher.firstName +
+        " " +
+        teacher.secondName +
+        " " +
+        teacher.thirdName),
+    subtitle: Text(teacher.birthday),
+    trailing: ElevatedButton(
+      onPressed: () {
+        _showChangeConfirmationDialog(context,widget.classId, teacher.id)
+            .then((value) {
+          Navigator.pop(context);
+        });
+      },
+      child: coloredArabicText("اختر", c: Colors.white),
+    ),
+  );
 
-  // Function to add a student to a classroom
-  Future<void> addTeacherToClass(String classId, String teacherId) async {
-    final docUser =
-        FirebaseFirestore.instance.collection('users').doc(teacherId);
-    await docUser.update({
-      'classIds': FieldValue.arrayUnion([classId]),
-    }).then((value) {
-      final docClass =
-          FirebaseFirestore.instance.collection('classrooms').doc(classId);
-      docClass.update({
-        'teacherId': teacherId,
-      }).then((_) {
-        showSnackBar(context, "تمت إضافة المربي بنجاح");
-      }).catchError((error) {
-        showSnackBar(context, "حدث خطأ أثناء إضافة المربي: $error");
-      });
-    }).catchError((error) {
-      showSnackBar(context, "حدث خطأ أثناء تحديث معلومات المربي: $error");
-    });
+  Future<void> _showChangeConfirmationDialog(BuildContext context, String classId, String teacherId) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // Dialog cannot be dismissed by tapping outside
+      builder: (BuildContext dialogContext) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: AlertDialog(
+            title: Text('تأكيد الحذف'),
+            content: const SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('هل تريد حقًا تغيير مربي هذه المجموعة؟'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('إلغاء'),
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
+                },
+              ),
+              TextButton(
+                child: Text('تغيير'),
+                onPressed: () {
+                  ClassroomMethods(classId).addTeacherToClass(context, teacherId);
+                  Navigator.of(dialogContext).pop(); // Close the dialog
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
+
 }
