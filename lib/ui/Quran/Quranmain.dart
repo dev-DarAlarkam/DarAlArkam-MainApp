@@ -71,7 +71,7 @@ class _QuranState extends State<Quran> {
                               pageLayoutMode: PdfPageLayoutMode.continuous,
 
                           );
-                        }
+                        }, future: null,
                         ),
                   ),
                 )
