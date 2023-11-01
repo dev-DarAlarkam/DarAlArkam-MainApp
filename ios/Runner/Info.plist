@@ -22,18 +22,42 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+
+<!-- FACEBOOK&GOOGLE CONFIG START HERE -->
+
 	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.220867444623-3h64i7i2t4otj3hmhai7ktvvmothaklk</string>
-				<string>fb868365077821821</string>
-			</array>
-		</dict>
-	</array>
+        <array>
+            <dict>
+                <key>CFBundleURLSchemes</key>
+                <array>
+                    <string>fb868365077821821</string>
+                </array>
+            </dict>
+
+            <dict>
+                <key>CFBundleTypeRole</key>
+                <string>Editor</string>
+                <key>CFBundleURLSchemes</key>
+                <array>
+					<string>com.googleusercontent.apps.220867444623-3h64i7i2t4otj3hmhai7ktvvmothaklk</string>
+                </array>
+            </dict>
+        </array>
+
+
+	<key>FacebookAppID</key>
+	<string>868365077821821</string>
+
+	<key>FacebookClientToken</key>
+	<string>51df2f86ac7cc85ad2707fbc35fc8f0c</string>
+
+	<key>FacebookDisplayName</key>
+	<string>DarAlArkam-MainApp</string>
+	
+	<!-- FACEBOOK&GOOGLE CONFIG END HERE -->
+
+
+
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>FIREBASE_ANALYTICS_COLLECTION_ENABLED</key>
