@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'package:daralarkam_main_app/backend/userManagement/firebaseUserMethods.dart';
+import 'package:daralarkam_main_app/backend/userManagement/teacherMethods.dart';
 import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
 import 'package:daralarkam_main_app/ui/activities/activities.dart';
 import 'package:daralarkam_main_app/ui/firebase/counter/counterScreenWrite.dart';
@@ -49,7 +50,7 @@ class TeacherTab extends StatelessWidget {
             ),
 
             body: FutureBuilder(
-              future: FirebaseUserMethods(getCurrentUserId()).fetchUserFromFirestore(),
+              future: TeacherMethods(getCurrentUserId()).fetchTeacherFromFirebase(),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
                   return Text("${snapshot.error}");
