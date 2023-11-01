@@ -37,48 +37,45 @@ class StudentMethods extends FirebaseUserMethods {
   Future<void> removeStudentFromHisClassroom(BuildContext context) async {
     final docUser = FirebaseFirestore.instance.collection('users').doc(userId);
     if(await doesUserExistInFirestore()) {
-      final classId = await getClassId();
-      final docClass = FirebaseFirestore.instance.collection('classrooms').doc(classId);
+      final String classId = await getClassId();
+      if(classId != ''){
+        final docClass =
+            FirebaseFirestore.instance.collection('classrooms').doc(classId);
 
-      docClass.get().then((classroomSnapshot) {
-        if (classroomSnapshot.exists) {
-          final List<dynamic> studentIds = classroomSnapshot.data()?['studentIds'];
+        docClass.get().then((classroomSnapshot) {
+          if (classroomSnapshot.exists) {
+            final List<dynamic> studentIds =
+                classroomSnapshot.data()?['studentIds'];
 
-          // Check if the student to remove exists in the list
-          if (studentIds.contains(userId)) {
-            studentIds.remove(userId);
+            // Check if the student to remove exists in the list
+            if (studentIds.contains(userId)) {
+              studentIds.remove(userId);
 
-            // Update the 'studentIds' field with the modified list
-            docClass.update({'studentIds': studentIds}).then((_) {
-
-              //Fetch the student data
-              docUser.get().then((snapshotUser) {
-
-                //check if the user we want to remove exists
-                if(snapshotUser.exists) {
-
-                  //update the 'classId' field with ''
-                  docUser.update({'classId': ''})
-                      .then((value) {
-                    showSnackBar(context, "تم إزالة الطالب بنجاح");
-                  })
-                      .catchError((error, stackTrace) {
-                    showSnackBar(context, error.toString());
-                  });
-
-                }
+              // Update the 'studentIds' field with the modified list
+              docClass.update({'studentIds': studentIds}).then((_) {
+                //Fetch the student data
+                docUser.get().then((snapshotUser) {
+                  //check if the user we want to remove exists
+                  if (snapshotUser.exists) {
+                    //update the 'classId' field with ''
+                    docUser.update({'classId': ''}).then((value) {
+                      showSnackBar(context, "تم إزالة الطالب بنجاح");
+                    }).catchError((error, stackTrace) {
+                      showSnackBar(context, error.toString());
+                    });
+                  }
+                });
+              }).catchError((error) {
+                showSnackBar(context, error.toString());
               });
-            }).catchError((error) {
-              showSnackBar(context, error.toString());
-            });
+            } else {
+              print("Student not found in classroom.");
+            }
           } else {
-            print("Student not found in classroom.");
+            print("Classroom not found.");
           }
-        } else {
-          print("Classroom not found.");
-        }
-      });
-
+        });
+      }
     }
   }
 

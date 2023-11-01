@@ -54,49 +54,49 @@ class FirebaseUserMethods {
     return '';
   }
 
-
-  /// Converts a user to an admin role in Firestore.
+  /// Converts a user to a guest role in Firestore.
   ///
-  /// This function checks if the user exists in Firestore and then converts the user's role to "admin".
+  /// This function checks if the user exists in Firestore and then converts the user's role to "guest".
   /// Depending on the user's current role, it may also perform additional actions like
   /// removing them from their existing classrooms (for students and teachers).
   Future<void> castToGuest(BuildContext context) async {
     // Check if the user exists in Firestore.
-    if (await doesUserExistInFirestore()) {
-      final docUser = FirebaseFirestore.instance.collection('users').doc(userId);
-      final currentType = await getType();
+    final FirebaseUser? user = await fetchUserFromFirestore();
+    if (user != null) {
+      final docUser =
+          FirebaseFirestore.instance.collection('users').doc(userId);
+      final currentType = user.type;
 
-      if (await doesUserExistInFirestore()) {
-        if (currentType != '') {
-          switch (currentType) {
-            case "admin":
-              return; // If the user is already an admin, no action is required.
+      if (currentType != '') {
+        switch (currentType) {
+          case "guest":
+            return; // If the user is already an admin, no action is required.
 
-            case "student":
+          case "student":
             // For students, remove them from their classroom before converting to admin.
-              await StudentMethods(userId).removeStudentFromHisClassroom(context);
-              break;
+            await StudentMethods(userId).removeStudentFromHisClassroom(context);
+            break;
 
-            case 'teacher':
+          case 'teacher':
             // For teachers, remove them from their classrooms before converting to admin.
-              await TeacherMethods(userId).removeTeacherFromHisClassrooms(context);
-              break;
+            await TeacherMethods(userId)
+                .removeTeacherFromHisClassrooms(context);
+            break;
 
-            default:
-              break;
-          }
-
-          // Update the user's role to "admin" after necessary actions.
-          await docUser.update({"type": "admin"}).then((value) {
-            showSnackBar(context, "تم التحويل بنجاح");
-          }).catchError((error, stackTrace) {
-            showSnackBar(context, error.toString());
-          });
+          default:
         }
       }
+      // Update the user's role to "guest" after necessary actions.
+      await docUser.update({"type": "guest"}).then((value) {
+        showSnackBar(context, "تم التحويل بنجاح");
+      }).catchError((error, stackTrace) {
+        showSnackBar(context, error.toString());
+      });
+    }
+    else {
+      showSnackBar(context, "معلومات المستخدم غير متوفرة");
     }
   }
-
 
   /// Converts a user to an guest role in Firestore.
   ///
@@ -106,23 +106,26 @@ class FirebaseUserMethods {
   Future<void> castToAdmin(BuildContext context) async {
     // Check if the user exists in Firestore.
     if (await doesUserExistInFirestore()) {
-      final docUser = FirebaseFirestore.instance.collection('users').doc(userId);
+      final docUser =
+          FirebaseFirestore.instance.collection('users').doc(userId);
       final currentType = await getType();
 
       if (await doesUserExistInFirestore()) {
         if (currentType != '') {
           switch (currentType) {
-            case "guest":
+            case "admin":
               return; // If the user is already an admin, no action is required.
 
             case "student":
-            // For students, remove them from their classroom before converting to admin.
-              await StudentMethods(userId).removeStudentFromHisClassroom(context);
+              // For students, remove them from their classroom before converting to admin.
+              await StudentMethods(userId)
+                  .removeStudentFromHisClassroom(context);
               break;
 
             case 'teacher':
-            // For teachers, remove them from their classrooms before converting to admin.
-              await TeacherMethods(userId).removeTeacherFromHisClassrooms(context);
+              // For teachers, remove them from their classrooms before converting to admin.
+              await TeacherMethods(userId)
+                  .removeTeacherFromHisClassrooms(context);
               break;
 
             default:
@@ -130,7 +133,7 @@ class FirebaseUserMethods {
           }
 
           // Update the user's role to "admin" after necessary actions.
-          await docUser.update({"type": "guest"}).then((value) {
+          await docUser.update({"type": "admin"}).then((value) {
             showSnackBar(context, "تم التحويل بنجاح");
           }).catchError((error, stackTrace) {
             showSnackBar(context, error.toString());
@@ -149,7 +152,8 @@ class FirebaseUserMethods {
   Future<void> castToStudent(BuildContext context) async {
     // Check if the user exists in Firestore.
     if (await doesUserExistInFirestore()) {
-      final docUser = FirebaseFirestore.instance.collection('users').doc(userId);
+      final docUser =
+          FirebaseFirestore.instance.collection('users').doc(userId);
       final currentType = await getType();
 
       if (await doesUserExistInFirestore()) {
@@ -159,8 +163,9 @@ class FirebaseUserMethods {
               return; // If the user is already an admin, no action is required.
 
             case 'teacher':
-            // For teachers, remove them from their classrooms before converting to admin.
-              await TeacherMethods(userId).removeTeacherFromHisClassrooms(context);
+              // For teachers, remove them from their classrooms before converting to admin.
+              await TeacherMethods(userId)
+                  .removeTeacherFromHisClassrooms(context);
               break;
 
             default:
@@ -192,7 +197,8 @@ class FirebaseUserMethods {
   Future<void> castToTeacher(BuildContext context) async {
     // Check if the user exists in Firestore.
     if (await doesUserExistInFirestore()) {
-      final docUser = FirebaseFirestore.instance.collection('users').doc(userId);
+      final docUser =
+          FirebaseFirestore.instance.collection('users').doc(userId);
       final currentType = await getType();
 
       if (await doesUserExistInFirestore()) {
@@ -202,8 +208,9 @@ class FirebaseUserMethods {
               return; // If the user is already an admin, no action is required.
 
             case "student":
-            // For students, remove them from their classroom before converting to admin.
-              await StudentMethods(userId).removeStudentFromHisClassroom(context);
+              // For students, remove them from their classroom before converting to admin.
+              await StudentMethods(userId)
+                  .removeStudentFromHisClassroom(context);
               break;
 
             default:
@@ -216,7 +223,7 @@ class FirebaseUserMethods {
           });
 
           // Update the user's role to "admin" after necessary actions.
-          await docUser.update({"type": "guest"}).then((value) {
+          await docUser.update({"type": "teacher"}).then((value) {
             showSnackBar(context, "تم التحويل بنجاح");
           }).catchError((error, stackTrace) {
             showSnackBar(context, error.toString());
@@ -228,8 +235,7 @@ class FirebaseUserMethods {
 
   // Deletes the user from Firestore.
   Future<void> deleteUser(BuildContext context) async {
-    final docUser =
-    FirebaseFirestore.instance.collection('users').doc(userId);
+    final docUser = FirebaseFirestore.instance.collection('users').doc(userId);
     await docUser.delete();
     Navigator.pop(context);
   }
