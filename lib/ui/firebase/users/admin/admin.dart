@@ -40,7 +40,7 @@ class AdminTab extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.logout),
                   onPressed: () {
-                    signOut(context);
+                    FirebaseAuthMethods(FirebaseAuth.instance).signOut(context);
                   },
                 ),
               ], //for hiding the shadows

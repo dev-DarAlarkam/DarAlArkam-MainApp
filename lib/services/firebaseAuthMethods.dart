@@ -8,6 +8,7 @@ import './utils/showSnackBar.dart';
 
 class FirebaseAuthMethods {
   final FirebaseAuth _auth;
+  static bool signedWithGoogle = false;
   FirebaseAuthMethods(this._auth);
 
 
@@ -70,7 +71,7 @@ class FirebaseAuthMethods {
           );
           UserCredential userCredential =
           await _auth.signInWithCredential(credential);
-
+          signedWithGoogle = true;
       }
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message!); // Displaying the error message
@@ -90,12 +91,17 @@ class FirebaseAuthMethods {
       showSnackBar(context, e.message!); // Displaying the error message
     }
   }
+
+  Future<void> signOut(BuildContext context) async {
+    if (signedWithGoogle){
+      GoogleSignIn _googleSignIn = GoogleSignIn();
+      await _googleSignIn.disconnect();
+      signedWithGoogle = false;
+    }
+    await _auth.signOut()
+        .then((value) => Navigator.pop(context, const Home()))
+        .then((value) {showSnackBar(context, "لقد تم تسجيل الخروج بنجاح!");});
+  }
 }
 
-Future<void> signOut(BuildContext context) async {
-  GoogleSignIn _googleSignIn = GoogleSignIn();
-  await _googleSignIn.disconnect();
-  await FirebaseAuth.instance.signOut()
-      .then((value) => Navigator.pop(context, const Home()))
-      .then((value) {showSnackBar(context, "لقد تم تسجيل الخروج بنجاح!");});
-}
+
