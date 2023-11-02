@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
+import 'package:daralarkam_main_app/ui/activities/createAnActivity.dart';
 import 'package:daralarkam_main_app/ui/firebase/userManagement/guestManagement.dart';
 import 'package:daralarkam_main_app/ui/firebase/userManagement/users-tab.dart';
 import 'package:daralarkam_main_app/ui/home/home.dart';
@@ -87,6 +88,10 @@ class AdminTab extends StatelessWidget {
 
                                 //A button to navigate to the "Classrooms Tab For Admin"
                                 navigationButtonFul(context, "المجموعات", ClassroomsTabForAdmin()),
+                                const SizedBox(height: 10,),
+
+                                //A button to navigate to the "create a new activity"
+                                navigationButtonFul(context, "أضف فعالية", CreateAnActivityTab()),
                               ]
                           ),
                         ),

@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'package:daralarkam_main_app/ui/Adhkar/main-adhkar.dart';
 import 'package:daralarkam_main_app/ui/Quran/Quranmain.dart';
+import 'package:daralarkam_main_app/ui/activities/ActivitiesList.dart';
 import 'package:daralarkam_main_app/ui/activities/activities.dart';
 import 'package:daralarkam_main_app/ui/salah/salah.dart';
 import 'package:daralarkam_main_app/ui/widgets/navigate-to-tab-button.dart';
@@ -35,7 +36,7 @@ class MainTab extends StatelessWidget {
               const SizedBox(height: 10,),
               const NavigateToStatelessTabButton(text: "الأذكار",icon: "lib/assets/icons/beads.png", nextScreen: MainAdhkar()),
               const SizedBox(height: 10,),
-              const NavigateToStatelessTabButton(text: "فعاليات",icon: "lib/assets/icons/drum.png", nextScreen: Activities()),
+              const NavigateToStatefulTabButton(text: "فعاليات",icon: "lib/assets/icons/drum.png", nextScreen: ActivitiesListTab()),
               const Expanded(flex:3,child: SizedBox()),
             ],
           ),

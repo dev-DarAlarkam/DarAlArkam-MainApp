@@ -1,6 +1,7 @@
 import 'package:daralarkam_main_app/backend/counter/getCounter.dart';
 
 class Activity {
+  late String id;
   late String title;
   late String content;
   late String date;
@@ -8,6 +9,7 @@ class Activity {
   late List<String> additionalMedia;
 
   Activity({
+    required this.id,
     required this.title,
     required this.content,
     required this.date,
@@ -15,9 +17,10 @@ class Activity {
     required this.additionalMedia
   });
 
-  // Factory constructor with default values
+  // Factory constructor with default values and special id
   factory Activity.empty() {
     return Activity(
+      id: 'activity_${DateTime.now().millisecondsSinceEpoch}',
       title: '',
       content: '',
       date: getFormattedDate(),
@@ -28,6 +31,7 @@ class Activity {
 
   factory Activity.fromJson(Map<String, dynamic> json) {
     return Activity(
+      id: json['id'] as String,
       title: json['title'] as String,
       content: json['content'] as String,
       date: json['date'] as String,
@@ -54,6 +58,7 @@ class Activity {
   }
 
   Map<String, dynamic> toJson() => {
+    'id' : id,
     'title': title,
     'content': content,
     'date' : date,
