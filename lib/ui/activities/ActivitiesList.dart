@@ -86,11 +86,20 @@ class _ActivitiesListTabState extends State<ActivitiesListTab> {
     );
   }
 
-  // Build a list tile for a student
-  Widget buildEvent(Activity activity) => ListTile(
-    title: Text(activity.title),
-    onTap: () {
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> ActivityViewer(activity: activity)));
-    },
-  );
+
+  Widget buildEvent(Activity activity){
+    return Stack(
+      children: [
+        Positioned()
+      ],
+    )
+  }
+
+//   // Build a list tile for a student
+//   Widget buildEvent(Activity activity) => ListTile(
+//     title: Text(activity.title),
+//     onTap: () {
+//       Navigator.push(context, MaterialPageRoute(builder: (context)=> ActivityViewer(activity: activity)));
+//     },
+//   );
 }

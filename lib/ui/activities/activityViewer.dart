@@ -1,10 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:daralarkam_main_app/backend/Activities/Activity.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:transparent_image/transparent_image.dart';
+
+import 'ActivityViewerWidgets.dart';
 
 class ActivityViewer extends StatefulWidget {
   final Activity activity;
@@ -34,23 +39,9 @@ class _ActivityViewerState extends State<ActivityViewer> {
                   child: Container(
                       width: double.maxFinite,
                       height: height * 0.35,
-                      child: Stack(
-                        children: [
-                          const Center(
-                            child:
-                                CircularProgressIndicator(), // Loading indicator
-                          ),
-                          Center(
-                            child: FadeInImage.memoryNetwork(
-                              placeholder:
-                                  kTransparentImage, // A 1x1 transparent image as a placeholder.
-                              image: generateDirectDownloadUrl(
-                                  widget.activity.thumbnail),
-                              fit: BoxFit.fitWidth,
-                            ),
-                          ),
-                        ],
-                      ))),
+                      child: buildThumbnail(widget.activity.thumbnail)
+                  )
+              ),
               Positioned(
                 top: 40,
                 right: 20,
@@ -60,16 +51,16 @@ class _ActivityViewerState extends State<ActivityViewer> {
                     },
                     icon: const Icon(
                       Icons.arrow_back,
-                      color: Colors.green,
+                      color: Colors.white,
                     )),
               ),
               Positioned(
                   top: height * 0.3,
                   child: Container(
                     padding:
-                        const EdgeInsets.only(left: 20, right: 20, top: 30),
+                        const EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 0),
                     width: width,
-                    height: height * 0.8,
+                    height: height * 0.7,
                     decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
@@ -90,15 +81,15 @@ class _ActivityViewerState extends State<ActivityViewer> {
                           const SizedBox(
                             height: 20,
                           ),
-                          buildIndicator(),
-                          const SizedBox(
-                            height: 30,
-                          ),
+
                           buildImageSlider(),
                           const SizedBox(
                             height: 20,
                           ),
-                          buildIndicator()
+                          buildIndicator(),
+                          const SizedBox(
+                            height: 30,
+                          ),
                         ],
                       ),
                     ),
@@ -109,55 +100,27 @@ class _ActivityViewerState extends State<ActivityViewer> {
   }
 
   Widget buildImageSlider() => CarouselSlider.builder(
-        itemCount: widget.activity.additionalMedia.length,
-        options: CarouselOptions(
-            initialPage: 0,
-            enlargeCenterPage: true,
-            height: MediaQuery.of(context).size.height * 0.5,
-            onPageChanged: (index, reason) =>
-                setState(() => activeIndex = index)),
-        itemBuilder: (context, index, realIndex) {
-          final urlImage = widget.activity.additionalMedia[index];
+    itemCount: widget.activity.additionalMedia.length,
+    options: CarouselOptions(
+        initialPage: 0,
+        enlargeCenterPage: true,
+        height: MediaQuery.of(context).size.height * 0.3,
+        onPageChanged: (index, reason) =>
+            setState(() => activeIndex = index)),
+    itemBuilder: (context, index, realIndex) {
+      final urlImage = widget.activity.additionalMedia[index];
 
-          return buildImage(urlImage, index);
-        },
-      );
-  Widget buildImage(String url, int index) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 12),
-      child: Stack(
-        children: [
-          const Center(
-            child: CircularProgressIndicator(), // Loading indicator
-          ),
-          Center(
-            child: FadeInImage.memoryNetwork(
-              placeholder:
-                  kTransparentImage, // A 1x1 transparent image as a placeholder.
-              image: generateDirectDownloadUrl(url),
-              fit: BoxFit.fitWidth,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  String generateDirectDownloadUrl(String originalUrl) {
-    final urlParts = Uri.parse(originalUrl).pathSegments;
-    final fileId = urlParts[urlParts.indexOf('d') + 1];
-    final directDownloadUrl =
-        'https://drive.google.com/uc?export=download&id=$fileId';
-    return directDownloadUrl;
-  }
+      return buildImage(context, urlImage, index);
+    },
+  );
 
   Widget buildIndicator() => AnimatedSmoothIndicator(
-        activeIndex: activeIndex,
-        count: widget.activity.additionalMedia.length,
-        effect: const JumpingDotEffect(
-            dotColor: Colors.grey,
-            activeDotColor: Colors.green,
-            dotHeight: 10,
-            dotWidth: 10),
-      );
+    activeIndex: activeIndex,
+    count: widget.activity.additionalMedia.length,
+    effect: const JumpingDotEffect(
+        dotColor: Colors.grey,
+        activeDotColor: Colors.green,
+        dotHeight: 10,
+        dotWidth: 10),
+  );
 }
