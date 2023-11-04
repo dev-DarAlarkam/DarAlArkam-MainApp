@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 
 import '../../backend/Activities/Activity.dart';
 
-class CreateAnActivityTab extends StatefulWidget {
-  CreateAnActivityTab({super.key});
-  Activity activity= Activity.empty();
+class EditAnActivityTab extends StatefulWidget {
+  EditAnActivityTab({super.key, required this.activity});
+  Activity activity;
   @override
-  State<CreateAnActivityTab> createState() => _CreateAnActivityTabState();
+  State<EditAnActivityTab> createState() => _EditAnActivityTabState();
 }
 
-class _CreateAnActivityTabState extends State<CreateAnActivityTab> {
+class _EditAnActivityTabState extends State<EditAnActivityTab> {
   List<TextEditingController> textControllers = [TextEditingController()];
   TextEditingController _title = TextEditingController();
   TextEditingController _content = TextEditingController();
@@ -57,7 +57,17 @@ class _CreateAnActivityTabState extends State<CreateAnActivityTab> {
   @override
   void initState() {
     super.initState();
-    _formattedDate = formatADate(_date);
+    _title = TextEditingController(text: widget.activity.title);
+    _content = TextEditingController(text: widget.activity.content);
+    _thumbnail = TextEditingController(text: widget.activity.thumbnail);
+    _formattedDate = widget.activity.date;
+    for(int i=0; i<widget.activity.additionalMedia.length;++i){
+      if(i<1){
+        textControllers[i] = TextEditingController(text: widget.activity.additionalMedia[i]);
+      } else {
+        textControllers.add(TextEditingController(text: widget.activity.additionalMedia[i]));
+      }
+    }
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
+import 'package:daralarkam_main_app/ui/activities/ActivitiesListForAdmin.dart';
 import 'package:daralarkam_main_app/ui/activities/createAnActivity.dart';
 import 'package:daralarkam_main_app/ui/firebase/userManagement/guestManagement.dart';
 import 'package:daralarkam_main_app/ui/firebase/userManagement/users-tab.dart';
@@ -70,29 +71,46 @@ class AdminTab extends StatelessWidget {
 
 
                         //Admin functions
-                        SingleChildScrollView(
-                          child: Column(
-                              children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height*0.6,
+                          width: MediaQuery.of(context).size.width*0.9,
+                          child: SingleChildScrollView(
+                            child: Column(
+                                children: [
 
-                                //A button to navigate to the "Users Tab"
-                                navigationButtonFul(context, "المستخدمون", UsersTab()),
-                                const SizedBox(height: 10,),
+                                  coloredArabicText("إدارة المستخدمين"),
+                                  //A button to navigate to the "Users Tab"
+                                  navigationButtonFul(context, "المستخدمون", UsersTab()),
+                                  const SizedBox(height: 10,),
 
-                                //A button to navigate to the "Guest Management Tab"
-                                navigationButtonFul(context, "إدارة الضيوف", GuestManagementTab()),
-                                const SizedBox(height: 10,),
+                                  //A button to navigate to the "Guest Management Tab"
+                                  navigationButtonFul(context, "إدارة الضيوف", GuestManagementTab()),
+                                  const SizedBox(height: 10,),
 
-                                //A button to navigate to the "Create A classroom tab"
-                                navigationButtonFul(context, "انشئ مجموعة", CreateAClassroomTab()),
-                                const SizedBox(height: 10,),
+                                  Divider(),
 
-                                //A button to navigate to the "Classrooms Tab For Admin"
-                                navigationButtonFul(context, "المجموعات", ClassroomsTabForAdmin()),
-                                const SizedBox(height: 10,),
+                                  coloredArabicText("إدارة المجموعات"),
+                                  //A button to navigate to the "Classrooms Tab For Admin"
+                                  navigationButtonFul(context, "المجموعات", ClassroomsTabForAdmin()),
+                                  const SizedBox(height: 10,),
 
-                                //A button to navigate to the "create a new activity"
-                                navigationButtonFul(context, "أضف فعالية", CreateAnActivityTab()),
-                              ]
+                                  //A button to navigate to the "Create A classroom tab"
+                                  navigationButtonFul(context, "انشئ مجموعة", CreateAClassroomTab()),
+                                  const SizedBox(height: 10,),
+
+                                  Divider(),
+
+                                  coloredArabicText("إدارة الفعاليات"),
+                                  //A button to navigate to the "Activities List For Admin"
+                                  navigationButtonFul(context, "الفعاليات", ActivitiesListForAdminTab()),
+                                  const SizedBox(height: 10,),
+                                  //A button to navigate to the "create a new activity"
+                                  navigationButtonFul(context, "أضف فعالية", CreateAnActivityTab()),
+                                  const SizedBox(height: 10,),
+
+
+                                ]
+                            ),
                           ),
                         ),
                         const Expanded(flex:2,child: SizedBox()),

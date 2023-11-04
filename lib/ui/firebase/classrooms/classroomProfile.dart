@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 import '../../../backend/userManagement/firebaseUserUtils.dart';
 import '../../../backend/users/users.dart';
-import '../../activities/activities.dart';
+import '../../inactiveFeature.dart';
 import '../../widgets/navigate-to-tab-button.dart';
 import '../../widgets/text.dart';
 
