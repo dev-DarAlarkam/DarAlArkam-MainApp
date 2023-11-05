@@ -1,4 +1,5 @@
 import 'package:daralarkam_main_app/ui/home/home.dart';
+import 'package:daralarkam_main_app/ui/splashScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
     ]);
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.green,),
-      home: const Home(),
+      home: const SplashScreen(),
     );
   }
 }

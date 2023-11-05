@@ -31,14 +31,14 @@ class ActivityMethods {
     final snapshot = await docActivity.get();
 
     if(snapshot.exists) {
-      await docActivity.update(activity.toJson()).then((_) {
-        showSnackBar(context, "تمت تعديل الفعالية بنجاح");
+      await docActivity.set(activity.toJson()).then((_) {
+        showSnackBar(context, "تم تعديل الفعالية بنجاح");
       }).catchError((error, stackTrace) {
         showSnackBar(context, error.toString());
       });
     }
     else {
-      print("this activity doesn't exist");
+      showSnackBar(context, "هذه الفعالية غير موجودة");
     }
   }
 

@@ -49,7 +49,7 @@ class _EditAnActivityTabState extends State<EditAnActivityTab> {
     widget.activity.updateAdditionalMedia(_urls);
 
     await ActivityMethods(widget.activity.id)
-        .uploadANewActivityToFirestore(context, widget.activity);
+        .updateAnActivityInFirestore(context, widget.activity);
   }
 
 
