@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daralarkam_main_app/ui/activities/activities.dart';
+import 'package:daralarkam_main_app/ui/inactiveFeature.dart';
 import 'package:flutter/material.dart';
 import '../../../ui/firebase/users/admin/admin.dart';
 import '../../../ui/firebase/users/guest/guest.dart';
@@ -41,7 +41,7 @@ void navigateBasedOnType(BuildContext context, String uid) {
               case "new":
                 return const NewUserTab();
               default :
-                return const Activities();
+                return const InactiveFeatureTab();
             }
           }
         },

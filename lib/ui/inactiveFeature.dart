@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
 
 
-class Activities extends StatelessWidget {
-  const Activities({Key? key}) : super(key: key);
+class InactiveFeatureTab extends StatelessWidget {
+  const InactiveFeatureTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

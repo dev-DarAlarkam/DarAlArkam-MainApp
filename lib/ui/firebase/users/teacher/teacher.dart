@@ -2,7 +2,7 @@ import 'dart:core';
 import 'package:daralarkam_main_app/backend/userManagement/firebaseUserMethods.dart';
 import 'package:daralarkam_main_app/backend/userManagement/teacherMethods.dart';
 import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
-import 'package:daralarkam_main_app/ui/activities/activities.dart';
+import 'package:daralarkam_main_app/ui/inactiveFeature.dart';
 import 'package:daralarkam_main_app/ui/firebase/counter/counterScreenWrite.dart';
 import 'package:daralarkam_main_app/ui/firebase/counter/countersViewer.dart';
 import 'package:daralarkam_main_app/ui/home/home.dart';
@@ -110,7 +110,7 @@ class TeacherTab extends StatelessWidget {
                                     const SizedBox(height: 10,),
 
                                     //disabled feature
-                                    navigationButtonLess(context,"إحصائيات",Activities()),
+                                    navigationButtonLess(context,"إحصائيات",InactiveFeatureTab()),
                                   ],
                                 ),
                               ]
