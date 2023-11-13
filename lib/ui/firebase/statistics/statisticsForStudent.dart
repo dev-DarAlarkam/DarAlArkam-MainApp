@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daralarkam_main_app/ui/firebase/statistics/statisticsWidgets.dart';
 import 'package:flutter/material.dart';
-import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
 
 import '../../../backend/classReport/classReport.dart';
 import '../../widgets/text.dart';
@@ -29,7 +29,6 @@ class StatisticsForStudentTab extends StatelessWidget {
                   const SizedBox(height: 10,),
                   SizedBox(height: height*.1,child: Image.asset("lib/assets/photos/logo.png"),),
                   const SizedBox(height: 10,),
-                  //Getting user info
                   coloredArabicText("ملخص الحضور"),
                   const Expanded(child: SizedBox()),
                   StreamBuilder(
@@ -58,7 +57,7 @@ class StatisticsForStudentTab extends StatelessWidget {
                           for (AttendanceCounterTypes value in AttendanceCounterTypes.values) {
                             if (stats[value] != null) {
                               if (value != AttendanceCounterTypes.Unknown){
-                                rows.add(infoRow(translateAttendanceCounterTypes(value), stats[value]!, context));
+                                rows.add(statViewRow(translateAttendanceCounterTypes(value), stats[value]!, context));
                                 rows.add(const SizedBox(height: 10,));
                               }
                             }
@@ -95,38 +94,4 @@ class StatisticsForStudentTab extends StatelessWidget {
           .map((event) => event.docs.map((e) => ClassReport.fromJson(e.data())).toList());
 
 
-  Widget infoRow(String name, int stat, BuildContext context){
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Expanded(flex:1,child: SizedBox()),
-          Container(
-              height: height*0.05,
-              width: width*0.4,
-              decoration: BoxDecoration(
-                color: colors.green,
-                borderRadius: BorderRadiusDirectional.circular(10),
-              ),
-              child: Center(child: coloredArabicText(name, c: Colors.white))
-          ),
-          const Expanded(flex:1,child: SizedBox()),
-          Container(
-              height: height*0.05,
-              width: width*0.3,
-              decoration: BoxDecoration(
-                color: colors.green,
-                borderRadius: BorderRadiusDirectional.circular(10),
-              ),
-              child: Center(child: coloredArabicText("$stat", c: Colors.white))
-          ),
-          const Expanded(flex:1,child: SizedBox()),
-        ],
-      ),
-    );
-  }
 }

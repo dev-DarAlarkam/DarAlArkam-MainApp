@@ -4,6 +4,7 @@ import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
 import 'package:daralarkam_main_app/ui/firebase/classReport/classReportsViewerForStudents.dart';
 import 'package:daralarkam_main_app/ui/firebase/counter/counterScreenWrite.dart';
 import 'package:daralarkam_main_app/ui/firebase/counter/countersViewer.dart';
+import 'package:daralarkam_main_app/ui/firebase/statistics/statisticsForCounters.dart';
 import 'package:daralarkam_main_app/ui/firebase/statistics/statisticsForStudent.dart';
 import 'package:daralarkam_main_app/ui/home/home.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
@@ -94,6 +95,10 @@ class StudentTab extends StatelessWidget {
 
                                     //Navigation button to the Counters Viewer Tab
                                     navigationButtonFul(context,"الأيام السابقة",CountersViewer(uid: getCurrentUserId(),)),
+                                    const SizedBox(height: 10,),
+
+                                    //Navigation button to the Statistics For Counters Tab
+                                    navigationButtonLess(context,"إحصائيات",StatisticsForCounters(uid: getCurrentUserId(),)),
                                   ],
                                 ),
 

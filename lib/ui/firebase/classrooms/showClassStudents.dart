@@ -25,7 +25,7 @@ class _ShowClassStudentsTabState extends State<ShowClassStudentsTab> {
   // List to store students data
   List<Student> students = [];
 
-  // Stream to read students who are not in any classroom
+  // Stream to read students who are in the classroom
   Stream<List<FirebaseUser>> readStudentsInsideAClassroom(String classId) =>
       FirebaseFirestore.instance
           .collection('users')

@@ -14,6 +14,7 @@ class SalahCounter {
   SalahCounterTypes asr = SalahCounterTypes.DidntDoIt;
   SalahCounterTypes maghrib = SalahCounterTypes.DidntDoIt;
   SalahCounterTypes ishaa = SalahCounterTypes.DidntDoIt;
+  int stat =0;
 
   SalahCounter();
 
@@ -35,6 +36,10 @@ class SalahCounter {
 
   void updateIshaa() {
     ishaa = _getNextEnumValue(ishaa);
+  }
+
+  void updateStat() {
+    stat = fajr.index + duhr.index + asr.index + maghrib.index + ishaa.index;
   }
 
   SalahCounterTypes _getNextEnumValue(SalahCounterTypes current) {
@@ -74,13 +79,18 @@ class NawafelCounter {
   bool duha = false;
   bool qiyam = false;
   bool siyam = false;
+  int stat = 0;
 
   NawafelCounter();
 
   void updateDuha() {duha = duha? false : true;}
   void updateQiyam() {qiyam = qiyam? false : true;}
   void updateSiyam() {siyam = siyam? false : true;}
-
+  void updateStat() {
+    stat = duha ? 1 : 0;
+    stat += qiyam ? 1 : 0;
+    stat += siyam ? 1 : 0;
+  }
   Map<String,dynamic> toJson() => {
     "duha" : duha,
     "qiyam" : qiyam,
@@ -101,14 +111,19 @@ class DhekrCounter {
   bool tahlil = false;
   bool salah = false;
   bool istighfar = false;
-
+  int stat = 0;
   DhekrCounter();
 
   void updateSabah() {morningEvening = morningEvening? false : true;}
   void updateTahlil() {tahlil = tahlil? false : true;}
   void updateSalah() {salah = salah? false : true;}
   void updateIstighfar() {istighfar = istighfar? false : true;}
-
+  void updateStat() {
+    stat = morningEvening ? 1 : 0;
+    stat += tahlil ? 1 : 0;
+    stat += salah ? 1 : 0;
+    stat += istighfar ? 1 : 0;
+  }
   Map<String,dynamic> toJson() => {
     "morningEvening" : morningEvening,
     "tahlil" : tahlil,
@@ -131,12 +146,18 @@ class KhairCounter {
   bool berr = false;
   bool ghadd = false;
   bool sawn = false;
+  int stat = 0;
 
   KhairCounter();
 
   void updateBerr() {berr = berr? false : true;}
   void updateGhadd() {ghadd = ghadd? false : true;}
   void updateSawn() {sawn = sawn? false : true;}
+  void updateStat() {
+    stat = berr ? 1 : 0;
+    stat += ghadd ? 1 : 0;
+    stat += sawn ? 1 : 0;
+  }
 
   Map<String,dynamic> toJson() => {
     "berr" : berr,
@@ -160,6 +181,7 @@ class Counter {
   final NawafelCounter nawafel;
   final DhekrCounter dhekr;
   final KhairCounter khair;
+  int stat = 0;
 
   Counter({
     required this.date,
@@ -169,9 +191,19 @@ class Counter {
     required this.khair,
   });
 
+  int updateStat() {
+    salah.updateStat();
+    nawafel.updateStat();
+    dhekr.updateStat();
+    khair.updateStat();
+
+    stat = salah.stat + nawafel.stat + dhekr.stat + khair.stat;
+    return stat;
+  }
 
   Map<String, dynamic> toJson() => {
     "date": date,
+    "stat" : updateStat(),
     "counter": {
       "salah": salah.toJson(),
       "nawafel": nawafel.toJson(),
