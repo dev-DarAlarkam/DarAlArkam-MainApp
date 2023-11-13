@@ -233,8 +233,11 @@ class FirebaseUserMethods {
     }
   }
 
-  // Deletes the user from Firestore.
+  // Deletes the user from Firestore, before that it 
   Future<void> deleteUser(BuildContext context) async {
+
+    castToGuest(context);
+
     final docUser = FirebaseFirestore.instance.collection('users').doc(userId);
     await docUser.delete();
     Navigator.pop(context);

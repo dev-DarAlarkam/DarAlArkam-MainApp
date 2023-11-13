@@ -2,14 +2,14 @@ import 'dart:ui';
 
 class StatsForCounter {
   List<int> stats;
-  List<List<Data>> data;
+  List<List<Data>> weeklyData;
   int numOfCounters;
   double average;
   int highestMark;
 
   StatsForCounter({
     required this.stats,
-    required this.data,
+    required this.weeklyData,
     required this.numOfCounters,
     required this.average,
     required this.highestMark,

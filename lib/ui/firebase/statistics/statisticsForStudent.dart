@@ -57,7 +57,7 @@ class StatisticsForStudentTab extends StatelessWidget {
                           for (AttendanceCounterTypes value in AttendanceCounterTypes.values) {
                             if (stats[value] != null) {
                               if (value != AttendanceCounterTypes.Unknown){
-                                rows.add(infoRow(translateAttendanceCounterTypes(value), stats[value]!, context));
+                                rows.add(statViewRow(translateAttendanceCounterTypes(value), stats[value]!, context));
                                 rows.add(const SizedBox(height: 10,));
                               }
                             }
