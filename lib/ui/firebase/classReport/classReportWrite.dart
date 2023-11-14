@@ -7,7 +7,6 @@ import 'package:daralarkam_main_app/backend/users/users.dart';
 import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 
-import '../../../backend/userManagement/firebaseUserUtils.dart';
 final GlobalKey<FormState> _titleFormKey = GlobalKey<FormState>();
 final GlobalKey<FormState> _summaryFormKey = GlobalKey<FormState>();
 final TextEditingController _title = TextEditingController();

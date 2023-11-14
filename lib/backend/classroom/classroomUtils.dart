@@ -24,7 +24,7 @@ class ClassroomMethods {
  }
 
  Future<bool> doesClassroomExistInFirestore() async {
-   final docUser = FirebaseFirestore.instance.collection('users').doc(classId);
+   final docUser = FirebaseFirestore.instance.collection('classrooms').doc(classId);
    final snapshot = await docUser.get();
 
    if (snapshot.exists) {
