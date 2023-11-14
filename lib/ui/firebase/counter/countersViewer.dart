@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../backend/counter/counter.dart';
 import '../../widgets/text.dart';
+import 'counterScreenEdit.dart';
 
 // Enum to determine the sort order for counters' list
 enum SortOrder { ascending, descending }
@@ -111,5 +112,14 @@ class _CountersViewerState extends State<CountersViewer> {
           MaterialPageRoute(
               builder: (context) => CounterScreenRead(counter: counter)));
     },
+    trailing: ElevatedButton(
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => CounterScreenEdit(counter: counter)));
+      },
+      child: Text("تعديل"),
+    ),
   );
 }

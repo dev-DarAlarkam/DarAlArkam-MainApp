@@ -16,6 +16,7 @@ import '../../../../backend/users/users.dart';
 import '../../../../services/firebaseAuthMethods.dart';
 import '../../../widgets/navigate-to-tab-button.dart';
 import '../../classrooms/classrooms-tab.dart';
+import '../../statistics/statisticsForCounters.dart';
 
 
 class TeacherTab extends StatelessWidget {
@@ -96,6 +97,11 @@ class TeacherTab extends StatelessWidget {
 
                                     //Navigation button to the Counters Viewer Tab
                                     navigationButtonFul(context,"الأيام السابقة",CountersViewer(uid: getCurrentUserId(),)),
+                                    const SizedBox(height: 10,),
+
+                                    //Navigation button to the Statistics For Counters Tab
+                                    navigationButtonLess(context,"إحصائيات",StatisticsForCounters(uid: getCurrentUserId(),)),
+
                                   ],
                                 ),
 

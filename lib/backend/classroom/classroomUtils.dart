@@ -12,7 +12,9 @@ class ClassroomMethods {
  final String classId;
  ClassroomMethods(this.classId);
 
- // Fetches classroom information from Firestore.
+ /// Fetches classroom information from Firestore.
+ /// this function returns a Classroom if it finds the one, or null if it doesn't
+ /// find it.
  Future<Classroom?> fetchClassroomFromFirebase() async{
    final docClass = FirebaseFirestore.instance.collection('classrooms').doc(classId);
    final snapshot = await docClass.get();
@@ -23,6 +25,8 @@ class ClassroomMethods {
    return null;
  }
 
+
+ /// Checks if the given classId matches an existing Classroom document in Firestore.
  Future<bool> doesClassroomExistInFirestore() async {
    final docUser = FirebaseFirestore.instance.collection('classrooms').doc(classId);
    final snapshot = await docUser.get();
@@ -63,9 +67,6 @@ class ClassroomMethods {
  }
 
 
- /// Adds a teacher as the classroom teacher, updates the teacherId in the classroom document,
- /// and the classIds in the teacher's document.
- ///
  /// This function adds a teacher to a classroom as the teacher and ensures that the teacher is not
  /// already the teacher of the classroom. If the classroom already has a teacher, the previous
  /// teacher is removed from the classroom. It also checks if the teacher exists in Firestore
