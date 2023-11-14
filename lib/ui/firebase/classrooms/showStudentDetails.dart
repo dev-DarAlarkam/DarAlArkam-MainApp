@@ -5,7 +5,7 @@ import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 
 import '../../../backend/userManagement/firebaseUserUtils.dart';
-import '../counter/countersViewer.dart';
+import '../counter/countersViewerWithoutEdit.dart';
 
 class ShowStudentDetailsTab extends StatelessWidget {
   const ShowStudentDetailsTab({Key? key, required this.uid, required this.cid}) : super(key: key);
@@ -55,7 +55,7 @@ class ShowStudentDetailsTab extends StatelessWidget {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => CountersViewer(uid: uid,)));
+                                        builder: (context) => CountersViewerWithoutEdit(uid: uid,)));
                               }, child: coloredArabicText("برنامج المحاسبة", c: Colors.white)),
                               const SizedBox(height: 10,),
 

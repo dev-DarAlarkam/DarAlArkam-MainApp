@@ -58,7 +58,7 @@ class _ClassReportWriteTabState extends State<ClassReportWriteTab> {
               appBar: AppBar(
                 leading: IconButton(
                     onPressed:() async {
-                      await _showDeleteConfirmationDialog(report, widget.classId);
+                      await _showSaveConfirmationDialog(report, widget.classId);
                       Navigator.of(context).pop();
                     },
                     icon: const Icon(Icons.arrow_back)
@@ -215,7 +215,7 @@ class _ClassReportWriteTabState extends State<ClassReportWriteTab> {
     );
   }
 
-  Future<void> _showDeleteConfirmationDialog(ClassReport report, String classId) async {
+  Future<void> _showSaveConfirmationDialog(ClassReport report, String classId) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // Dialog cannot be dismissed by tapping outside
@@ -223,11 +223,11 @@ class _ClassReportWriteTabState extends State<ClassReportWriteTab> {
         return Directionality(
           textDirection: TextDirection.rtl,
           child: AlertDialog(
-            title: Text('تأكيد الحذف'),
+            title: Text('تأكيد الحفظ'),
             content: const SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text('هل تريد حقًا حذف هذه المجموعة؟'),
+                  Text('هل تريد حقًا الخروج بدون حفظ التقرير؟'),
                 ],
               ),
             ),
@@ -239,7 +239,7 @@ class _ClassReportWriteTabState extends State<ClassReportWriteTab> {
                 },
               ),
               TextButton(
-                child: Text('حذف'),
+                child: Text('حفظ'),
                 onPressed: () async  {
                   final docClass =
                   FirebaseFirestore.instance.collection('classrooms').doc(classId);

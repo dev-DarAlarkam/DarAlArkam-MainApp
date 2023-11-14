@@ -115,7 +115,7 @@ class _SelectATeacherTabState extends State<SelectATeacherTab> {
         return Directionality(
           textDirection: TextDirection.rtl,
           child: AlertDialog(
-            title: Text('تأكيد الحذف'),
+            title: Text('تأكيد التغيير'),
             content: const SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[

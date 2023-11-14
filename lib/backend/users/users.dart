@@ -19,6 +19,10 @@ class FirebaseUser {
     required this.type,
   });
 
+  String getFullName() {
+    return firstName+" "+secondName+" "+thirdName;
+  }
+
 
   Map<String, dynamic> toJson() => {
     "id" : id,

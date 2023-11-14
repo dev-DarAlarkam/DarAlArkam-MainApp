@@ -2,6 +2,7 @@ import 'dart:core';
 import 'package:daralarkam_main_app/ui/activities/ActivitiesListForAdmin.dart';
 import 'package:daralarkam_main_app/ui/activities/createAnActivity.dart';
 import 'package:daralarkam_main_app/ui/firebase/userManagement/guestManagement.dart';
+import 'package:daralarkam_main_app/ui/firebase/userManagement/searchAUser.dart';
 import 'package:daralarkam_main_app/ui/firebase/userManagement/users-tab.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -79,6 +80,10 @@ class AdminTab extends StatelessWidget {
                                   coloredArabicText("إدارة المستخدمين"),
                                   //A button to navigate to the "Users Tab"
                                   navigationButtonFul(context, "المستخدمون", UsersTab()),
+                                  const SizedBox(height: 10,),
+
+                                  //A button to navigate to the "Users Tab"
+                                  navigationButtonFul(context, "بحث", SearchAUserTab()),
                                   const SizedBox(height: 10,),
 
                                   //A button to navigate to the "Guest Management Tab"
