@@ -51,7 +51,7 @@ class FirebaseUserMethods {
     if (user != null) {
       return user.type;
     }
-    return '';
+    return 'new';
   }
 
   /// Converts a user to a guest role in Firestore.

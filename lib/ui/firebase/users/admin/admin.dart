@@ -70,8 +70,8 @@ class AdminTab extends StatelessWidget {
 
                         //Admin functions
                         SizedBox(
-                          height: MediaQuery.of(context).size.height*0.6,
-                          width: MediaQuery.of(context).size.width*0.9,
+                          height: MediaQuery.of(context).size.height*0.7,
+                          width: double.maxFinite,
                           child: SingleChildScrollView(
                             child: Column(
                                 children: [

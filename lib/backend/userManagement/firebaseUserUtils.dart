@@ -61,5 +61,5 @@ Future<void> updateUser(BuildContext context, String uid, String newType) async 
   }
 
   // Exit the current tab after executing the role change.
-  Navigator.pop(context);
+
 }

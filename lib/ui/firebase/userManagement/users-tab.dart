@@ -6,7 +6,7 @@ import 'package:daralarkam_main_app/ui/firebase/userManagement/user-profile.dart
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 
-// Enum to determine the sort order for counters' list
+// Enum to determine the sort order for users list
 enum SortOrder { ascending, descending, byFirstName}
 
 class UsersTab extends StatefulWidget {
@@ -25,7 +25,7 @@ class _UsersTabState extends State<UsersTab> {
   @override
   void initState() {
     super.initState();
-    // Fetch and sort the counters when the widget is initialized
+    // Fetch and sort the users when the widget is initialized
     sortUsers(_currentSortOrder);
   }
 
@@ -37,7 +37,7 @@ class _UsersTabState extends State<UsersTab> {
           appBar: AppBar(
             title: const Text("المستخدمون"),
             actions: [
-              // Sort button in the app bar
+              // Sort dropdown menu in the app bar
               DropdownButton<String>(
                 value: _currentSortOrder,
                 onChanged: _onSortOrderChanged, // Call the function to update the chosen sort order
@@ -51,6 +51,7 @@ class _UsersTabState extends State<UsersTab> {
             ],
           ),
           body:  Center(
+            //fetching the users' data from firestore  
             child: StreamBuilder(
                     stream: readUsers(),
                     builder: (context, snapshot) {
@@ -71,6 +72,16 @@ class _UsersTabState extends State<UsersTab> {
         )
     );
   }
+
+  /// Retrieves a stream of user data for all users.
+  ///
+  /// This function creates and returns a stream that listens for changes
+  /// in the 'users' collection of the Firestore database.
+  ///
+  /// The stream emits a list of [FirebaseUser] objects whenever there
+  /// is a change in the data.
+  ///
+  /// Returns a [Stream] of [List] of [FirebaseUser].
   Stream<List<FirebaseUser>> readUsers() => FirebaseFirestore.instance
       .collection('users')
       .where('id', isNotEqualTo: getCurrentUserId())
@@ -86,7 +97,7 @@ class _UsersTabState extends State<UsersTab> {
     sortUsers(newSortOrder!);
   }
 
-  // Function to sort counters based on their date
+  // Function to sort users based on their date
   void sortUsers(String order) {
     if (order == 'تصاعدي') {
       // Sort in ascending order (A to Z)
@@ -100,6 +111,16 @@ class _UsersTabState extends State<UsersTab> {
     }
   }
 
+  /// Builds a [ListTile] widget representing a user in the user list.
+  ///
+  /// This function takes a [FirebaseUser] object and constructs a [ListTile]
+  /// with the user's full name as the title, the birthday and translated user type
+  /// as the subtitle. Additionally, a tap on the [ListTile] navigates to the
+  /// user's profile using the [UserProfile] widget.
+  ///
+  /// - [user]: The [FirebaseUser] object representing the user.
+  ///
+  /// Returns a [ListTile] widget.
   Widget buildUser(FirebaseUser user) => ListTile(
     title: Text(user.firstName+" "+user.secondName+" "+user.thirdName),
     subtitle: Text(user.birthday + " - " + translateUserTypes(user.type)),
