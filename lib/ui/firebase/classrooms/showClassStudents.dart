@@ -2,11 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/classroom/classroomUtils.dart';
 import 'package:daralarkam_main_app/backend/userManagement/firebaseUserMethods.dart';
 import 'package:daralarkam_main_app/backend/userManagement/studentMethods.dart';
-import 'package:daralarkam_main_app/backend/users/users.dart';
+import 'package:daralarkam_main_app/backend/users/supervisor.dart';
 import 'package:daralarkam_main_app/ui/firebase/classrooms/showStudentDetails.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 import '../../../../services/utils/showSnackBar.dart';
+import '../../../backend/users/firebaseUser.dart';
+import '../../../backend/users/student.dart';
 
 // Enum to determine the sort order for students' list
 enum SortOrder { ascending, descending }
@@ -98,7 +100,7 @@ class _ShowClassStudentsTabState extends State<ShowClassStudentsTab> {
 
   // Build a list tile for a student
   Widget buildStudent(Student student) => ListTile(
-    title: Text(student.firstName + " " + student.secondName + " " + student.thirdName),
+    title: Text(student.fullName),
     subtitle: Text(student.birthday),
     trailing: ElevatedButton(
       onPressed: () {

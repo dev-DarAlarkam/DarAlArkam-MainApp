@@ -10,7 +10,8 @@ import 'package:daralarkam_main_app/ui/widgets/my-flutter-app-icons.dart';
 import 'package:flutter/material.dart';
 
 import '../../../backend/userManagement/firebaseUserUtils.dart';
-import '../../../backend/users/users.dart';
+import '../../../backend/users/firebaseUser.dart';
+import '../../../backend/users/supervisor.dart';
 import '../../inactiveFeature.dart';
 import '../../widgets/navigate-to-tab-button.dart';
 import '../../widgets/text.dart';
@@ -39,7 +40,7 @@ class _ClassroomProfileTabState extends State<ClassroomProfileTab> {
                   onPressed: () {
                     setState(() {});
                     }
-                  , icon: Icon(Icons.update)
+                  , icon: const Icon(Icons.refresh)
               )
             ],
           ),

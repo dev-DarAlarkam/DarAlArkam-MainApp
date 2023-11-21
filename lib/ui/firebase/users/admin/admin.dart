@@ -2,17 +2,19 @@ import 'dart:core';
 import 'package:daralarkam_main_app/ui/activities/ActivitiesListForAdmin.dart';
 import 'package:daralarkam_main_app/ui/activities/createAnActivity.dart';
 import 'package:daralarkam_main_app/ui/firebase/userManagement/guestManagement.dart';
+import 'package:daralarkam_main_app/ui/firebase/userManagement/searchAUser.dart';
 import 'package:daralarkam_main_app/ui/firebase/userManagement/users-tab.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../backend/userManagement/firebaseUserMethods.dart';
+import '../../../../backend/users/firebaseUser.dart';
 import '../../../../services/firebaseAuthMethods.dart';
 import 'classrooms/classroom-tab-for-admin.dart';
 import 'classrooms/createAClassroom.dart';
 import '../../../../backend/userManagement/firebaseUserUtils.dart';
-import '../../../../backend/users/users.dart';
+import '../../../../backend/users/supervisor.dart';
 import '../../../widgets/navigate-to-tab-button.dart';
 
 class AdminTab extends StatelessWidget {
@@ -70,37 +72,37 @@ class AdminTab extends StatelessWidget {
 
                         //Admin functions
                         SizedBox(
-                          height: MediaQuery.of(context).size.height*0.6,
-                          width: MediaQuery.of(context).size.width*0.9,
+                          height: MediaQuery.of(context).size.height*0.7,
+                          width: double.maxFinite,
                           child: SingleChildScrollView(
                             child: Column(
                                 children: [
 
                                   coloredArabicText("إدارة المستخدمين"),
                                   //A button to navigate to the "Users Tab"
-                                  navigationButtonFul(context, "المستخدمون", UsersTab()),
+                                  navigationButtonFul(context, "المستخدمون", const UsersTab()),
                                   const SizedBox(height: 10,),
 
                                   //A button to navigate to the "Guest Management Tab"
-                                  navigationButtonFul(context, "إدارة الضيوف", GuestManagementTab()),
+                                  navigationButtonFul(context, "إدارة الضيوف", const GuestManagementTab()),
                                   const SizedBox(height: 10,),
 
-                                  Divider(),
+                                  const Divider(),
 
                                   coloredArabicText("إدارة المجموعات"),
                                   //A button to navigate to the "Classrooms Tab For Admin"
-                                  navigationButtonFul(context, "المجموعات", ClassroomsTabForAdmin()),
+                                  navigationButtonFul(context, "المجموعات", const ClassroomsTabForAdmin()),
                                   const SizedBox(height: 10,),
 
                                   //A button to navigate to the "Create A classroom tab"
-                                  navigationButtonFul(context, "انشئ مجموعة", CreateAClassroomTab()),
+                                  navigationButtonFul(context, "انشئ مجموعة", const CreateAClassroomTab()),
                                   const SizedBox(height: 10,),
 
-                                  Divider(),
+                                  const Divider(),
 
                                   coloredArabicText("إدارة الفعاليات"),
                                   //A button to navigate to the "Activities List For Admin"
-                                  navigationButtonFul(context, "الفعاليات", ActivitiesListForAdminTab()),
+                                  navigationButtonFul(context, "الفعاليات", const ActivitiesListForAdminTab()),
                                   const SizedBox(height: 10,),
                                   //A button to navigate to the "create a new activity"
                                   navigationButtonFul(context, "أضف فعالية", CreateAnActivityTab()),

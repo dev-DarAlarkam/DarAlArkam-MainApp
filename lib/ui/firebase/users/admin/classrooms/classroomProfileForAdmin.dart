@@ -2,15 +2,17 @@ import 'package:daralarkam_main_app/backend/classroom/classroom.dart';
 import 'package:daralarkam_main_app/backend/classroom/classroomUtils.dart';
 import 'package:daralarkam_main_app/backend/counter/getCounter.dart';
 import 'package:daralarkam_main_app/backend/userManagement/firebaseUserMethods.dart';
-import 'package:daralarkam_main_app/backend/users/users.dart';
+import 'package:daralarkam_main_app/backend/users/supervisor.dart';
 import 'package:daralarkam_main_app/ui/firebase/classReport/classReportWrite.dart';
 import 'package:daralarkam_main_app/ui/firebase/classReport/classReportsViewer.dart';
 import 'package:daralarkam_main_app/ui/firebase/classrooms/addStudentsToClass.dart';
 import 'package:daralarkam_main_app/ui/firebase/classrooms/showClassStudents.dart';
 import 'package:daralarkam_main_app/ui/firebase/users/admin/classrooms/selectATeacher.dart';
+import 'package:daralarkam_main_app/ui/firebase/users/admin/classrooms/teacherProfile.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../backend/userManagement/firebaseUserUtils.dart';
+import '../../../../../backend/users/firebaseUser.dart';
 import '../../../../widgets/navigate-to-tab-button.dart';
 import '../../../../widgets/text.dart';
 
@@ -42,7 +44,7 @@ class _ClassroomProfileForAdminTabState extends State<ClassroomProfileForAdminTa
                 onPressed: () {
                   setState(() {});
                 }
-                , icon: Icon(Icons.update)
+                , icon: const Icon(Icons.refresh)
             )
           ],
         ),
@@ -76,7 +78,13 @@ class _ClassroomProfileForAdminTabState extends State<ClassroomProfileForAdminTa
                               return Text('');
                             } else if (snapshot.hasData) {
                               final FirebaseUser user = snapshot.data! as FirebaseUser;
-                              return coloredArabicText('المربي: ' + getUsername(user));
+                              return TextButton(
+                                  onPressed: () {
+                                    // Navigation button to "Teacher's Profile" tab
+                                    Navigator.push(context, MaterialPageRoute(builder: (_)=> TeacherProfileTab(uid: user.id)));
+                                  },
+                                  child: coloredArabicText('المربي: ' + user.userName)
+                                  );
                             } else {
                               return Text("");
                             }

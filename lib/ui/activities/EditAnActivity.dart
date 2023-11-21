@@ -217,7 +217,7 @@ class _EditAnActivityTabState extends State<EditAnActivityTab> {
         return Directionality(
           textDirection: TextDirection.rtl,
           child: AlertDialog(
-            title: Text('تأكيد الحذف'),
+            title: Text('تأكيد الحفظ'),
             content: const SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[

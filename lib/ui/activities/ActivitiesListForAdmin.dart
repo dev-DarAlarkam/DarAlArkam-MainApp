@@ -129,7 +129,7 @@ class _ActivitiesListForAdminTabState extends State<ActivitiesListForAdminTab> {
             content: const SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text('هل تريد حقًا حذف هذا التقرير؟'),
+                  Text('هل تريد حقًا حذف هذه الفعالية؟'),
                 ],
               ),
             ),

@@ -92,10 +92,20 @@ class NavigateToStatelessTabButton extends StatelessWidget {
 Widget navigationButtonFul(BuildContext context, String text, StatefulWidget nextScreen){
   final double height = MediaQuery.of(context).size.height;
   final double width = MediaQuery.of(context).size.width;
-  return GestureDetector(
-      onTap: () {
+  return ElevatedButton(
+      onPressed: () {
         Navigator.push(context, MaterialPageRoute(builder: (context)=> nextScreen));
       },
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.resolveWith(
+              (states) {
+            if (states.contains(MaterialState.pressed)) {
+              return Colors.black26;
+            }
+            return colors.green;
+          },
+        ),
+      ),
       child: Container(
         height: height*0.1,
         width: width*0.35,
@@ -112,10 +122,20 @@ Widget navigationButtonFul(BuildContext context, String text, StatefulWidget nex
 Widget navigationButtonLess(BuildContext context, String text, StatelessWidget nextScreen){
   final double height = MediaQuery.of(context).size.height;
   final double width = MediaQuery.of(context).size.width;
-  return GestureDetector(
-      onTap: () {
+  return ElevatedButton(
+      onPressed: () {
         Navigator.push(context, MaterialPageRoute(builder: (context)=> nextScreen));
       },
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.resolveWith(
+              (states) {
+            if (states.contains(MaterialState.pressed)) {
+              return Colors.black26;
+            }
+            return colors.green;
+          },
+        ),
+      ),
       child: Container(
         height: height*0.1,
         width: width*0.35,

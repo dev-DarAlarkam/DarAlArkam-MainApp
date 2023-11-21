@@ -26,7 +26,7 @@ class _CounterScreenWriteState extends State<CounterScreenWrite> {
 
           leading: IconButton(
               onPressed:() async {
-                await _showDeleteConfirmationDialog();
+                await _showSaveConfirmationDialog();
                 Navigator.of(context).pop();
               },
               icon: const Icon(Icons.arrow_back)
@@ -269,7 +269,7 @@ class _CounterScreenWriteState extends State<CounterScreenWrite> {
         return "";
     }
   }
-  Future<void> _showDeleteConfirmationDialog() async {
+  Future<void> _showSaveConfirmationDialog() async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // Dialog cannot be dismissed by tapping outside
@@ -277,7 +277,7 @@ class _CounterScreenWriteState extends State<CounterScreenWrite> {
         return Directionality(
           textDirection: TextDirection.rtl,
           child: AlertDialog(
-            title: Text('تأكيد الحذف'),
+            title: Text('تأكيد الحفظ'),
             content: const SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[

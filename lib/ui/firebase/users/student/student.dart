@@ -13,7 +13,9 @@ import 'package:flutter/material.dart';
 import '../../../../backend/counter/getCounter.dart';
 import '../../../../backend/userManagement/firebaseUserMethods.dart';
 import '../../../../backend/userManagement/firebaseUserUtils.dart';
-import '../../../../backend/users/users.dart';
+import '../../../../backend/users/firebaseUser.dart';
+import '../../../../backend/users/student.dart';
+import '../../../../backend/users/supervisor.dart';
 import '../../../../services/firebaseAuthMethods.dart';
 import '../../../widgets/navigate-to-tab-button.dart';
 

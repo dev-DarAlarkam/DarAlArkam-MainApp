@@ -1,13 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daralarkam_main_app/backend/userManagement/navigator.dart';
-import 'package:daralarkam_main_app/backend/users/users.dart';
-import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
+import 'package:daralarkam_main_app/backend/counter/getCounter.dart';
+import 'package:daralarkam_main_app/backend/userManagement/additionalInformationMethods.dart';
+import 'package:daralarkam_main_app/backend/userManagement/firebaseUserMethods.dart';
+import 'package:daralarkam_main_app/backend/users/additionalInformation.dart';
+import 'package:daralarkam_main_app/ui/firebase/users/new-user/new_user_widgets.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
 
 import '../../../../backend/userManagement/firebaseUserUtils.dart';
+import '../../../../backend/users/firebaseUser.dart';
 
 class NewUserTab extends StatefulWidget {
   const NewUserTab({Key? key}) : super(key: key);
@@ -17,9 +19,14 @@ class NewUserTab extends StatefulWidget {
 }
 
 class _NewUserTabState extends State<NewUserTab> {
-  String birthday = "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}";
+  String birthday = getFormattedDate();
   DateTime _date = DateTime.now();
-  TextEditingController firstName = TextEditingController(), secondName = TextEditingController(), thirdName = TextEditingController();
+  TextEditingController firstName = TextEditingController(),
+      fatherName = TextEditingController(),
+      familyName = TextEditingController(),
+      grandfatherName = TextEditingController(),
+      groupName = TextEditingController(),
+      teacherName = TextEditingController();
 
   // Widget for the sign-up button
   Widget signUpButton() {
@@ -35,20 +42,22 @@ class _NewUserTabState extends State<NewUserTab> {
           final user = FirebaseUser(
               id: getCurrentUserId(),
               firstName: firstName.text,
-              secondName: secondName.text,
-              thirdName: thirdName.text,
+              fatherName: fatherName.text,
+              grandfatherName: grandfatherName.text,
+              familyName: familyName.text,
               birthday: birthday,
               type: "guest");
-          final json = user.toJson();
-          final docUser = FirebaseFirestore.instance
-              .collection('users')
-              .doc(getCurrentUserId());
-          await docUser.set(json).then((value) {
-            navigateBasedOnType(context, getCurrentUserId());
-          }).onError((error, stackTrace) {
-            showSnackBar(context, error.toString());
-          });
-        },
+
+          final info = AdditionalInformation(
+              id: getCurrentUserId(),
+              groupName: groupName.text,
+              teacherName: teacherName.text);
+
+          FirebaseUserMethods(user.id).uploadUserToFirestore(context, user);
+          AdditionalInformationMethods(user.id).uploadInfoToFirestore(context, info);
+          },
+
+
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith(
                 (states) {
@@ -88,7 +97,7 @@ class _NewUserTabState extends State<NewUserTab> {
                 .then((value) {
               setState(() {
                 _date = value!;
-                birthday = "${_date.day}/${_date.month}/${_date.year}";
+                birthday = formatADate(_date);
               });
             });
           },
@@ -119,126 +128,56 @@ class _NewUserTabState extends State<NewUserTab> {
           elevation: 0,
         ),
         body: Center(
-          child: SizedBox(
-            width: width * 0.9,
-            height: height * 0.9,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Expanded(flex:1,child: SizedBox() ),
-                SizedBox(height: height * 0.1,child: Image.asset("lib/assets/photos/main-logo.png"),),
-                const Expanded(flex:1,child: SizedBox() ),
-                boldColoredArabicText("إنشاء حساب"),
-                const Expanded(flex:1,child: SizedBox() ),
-                // First name input box
-                SizedBox(
-                  width: width * 0.6,
-                  height: height * 0.05,
-                  child: TextField(
-                    controller: firstName,
-                    enableSuggestions: true,
-                    autocorrect: true,
-                    cursorColor: Colors.black,
-                    textDirection: TextDirection.rtl,
-                    textAlign: TextAlign.right,
-                    textAlignVertical: TextAlignVertical.center,
-                    style: const TextStyle(
-                      color: Colors.black,
-                    ),
-                    decoration: InputDecoration(
-                      labelText: "اسم الطالب/ة",
-                      labelStyle: TextStyle(
-                        color: colors.green,
-                      ),
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.white24,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(width: 0, style: BorderStyle.solid, color: colors.green),
-                      ),
-                    ),
-                    keyboardType: TextInputType.name,
+          child: SingleChildScrollView(
+            child: SizedBox(
+              width: width * 0.9,
+              height: height * 0.9,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Expanded(flex:1,child: SizedBox() ),
+                  SizedBox(height: height * 0.1,child: Image.asset("lib/assets/photos/main-logo.png"),),
+                  const Expanded(flex:1,child: SizedBox() ),
+                  boldColoredArabicText("إنشاء حساب"),
+                  const Expanded(flex:1,child: SizedBox() ),
+
+                  // First name input box
+                  inputTextField(context, "اسم الطالب/ة", firstName),
+                  const SizedBox(height: 10,),
+                  // Second name input box
+                  inputTextField(context, "اسم الأب", fatherName),
+                  const SizedBox(height: 10,),
+                  // grandfather name input box
+                  inputTextField(context, "اسم الجد", grandfatherName),
+                  const SizedBox(height: 10,),
+                  // Third name input box
+                  inputTextField(context, "اسم العائلة", familyName),
+                  const SizedBox(height: 10,),
+
+                  const Divider(),
+
+                  // Birthday picker
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      birthdayButton(context),
+                      const SizedBox(width: 30,),
+                      Container(child: coloredArabicText(birthday))
+                    ],
                   ),
-                ),
-                const SizedBox(height: 10,),
-                // Second name input box
-                SizedBox(
-                  width: width * 0.6,
-                  height: height * 0.05,
-                  child: TextField(
-                    controller: secondName,
-                    enableSuggestions: true,
-                    autocorrect: true,
-                    cursorColor: Colors.black,
-                    textDirection: TextDirection.rtl,
-                    textAlign: TextAlign.right,
-                    textAlignVertical: TextAlignVertical.center,
-                    style: const TextStyle(
-                      color: Colors.black,
-                    ),
-                    decoration: InputDecoration(
-                      labelText: "اسم الأب",
-                      labelStyle: TextStyle(
-                        color: colors.green,
-                      ),
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.white24,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(width: 0, style: BorderStyle.solid, color: colors.green),
-                      ),
-                    ),
-                    keyboardType: TextInputType.name,
-                  ),
-                ),
-                const SizedBox(height: 10,),
-                // Third name input box
-                SizedBox(
-                  width: width * 0.6,
-                  height: height * 0.05,
-                  child: TextField(
-                    controller: thirdName,
-                    enableSuggestions: true,
-                    autocorrect: true,
-                    cursorColor: Colors.black,
-                    textDirection: TextDirection.rtl,
-                    textAlign: TextAlign.right,
-                    textAlignVertical: TextAlignVertical.center,
-                    style: const TextStyle(
-                      color: Colors.black,
-                    ),
-                    decoration: InputDecoration(
-                      labelText: "اسم العائلة",
-                      labelStyle: TextStyle(
-                        color: colors.green,
-                      ),
-                      filled: true,
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      fillColor: Colors.white24,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(width: 0, style: BorderStyle.solid, color: colors.green),
-                      ),
-                    ),
-                    keyboardType: TextInputType.name,
-                  ),
-                ),
-                const SizedBox(height: 10,),
-                // Birthday picker
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    birthdayButton(context),
-                    const SizedBox(width: 30,),
-                    Container(child: coloredArabicText(birthday))
-                  ],
-                ),
-                const Expanded(flex:1,child: SizedBox()),
-                signUpButton(),
-                const Expanded(flex:3,child: SizedBox()),
-              ],
+
+                  const Divider(),
+
+                  inputTextField(context, "اسم المجموعة", groupName),
+                  const SizedBox(height: 10,),
+                  // Third name input box
+                  inputTextField(context, "اسم المربي/ة", teacherName),
+
+                  const Expanded(flex:1,child: SizedBox()),
+                  signUpButton(),
+                  const Expanded(flex:3,child: SizedBox()),
+                ],
+              ),
             ),
           ),
         ),

@@ -1,7 +1,9 @@
 import 'package:daralarkam_main_app/backend/userManagement/firebaseUserMethods.dart';
-import 'package:daralarkam_main_app/backend/users/users.dart';
+import 'package:daralarkam_main_app/backend/users/supervisor.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../users/firebaseUser.dart';
 
 // Translates user types from one language to another.
 String translateUserTypes(String type) {
@@ -25,7 +27,7 @@ String getCurrentUserId() {
 }
 
 String getUsername(FirebaseUser user) {
-  return user.firstName + " " + user.secondName + " " + user.thirdName;
+  return user.userName;
 }
 
 /// Updates a user's role in Firestore.
@@ -61,5 +63,5 @@ Future<void> updateUser(BuildContext context, String uid, String newType) async 
   }
 
   // Exit the current tab after executing the role change.
-  Navigator.pop(context);
+
 }

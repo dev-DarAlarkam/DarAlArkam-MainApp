@@ -4,13 +4,13 @@ import 'package:daralarkam_main_app/ui/firebase/statistics/statisticsForStudent.
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 
-import '../../../backend/userManagement/firebaseUserUtils.dart';
-import '../counter/countersViewerWithoutEdit.dart';
+import '../../../../../backend/userManagement/firebaseUserUtils.dart';
+import '../../../counter/countersViewerWithoutEdit.dart';
 
-class ShowStudentDetailsTab extends StatelessWidget {
-  const ShowStudentDetailsTab({Key? key, required this.uid, required this.cid}) : super(key: key);
+
+class TeacherProfileTab extends StatelessWidget {
+  const TeacherProfileTab({Key? key, required this.uid}) : super(key: key);
   final String uid;
-  final String cid;
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -19,7 +19,7 @@ class ShowStudentDetailsTab extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("ملف الطالب الشخصي"),
+          title: const Text("ملف المربي الشخصي"),
         ),
         body: Center(
           child: Column(
@@ -40,7 +40,7 @@ class ShowStudentDetailsTab extends StatelessWidget {
                           child: Column(
                             children: [
                               //username
-                              coloredArabicText(user.firstName + " " + user.fatherName + " " + user.familyName),
+                              coloredArabicText(user.userName),
                               const SizedBox(height: 10,),
                               //type
                               coloredArabicText(translateUserTypes(user.type)),
@@ -59,23 +59,13 @@ class ShowStudentDetailsTab extends StatelessWidget {
                               }, child: coloredArabicText("برنامج المحاسبة", c: Colors.white)),
                               const SizedBox(height: 10,),
 
-                              //Counter Stats of the student
+                              //Counter Stats of the teacher
                               ElevatedButton(onPressed: (){
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => StatisticsForCounters(uid: uid)));
                               }, child: coloredArabicText("إحصائيات برنامج المحاسبة", c: Colors.white)),
-                              const SizedBox(height: 10,),
-
-                              //Attendance stats of the student
-                              ElevatedButton(onPressed: (){
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => StatisticsForStudentTab(classId:cid,studentId: uid,)));
-                              }, child: coloredArabicText("إحصائيات حضور الطالب", c: Colors.white)),
-
                             ],
                           ),
                         ),
