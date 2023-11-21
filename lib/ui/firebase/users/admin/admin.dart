@@ -83,10 +83,6 @@ class AdminTab extends StatelessWidget {
                                   navigationButtonFul(context, "المستخدمون", const UsersTab()),
                                   const SizedBox(height: 10,),
 
-                                  //A button to navigate to the "Users Tab"
-                                  navigationButtonFul(context, "بحث", const SearchAUserTab()),
-                                  const SizedBox(height: 10,),
-
                                   //A button to navigate to the "Guest Management Tab"
                                   navigationButtonFul(context, "إدارة الضيوف", const GuestManagementTab()),
                                   const SizedBox(height: 10,),

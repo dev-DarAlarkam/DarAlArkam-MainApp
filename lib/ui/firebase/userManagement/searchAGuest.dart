@@ -12,20 +12,20 @@ import '../../../backend/users/firebaseUser.dart';
 // Enum to determine the sort order for users list
 enum SortOrder { ascending, descending, byFirstName}
 
-class SearchAUserTab extends StatefulWidget {
-  const SearchAUserTab({Key? key}) : super(key: key);
+class SearchAGuestTab extends StatefulWidget {
+  const SearchAGuestTab({Key? key}) : super(key: key);
 
   @override
-  State<SearchAUserTab> createState() => _SearchAUserTabState();
+  State<SearchAGuestTab> createState() => _SearchAGuestTabState();
 }
 
-class _SearchAUserTabState extends State<SearchAUserTab> {
+class _SearchAGuestTabState extends State<SearchAGuestTab> {
   // Keeps track of the current sort order (ascending by default)
   String _currentSortOrder = 'تصاعدي'; // Initialize with a default sort order
-  
-  List<FirebaseUser> allUsers = [];
+
+  List<FirebaseUser> allGuests = [];
   // List to store users data
-  List<FirebaseUser> users = [];
+  List<FirebaseUser> filteredGuests = [];
   // TextEditingController for the search bar
   final TextEditingController controller = TextEditingController();
   @override
@@ -41,7 +41,7 @@ class _SearchAUserTabState extends State<SearchAUserTab> {
         textDirection: TextDirection.rtl,
         child: Scaffold(
           appBar: AppBar(
-            title: const Text("المستخدمون"),
+            title: const Text("الضيوف"),
             actions: [
               // Sort dropdown menu in the app bar
               DropdownButton<String>(
@@ -57,21 +57,21 @@ class _SearchAUserTabState extends State<SearchAUserTab> {
             ],
           ),
           body:  Center(
-            //fetching the users' data from firestore  
+            //fetching the users' data from firestore
             child: Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.fromLTRB(16,16,16,16), 
+                  margin: const EdgeInsets.fromLTRB(16,16,16,16),
                   child: TextField(
-                    
+
                     controller: controller,
                     decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.search),
-                      hintText: "ابحث",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: const BorderSide(color: Colors.green)
-                      )
+                        prefixIcon: const Icon(Icons.search),
+                        hintText: "ابحث",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: const BorderSide(color: Colors.green)
+                        )
                     ),
                     onChanged: searchUser,
                   ),
@@ -79,21 +79,21 @@ class _SearchAUserTabState extends State<SearchAUserTab> {
                 const Gap(10),
                 Expanded(
                   child: StreamBuilder(
-                          stream: readUsers(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasError){return Text(snapshot.error.toString());}
-                            else if(snapshot.hasData) {
-                              allUsers = snapshot.data as List<FirebaseUser>;
-                              // users = allUsers;
-                              sortUsers(_currentSortOrder);
-                              return Center(
-                                child: ListView(
-                                      children: users.map(buildUser).toList(),
-                                  ),
-                              );
-                              }
-                            else{return const Center(child: CircularProgressIndicator());}
-                          },
+                    stream: readUsers(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError){return Text(snapshot.error.toString());}
+                      else if(snapshot.hasData) {
+                        allGuests = snapshot.data as List<FirebaseUser>;
+                        // users = allUsers;
+                        sortUsers(_currentSortOrder);
+                        return Center(
+                          child: ListView(
+                            children: filteredGuests.map(buildUser).toList(),
+                          ),
+                        );
+                      }
+                      else{return const Center(child: CircularProgressIndicator());}
+                    },
                   ),
                 ),
               ],
@@ -114,7 +114,7 @@ class _SearchAUserTabState extends State<SearchAUserTab> {
   /// Returns a [Stream] of [List] of [FirebaseUser].
   Stream<List<FirebaseUser>> readUsers() => FirebaseFirestore.instance
       .collection('users')
-      .where('id', isNotEqualTo: getCurrentUserId())
+      .where('type', isEqualTo: "guest")
       .snapshots()
       .map((event) => event.docs
       .map((e) => FirebaseUser.fromJson(e.data())).toList());
@@ -131,13 +131,13 @@ class _SearchAUserTabState extends State<SearchAUserTab> {
   void sortUsers(String order) {
     if (order == 'تصاعدي') {
       // Sort in ascending order (A to Z)
-      users.sort((a, b) => a.fullName.compareTo(b.fullName));
+      filteredGuests.sort((a, b) => a.fullName.compareTo(b.fullName));
     } else if(order == 'تنازلي') {
       // Sort in descending order (Z to A)
-      users.sort((a, b) => b.fullName.compareTo(a.fullName));
+      filteredGuests.sort((a, b) => b.fullName.compareTo(a.fullName));
     } else {
       // Sort in ascending order (by type)
-      users.sort((a, b) => a.type.compareTo(b.type));
+      filteredGuests.sort((a, b) => a.type.compareTo(b.type));
     }
   }
 
@@ -153,16 +153,37 @@ class _SearchAUserTabState extends State<SearchAUserTab> {
   /// Returns a [ListTile] widget.
   Widget buildUser(FirebaseUser user) => ListTile(
     title: Text(user.fullName),
-    subtitle: Text(user.birthday + " - " + translateUserTypes(user.type)),
-    onTap: (){
-      Navigator.push(context, MaterialPageRoute(builder: (context)=> UserProfile(uid:user.id)));
+    subtitle: FutureBuilder(
+      future: AdditionalInformationMethods(user.id).fetchInfoFromFirestore(),
+      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.hasError){
+          return Text(snapshot.error.toString());
+        }
+        else if(snapshot.hasData){
+          final info = snapshot.data! as AdditionalInformation;
+          return Text(info.groupName + " - " + info.teacherName + " - " + user.birthday);
+        }
+        else if (snapshot.connectionState == ConnectionState.waiting){
+          return Text("يتم التحميل...");
+        }
+        else {
+          return Text("لا توجد معلومات إضافية - " + user.birthday);
+        }
+      },
+    ),
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => UserProfile(uid: user.id)),
+      );
     },
   );
+
   void searchUser(String query){
-    final List<FirebaseUser> suggestions = allUsers.where((user) {
+    final List<FirebaseUser> suggestions = allGuests.where((user) {
       return user.fullName.contains(query);
     }).toList();
 
-    setState(() => users = suggestions);
+    setState(() => filteredGuests = suggestions);
   }
 }

@@ -2,11 +2,14 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/userManagement/firebaseUserUtils.dart';
 import 'package:daralarkam_main_app/backend/users/supervisor.dart';
+import 'package:daralarkam_main_app/ui/firebase/userManagement/searchAUser.dart';
 import 'package:daralarkam_main_app/ui/firebase/userManagement/user-profile.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
+import '../../../backend/userManagement/additionalInformationMethods.dart';
+import '../../../backend/users/additionalInformation.dart';
 import '../../../backend/users/firebaseUser.dart';
 
 // Enum to determine the sort order for users list
@@ -41,6 +44,17 @@ class _UsersTabState extends State<UsersTab> {
           appBar: AppBar(
             title: const Text("المستخدمون"),
             actions: [
+
+              // Navigation button to "Search a Student" tab
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_
+                            )=> const SearchAUserTab()));
+                  },
+                  icon: const Icon(Icons.search_sharp)
+              ),
+
               // Sort dropdown menu in the app bar
               DropdownButton<String>(
                 value: _currentSortOrder,
@@ -131,5 +145,4 @@ class _UsersTabState extends State<UsersTab> {
     onTap: (){
       Navigator.push(context, MaterialPageRoute(builder: (context)=> UserProfile(uid:user.id)));
     },
-  );
-}
+  );}

@@ -1,9 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/userManagement/firebaseUserUtils.dart';
+import 'package:daralarkam_main_app/ui/firebase/userManagement/searchAGuest.dart';
 import 'package:daralarkam_main_app/ui/firebase/userManagement/user-profile.dart';
 import 'package:flutter/material.dart';
 
+import '../../../backend/userManagement/additionalInformationMethods.dart';
+import '../../../backend/users/additionalInformation.dart';
 import '../../../backend/users/firebaseUser.dart';
 
 // Enum to determine the sort order for guests' list
@@ -37,6 +40,16 @@ class _GuestManagementTabState extends State<GuestManagementTab> {
           appBar: AppBar(
             title: const Text("الضيوف"),
             actions: [
+
+              // Navigation button to "Search a Student" tab
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_)=> const SearchAGuestTab()));
+                  },
+                  icon: const Icon(Icons.search_sharp)
+              ),
+
               // Sort dropdown menu in the app bar
               DropdownButton<String>(
                 value: _currentSortOrder,
@@ -106,7 +119,24 @@ Stream<List<FirebaseUser>> readUsers() =>
 /// Returns a [ListTile] widget.
 Widget buildUser(FirebaseUser user) => ListTile(
       title: Text(user.fullName),
-      subtitle: Text(user.birthday + " - " + translateUserTypes(user.type)),
+      subtitle: FutureBuilder(
+        future: AdditionalInformationMethods(user.id).fetchInfoFromFirestore(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasError){
+            return Text(snapshot.error.toString());
+          }
+          else if(snapshot.hasData){
+            final info = snapshot.data! as AdditionalInformation;
+            return Text(info.groupName + " - " + info.teacherName + " - " + user.birthday);
+          }
+          else if (snapshot.connectionState == ConnectionState.waiting){
+            return Text("يتم التحميل...");
+          }
+          else {
+            return Text("لا توجد معلومات إضافية - " + user.birthday);
+          }
+        },
+      ),
       onTap: () {
         Navigator.push(
           context,

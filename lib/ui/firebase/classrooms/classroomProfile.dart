@@ -40,7 +40,7 @@ class _ClassroomProfileTabState extends State<ClassroomProfileTab> {
                   onPressed: () {
                     setState(() {});
                     }
-                  , icon: Icon(Icons.update)
+                  , icon: const Icon(Icons.refresh)
               )
             ],
           ),
