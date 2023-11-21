@@ -40,7 +40,7 @@ class ShowStudentDetailsTab extends StatelessWidget {
                           child: Column(
                             children: [
                               //username
-                              coloredArabicText(user.firstName + " " + user.secondName + " " + user.thirdName),
+                              coloredArabicText(user.firstName + " " + user.fatherName + " " + user.familyName),
                               const SizedBox(height: 10,),
                               //type
                               coloredArabicText(translateUserTypes(user.type)),

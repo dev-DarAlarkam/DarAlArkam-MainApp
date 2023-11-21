@@ -1,16 +1,47 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daralarkam_main_app/backend/counter/getCounter.dart';
 import 'package:daralarkam_main_app/backend/userManagement/studentMethods.dart';
 import 'package:daralarkam_main_app/backend/userManagement/teacherMethods.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../services/utils/showSnackBar.dart';
-import '../users/users.dart';
+import '../users/firebaseUser.dart';
+
 
 // Class to encapsulate Firebase user-related methods.
 class FirebaseUserMethods {
   final String userId;
 
   FirebaseUserMethods(this.userId);
+
+  /// Uploads user information to firestore, but first checks the if
+  /// the information is valid and not empty
+  Future<void> uploadUserToFirestore(BuildContext context, FirebaseUser user) async {
+
+    if( user.firstName.isNotEmpty
+        && user.fatherName.isNotEmpty
+        && user.grandfatherName.isNotEmpty
+        && user.familyName.isNotEmpty
+        //checks if the birthday is valid
+        && user.birthday != getFormattedDate() ) {
+
+      final json = user.toJson();
+      final docUser = FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId);
+
+      await docUser.set(json).onError((error, stackTrace) {
+        showSnackBar(context, error.toString());
+      });
+
+    }
+    else {
+      showSnackBar(context, "المعلومات غير كافية");
+    }
+
+
+  }
+
 
   // Fetches user information from Firestore.
   Future<FirebaseUser?> fetchUserFromFirestore() async {
@@ -34,15 +65,6 @@ class FirebaseUserMethods {
     return false;
   }
 
-  // Retrieves the full name of the user.
-  Future<String> getUsername() async {
-    final user = await fetchUserFromFirestore();
-
-    if (user != null) {
-      return user.firstName + " " + user.secondName + " " + user.thirdName;
-    }
-    return '';
-  }
 
   // Retrieves the user's type.
   Future<String> getType() async {

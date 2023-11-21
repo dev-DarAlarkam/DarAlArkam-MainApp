@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/classReport/classReport.dart';
 import 'package:daralarkam_main_app/backend/classReport/classReportUtils.dart';
-import 'package:daralarkam_main_app/backend/users/users.dart';
+import 'package:daralarkam_main_app/backend/users/supervisor.dart';
 import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
+
+import '../../../backend/users/firebaseUser.dart';
 
 final GlobalKey<FormState> _titleFormKey = GlobalKey<FormState>();
 final GlobalKey<FormState> _summaryFormKey = GlobalKey<FormState>();
@@ -277,11 +279,7 @@ class _CustomListTileState extends State<CustomListTile> {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        widget.student.firstName +
-            " " +
-            widget.student.secondName +
-            " " +
-            widget.student.thirdName,
+        widget.student.userName
       ),
       subtitle: Text(translateAttendanceCounterTypes(
           widget.report.getStudentInfo(widget.student.id))),

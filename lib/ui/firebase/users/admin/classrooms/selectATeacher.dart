@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/classroom/classroomUtils.dart';
-import 'package:daralarkam_main_app/backend/users/users.dart';
+import 'package:daralarkam_main_app/backend/users/supervisor.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../backend/users/firebaseUser.dart';
+import '../../../../../backend/users/teacher.dart';
 
 // Enum to determine the sort order for the list of teachers
 enum SortOrder { ascending, descending }
@@ -32,9 +35,9 @@ class _SelectATeacherTabState extends State<SelectATeacherTab> {
   // Function to sort teachers based on their first names
   void sortTeachers(SortOrder order) {
     if (order == SortOrder.ascending) {
-      teachers.sort((a, b) => a.firstName.compareTo(b.firstName));
+      teachers.sort((a, b) => a.fullName.compareTo(b.fullName));
     } else {
-      teachers.sort((a, b) => b.firstName.compareTo(a.firstName));
+      teachers.sort((a, b) => b.fullName.compareTo(a.fullName));
     }
   }
 
@@ -90,11 +93,7 @@ class _SelectATeacherTabState extends State<SelectATeacherTab> {
 
   // Build a list tile for a teacher
   Widget buildTeacher(Teacher teacher) => ListTile(
-    title: Text(teacher.firstName +
-        " " +
-        teacher.secondName +
-        " " +
-        teacher.thirdName),
+    title: Text(teacher.fullName),
     subtitle: Text(teacher.birthday),
     trailing: ElevatedButton(
       onPressed: () {

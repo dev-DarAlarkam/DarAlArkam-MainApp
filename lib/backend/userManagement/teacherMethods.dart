@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../services/utils/showSnackBar.dart';
 import '../classroom/classroomUtils.dart';
-import '../users/users.dart';
+import '../users/teacher.dart';
 import 'firebaseUserMethods.dart';
 
 // Class for teacher-specific methods, inherits from FirebaseUserMethods.

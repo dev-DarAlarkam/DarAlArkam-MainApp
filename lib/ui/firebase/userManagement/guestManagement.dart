@@ -1,10 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/userManagement/firebaseUserUtils.dart';
-import 'package:daralarkam_main_app/backend/users/users.dart';
 import 'package:daralarkam_main_app/ui/firebase/userManagement/user-profile.dart';
-import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
+
+import '../../../backend/users/firebaseUser.dart';
 
 // Enum to determine the sort order for guests' list
 enum SortOrder { ascending, descending}
@@ -105,7 +105,7 @@ Stream<List<FirebaseUser>> readUsers() =>
 ///
 /// Returns a [ListTile] widget.
 Widget buildUser(FirebaseUser user) => ListTile(
-      title: Text(user.firstName + " " + user.secondName + " " + user.thirdName),
+      title: Text(user.fullName),
       subtitle: Text(user.birthday + " - " + translateUserTypes(user.type)),
       onTap: () {
         Navigator.push(
@@ -128,10 +128,10 @@ Widget buildUser(FirebaseUser user) => ListTile(
   void _sortUsers(String order) {
     if (order == 'تصاعدي') {
       // Sort in ascending order (A to Z)
-      users.sort((a, b) => a.firstName.compareTo(b.firstName));
+      users.sort((a, b) => a.fullName.compareTo(b.fullName));
     } else if(order == 'تنازلي') {
       // Sort in descending order (Z to A)
-      users.sort((a, b) => b.firstName.compareTo(a.firstName));
+      users.sort((a, b) => b.fullName.compareTo(a.fullName));
     } else {
       // Sort in ascending order (by type)
       users.sort((a, b) => a.type.compareTo(b.type));

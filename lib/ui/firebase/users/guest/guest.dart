@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../backend/userManagement/firebaseUserMethods.dart';
 import '../../../../backend/userManagement/firebaseUserUtils.dart';
-import '../../../../backend/users/users.dart';
+import '../../../../backend/users/firebaseUser.dart';
+import '../../../../backend/users/supervisor.dart';
 import '../../../../services/firebaseAuthMethods.dart';
 
 

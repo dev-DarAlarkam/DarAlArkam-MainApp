@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daralarkam_main_app/backend/users/users.dart';
+import 'package:daralarkam_main_app/backend/users/supervisor.dart';
 import 'package:daralarkam_main_app/ui/firebase/userManagement/userManagementWidgets.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:flutter/material.dart';
 
 import '../../../backend/userManagement/firebaseUserMethods.dart';
 import '../../../backend/userManagement/firebaseUserUtils.dart';
+import '../../../backend/users/firebaseUser.dart';
 
 /// Widget for displaying and managing the profile of a user.
 ///
@@ -50,11 +51,7 @@ class UserProfile extends StatelessWidget {
                         child: Column(
                           children: [
                             // Username
-                            coloredArabicText(user.firstName +
-                                " " +
-                                user.secondName +
-                                " " +
-                                user.thirdName),
+                            coloredArabicText(user.fullName),
                             const SizedBox(height: 10),
                             // User type
                             coloredArabicText(translateUserTypes(user.type)),

@@ -9,11 +9,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../backend/userManagement/firebaseUserMethods.dart';
+import '../../../../backend/users/firebaseUser.dart';
 import '../../../../services/firebaseAuthMethods.dart';
 import 'classrooms/classroom-tab-for-admin.dart';
 import 'classrooms/createAClassroom.dart';
 import '../../../../backend/userManagement/firebaseUserUtils.dart';
-import '../../../../backend/users/users.dart';
+import '../../../../backend/users/supervisor.dart';
 import '../../../widgets/navigate-to-tab-button.dart';
 
 class AdminTab extends StatelessWidget {
@@ -79,33 +80,33 @@ class AdminTab extends StatelessWidget {
 
                                   coloredArabicText("إدارة المستخدمين"),
                                   //A button to navigate to the "Users Tab"
-                                  navigationButtonFul(context, "المستخدمون", UsersTab()),
+                                  navigationButtonFul(context, "المستخدمون", const UsersTab()),
                                   const SizedBox(height: 10,),
 
                                   //A button to navigate to the "Users Tab"
-                                  navigationButtonFul(context, "بحث", SearchAUserTab()),
+                                  navigationButtonFul(context, "بحث", const SearchAUserTab()),
                                   const SizedBox(height: 10,),
 
                                   //A button to navigate to the "Guest Management Tab"
-                                  navigationButtonFul(context, "إدارة الضيوف", GuestManagementTab()),
+                                  navigationButtonFul(context, "إدارة الضيوف", const GuestManagementTab()),
                                   const SizedBox(height: 10,),
 
-                                  Divider(),
+                                  const Divider(),
 
                                   coloredArabicText("إدارة المجموعات"),
                                   //A button to navigate to the "Classrooms Tab For Admin"
-                                  navigationButtonFul(context, "المجموعات", ClassroomsTabForAdmin()),
+                                  navigationButtonFul(context, "المجموعات", const ClassroomsTabForAdmin()),
                                   const SizedBox(height: 10,),
 
                                   //A button to navigate to the "Create A classroom tab"
-                                  navigationButtonFul(context, "انشئ مجموعة", CreateAClassroomTab()),
+                                  navigationButtonFul(context, "انشئ مجموعة", const CreateAClassroomTab()),
                                   const SizedBox(height: 10,),
 
-                                  Divider(),
+                                  const Divider(),
 
                                   coloredArabicText("إدارة الفعاليات"),
                                   //A button to navigate to the "Activities List For Admin"
-                                  navigationButtonFul(context, "الفعاليات", ActivitiesListForAdminTab()),
+                                  navigationButtonFul(context, "الفعاليات", const ActivitiesListForAdminTab()),
                                   const SizedBox(height: 10,),
                                   //A button to navigate to the "create a new activity"
                                   navigationButtonFul(context, "أضف فعالية", CreateAnActivityTab()),

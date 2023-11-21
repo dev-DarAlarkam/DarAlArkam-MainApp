@@ -1,18 +1,15 @@
 import 'dart:core';
-import 'package:daralarkam_main_app/backend/userManagement/firebaseUserMethods.dart';
 import 'package:daralarkam_main_app/backend/userManagement/teacherMethods.dart';
-import 'package:daralarkam_main_app/services/utils/showSnackBar.dart';
 import 'package:daralarkam_main_app/ui/inactiveFeature.dart';
 import 'package:daralarkam_main_app/ui/firebase/counter/counterScreenWrite.dart';
 import 'package:daralarkam_main_app/ui/firebase/counter/countersViewer.dart';
-import 'package:daralarkam_main_app/ui/home/home.dart';
 import 'package:daralarkam_main_app/ui/widgets/text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../backend/counter/getCounter.dart';
 import '../../../../backend/userManagement/firebaseUserUtils.dart';
-import '../../../../backend/users/users.dart';
+import '../../../../backend/users/firebaseUser.dart';
 import '../../../../services/firebaseAuthMethods.dart';
 import '../../../widgets/navigate-to-tab-button.dart';
 import '../../classrooms/classrooms-tab.dart';

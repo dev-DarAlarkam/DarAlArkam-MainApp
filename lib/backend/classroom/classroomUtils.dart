@@ -5,7 +5,7 @@ import 'package:daralarkam_main_app/backend/userManagement/teacherMethods.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/utils/showSnackBar.dart';
-import '../users/users.dart';
+import '../users/teacher.dart';
 
 
 class ClassroomMethods {
