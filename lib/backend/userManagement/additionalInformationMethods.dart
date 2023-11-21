@@ -61,4 +61,10 @@ class AdditionalInformationMethods {
     return false;
   }
 
+
+  // Deletes the user info from Firestore,
+  Future<void> deleteInfo() async {
+    final docInfo = FirebaseFirestore.instance.collection('additionalInformation').doc(userId);
+    await docInfo.delete();
+  }
 }

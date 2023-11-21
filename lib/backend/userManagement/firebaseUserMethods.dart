@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daralarkam_main_app/backend/counter/getCounter.dart';
+import 'package:daralarkam_main_app/backend/userManagement/additionalInformationMethods.dart';
 import 'package:daralarkam_main_app/backend/userManagement/studentMethods.dart';
 import 'package:daralarkam_main_app/backend/userManagement/teacherMethods.dart';
 import 'package:flutter/cupertino.dart';
@@ -256,8 +257,10 @@ class FirebaseUserMethods {
   }
 
   // Deletes the user from Firestore, but first it converts the user type to guest
+  // and deletes the additional information of the user
   Future<void> deleteUser(BuildContext context) async {
     castToGuest(context);
+    AdditionalInformationMethods(userId).deleteInfo();
 
     final docUser = FirebaseFirestore.instance.collection('users').doc(userId);
     await docUser.delete();
