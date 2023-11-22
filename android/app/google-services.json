@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:220867444623:android:30d40995b5644b2114d5fa",
+        "mobilesdk_app_id": "1:220867444623:android:ca91237bd20d48b314d5fa",
         "android_client_info": {
-          "package_name": "com.example.daralarkam_main_app"
+          "package_name": "com.daralarkam.daralarkam_main_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "220867444623-b8v40riij05a5d3jmq4vnn84auq0efaf.apps.googleusercontent.com",
+          "client_id": "220867444623-9t9e7jjj22fk1k2tkh214gj2jud7fod9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.daralarkam_main_app",
+            "package_name": "com.daralarkam.daralarkam_main_app",
             "certificate_hash": "b917a6bfd9761874b083a8ae57cf46c2db84cb44"
           }
         },
@@ -43,7 +43,7 @@
               "client_id": "220867444623-3h64i7i2t4otj3hmhai7ktvvmothaklk.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.daralarkam_main_appMainApp"
+                "bundle_id": "com.example.daralarkamMainApp"
               }
             }
           ]
