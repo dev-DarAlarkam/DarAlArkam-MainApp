@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAuzlHDtHGLqJzH_UHt71KOmCR-EdbjpG0',
-    appId: '1:220867444623:android:30d40995b5644b2114d5fa',
+    appId: '1:220867444623:android:ca91237bd20d48b314d5fa',
     messagingSenderId: '220867444623',
     projectId: 'dar-alarkam-main-app',
     databaseURL: 'https://dar-alarkam-main-app-default-rtdb.europe-west1.firebasedatabase.app',
@@ -60,12 +60,13 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyA8dShhTvIHkLMpxKE6REwtVXz5CU0u3HM',
-    appId: '1:220867444623:ios:a5801631b4d6746014d5fa',
+    appId: '1:220867444623:ios:a8e54f747279a1f314d5fa',
     messagingSenderId: '220867444623',
     projectId: 'dar-alarkam-main-app',
     databaseURL: 'https://dar-alarkam-main-app-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'dar-alarkam-main-app.appspot.com',
-    iosClientId: '220867444623-3h64i7i2t4otj3hmhai7ktvvmothaklk.apps.googleusercontent.com',
-    iosBundleId: 'com.example.daralarkam_main_app_main_appMainApp',
+    androidClientId: '220867444623-9t9e7jjj22fk1k2tkh214gj2jud7fod9.apps.googleusercontent.com',
+    iosClientId: '220867444623-p0iarcq5hbtvb60hsdr53b8ac2unu6f8.apps.googleusercontent.com',
+    iosBundleId: 'com.daralarkam.daralarkamMainApp',
   );
 }
