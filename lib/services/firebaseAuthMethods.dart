@@ -8,7 +8,7 @@ import './utils/showSnackBar.dart';
 
 class FirebaseAuthMethods {
   final FirebaseAuth _auth;
-  static bool signedWithGoogle = true;
+  static bool signedWithGoogle = false;
   FirebaseAuthMethods(this._auth);
 
 
