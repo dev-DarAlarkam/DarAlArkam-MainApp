@@ -98,6 +98,8 @@ class _AuthenticationTabState extends State<AuthenticationTab> {
                   googleButton(context),
                   const SizedBox(height: 10,),
                   facebookButton(context),
+                  const SizedBox(height: 10,),
+                  appleButton(context),
                   const Expanded(flex: 3, child: SizedBox()),
                 ],
               ),

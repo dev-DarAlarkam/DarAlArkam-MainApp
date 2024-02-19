@@ -92,6 +92,20 @@ class FirebaseAuthMethods {
     }
   }
 
+  //APPLE SIGN IN
+  Future<void> signInWithApple(BuildContext context) async {
+    //todo: make it only for the apple users (check the platform and then based on the continue
+
+    try {
+
+      final appleProvider = AppleAuthProvider();
+      await _auth.signInWithProvider(appleProvider);
+
+    } on FirebaseAuthException catch(e) {
+      showSnackBar(context, e.message!); // Displaying the error message
+    }
+  }
+
   Future<void> signOut(BuildContext context) async {
     if (signedWithGoogle){
       GoogleSignIn _googleSignIn = GoogleSignIn();

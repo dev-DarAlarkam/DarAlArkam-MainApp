@@ -160,3 +160,49 @@ Widget facebookButton(BuildContext context) {
         )),
   );
 }
+
+
+// Widget for the Apple Sign in Button
+Widget appleButton(BuildContext context) {
+  double width = MediaQuery.of(context).size.width;
+  return Container(
+    height: 50,
+    width: width*0.8,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(25),
+      color: color.green,
+    ),
+    child: ElevatedButton(
+        onPressed: () async {
+          FirebaseAuthMethods(FirebaseAuth.instance)
+              .signInWithApple(context)
+              .then((value) {navigateBasedOnType(context, FirebaseAuth.instance.currentUser!.uid);})
+              .onError((error, stackTrace) {showSnackBar(context, error.toString());});
+        },
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith(
+                (states) {
+              if (states.contains(MaterialState.pressed)) {
+                return Colors.black26;
+              }
+              return color.green;
+            },
+          ),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+          ),
+        ),
+        child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              boldColoredArabicText("تسجيل الدخول بواسطة أبل", c:Colors.white),
+              const Icon(MyFlutterApp.apple, color: Colors.white)
+            ],
+          ),
+        )),
+  );
+}
