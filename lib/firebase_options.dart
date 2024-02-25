@@ -65,7 +65,7 @@ class DefaultFirebaseOptions {
     projectId: 'dar-alarkam-main-app',
     databaseURL: 'https://dar-alarkam-main-app-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'dar-alarkam-main-app.appspot.com',
-    androidClientId: '220867444623-9t9e7jjj22fk1k2tkh214gj2jud7fod9.apps.googleusercontent.com',
+    androidClientId: '220867444623-346stuqdc54sfb4ee2l92gq4p2cjjf2t.apps.googleusercontent.com',
     iosClientId: '220867444623-p0iarcq5hbtvb60hsdr53b8ac2unu6f8.apps.googleusercontent.com',
     iosBundleId: 'com.daralarkam.daralarkamMainApp',
   );

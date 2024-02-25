@@ -25,6 +25,14 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+        	<key>CFBundleTypeRole</key>
+        	<string>Editor</string>
+        	<key>CFBundleURLSchemes</key>
+			<array>
+            	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+        	</array>
+    	</dict>
+		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb868365077821821</string>
@@ -35,7 +43,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.220867444623-3h64i7i2t4otj3hmhai7ktvvmothaklk</string>
+				<string>com.googleusercontent.apps.220867444623-p0iarcq5hbtvb60hsdr53b8ac2unu6f8</string>
 			</array>
 		</dict>
 	</array>
@@ -68,6 +76,8 @@
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>

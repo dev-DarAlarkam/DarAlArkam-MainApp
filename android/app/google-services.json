@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "220867444623-346stuqdc54sfb4ee2l92gq4p2cjjf2t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.daralarkam.daralarkam_main_app",
+            "certificate_hash": "b75a7b4014436f07e73ff00ce61a485a4886d433"
+          }
+        },
+        {
+          "client_id": "220867444623-3dbusbfjb2d0chcc32dker55chjrmh1r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.daralarkam.daralarkam_main_app",
+            "certificate_hash": "986eaf00be8a310fbbf77c0838e1dd50bd0d0279"
+          }
+        },
+        {
           "client_id": "220867444623-9t9e7jjj22fk1k2tkh214gj2jud7fod9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

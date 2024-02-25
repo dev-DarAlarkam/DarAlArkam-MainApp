@@ -206,3 +206,39 @@ Widget appleButton(BuildContext context) {
         )),
   );
 }
+
+Widget googleLogInButton(BuildContext context){
+  return IconButton(
+      onPressed: () async {
+        FirebaseAuthMethods(FirebaseAuth.instance)
+            .signInWithGoogle(context)
+            .then((value) {
+          navigateBasedOnType(context, FirebaseAuth.instance.currentUser!.uid);
+        }).onError((error, stackTrace) {
+          showSnackBar(context, error.toString());
+        });
+      },
+      icon: const Icon(MyFlutterApp.google),
+
+  );
+}
+
+Widget facebookLogInButton(BuildContext context) => IconButton(
+    onPressed: () async {
+      FirebaseAuthMethods(FirebaseAuth.instance)
+          .signInWithFacebook(context)
+          .then((value) {navigateBasedOnType(context, FirebaseAuth.instance.currentUser!.uid);})
+          .onError((error, stackTrace) {showSnackBar(context, error.toString());});
+    },
+    icon: const Icon(MyFlutterApp.facebook)
+);
+
+Widget appleLogInButton(BuildContext context) => IconButton(
+    onPressed: () async {
+      FirebaseAuthMethods(FirebaseAuth.instance)
+          .signInWithApple(context)
+          .then((value) {navigateBasedOnType(context, FirebaseAuth.instance.currentUser!.uid);})
+          .onError((error, stackTrace) {showSnackBar(context, error.toString());});
+    },
+    icon: const Icon(MyFlutterApp.apple)
+);

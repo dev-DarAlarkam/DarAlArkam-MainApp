@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>220867444623-3h64i7i2t4otj3hmhai7ktvvmothaklk.apps.googleusercontent.com</string>
+	<string>220867444623-p0iarcq5hbtvb60hsdr53b8ac2unu6f8.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.220867444623-3h64i7i2t4otj3hmhai7ktvvmothaklk</string>
+	<string>com.googleusercontent.apps.220867444623-p0iarcq5hbtvb60hsdr53b8ac2unu6f8</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>220867444623-346stuqdc54sfb4ee2l92gq4p2cjjf2t.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyA8dShhTvIHkLMpxKE6REwtVXz5CU0u3HM</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.daralarkam_main_appMainApp</string>
+	<string>com.daralarkam.daralarkamMainApp</string>
 	<key>PROJECT_ID</key>
 	<string>dar-alarkam-main-app</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:220867444623:ios:f4b9e7c58c35f0ca14d5fa</string>
+	<string>1:220867444623:ios:a8e54f747279a1f314d5fa</string>
 	<key>DATABASE_URL</key>
 	<string>https://dar-alarkam-main-app-default-rtdb.europe-west1.firebasedatabase.app</string>
 </dict>
