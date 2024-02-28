@@ -94,7 +94,7 @@ class _AuthenticationTabState extends State<AuthenticationTab> {
                   signInButton(context, "تسجيل الدخول", emailTextController, passwordTextController),
                   const SizedBox(height: 10,),
                   line(),
-                  const SizedBox(height: 10,),
+                  const SizedBox(height: 20,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -103,11 +103,6 @@ class _AuthenticationTabState extends State<AuthenticationTab> {
                       appleLogInButton(context)
                     ],
                   ),
-                  // googleLogInButton(context),
-                  // const SizedBox(height: 10,),
-                  // facebookButton(context),
-                  // const SizedBox(height: 10,),
-                  // appleButton(context),
                   const Expanded(flex: 3, child: SizedBox()),
                 ],
               ),
