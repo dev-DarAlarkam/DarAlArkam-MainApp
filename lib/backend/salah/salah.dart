@@ -5,23 +5,38 @@ import 'package:xml/xml.dart' as xml;
 import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
 
-Future<String> loadAsset() async {
-  return await rootBundle.loadString('lib/assets/files/prayers.xml');
+Future<void> createDstStatusFile() async {
+
+  Map<String, bool> content = {"dst" : false};
+  String jsonString = json.encode(content);
+
+  try {
+
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/dst.json');
+    await file.writeAsString(jsonString);
+
+  } catch (e) {
+
+    print('Failed to save file: $e');
+
+  }
 }
 
 Future<bool> readDSTStatus() async {
   final directory = await getApplicationDocumentsDirectory();
   final file = File('${directory.path}/dst.json');
   String content = await file.readAsString();
-  Map<String, dynamic> map = json.decode(content);
   try {
     // Read the JSON asset file
     Map<String, dynamic> map = json.decode(content);
     bool isDst = map["dst"];
     return isDst;
+
   } catch (e) {
-    print(e.toString());
-    return false;
+    await createDstStatusFile();
+    return await readDSTStatus();
+
   }
 }
 
@@ -35,13 +50,84 @@ Future<void> updateDstStatus(bool isDst) async {
     final file = File('${directory.path}/dst.json');
     await file.writeAsString(jsonString);
     print('File saved successfully');
+    print(directory.path.toString());
+
   } catch (e) {
     print('Failed to save file: $e');
   }
 }
 
 
-Future<Map<String,String>> parseXml() async {
+
+Future<void> createSalahNotificationFile() async {
+
+  Map<String, bool> defaultContent = {
+    "Fajr" : false,
+    "Shuruq" : false,
+    "Duhr" : false,
+    "Asr" : false,
+    "Maghrib" : false,
+    "Isha" : false
+  };
+  String jsonString = json.encode(defaultContent);
+
+  try {
+
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/salahNotifications.json');
+    await file.writeAsString(jsonString);
+
+  } catch (e) {
+
+    print('Failed to save file: $e');
+
+  }
+}
+
+Future<Map<String, dynamic>> readSalahNotificationStatus() async {
+
+  final directory = await getApplicationDocumentsDirectory();
+  final file = File('${directory.path}/salahNotifications.json');
+  String content = await file.readAsString();
+
+  try {
+    // Read the JSON asset file
+    Map<String, dynamic> map = json.decode(content);
+    return map;
+
+  } catch (e) {
+    await createSalahNotificationFile();
+    return await readSalahNotificationStatus();
+
+  }
+}
+
+
+Future<void> updateSalahNotificationStatus(Map<String, dynamic> content) async {
+  String jsonString = json.encode(content);
+
+  try {
+
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/salahNotifications.json');
+    await file.writeAsString(jsonString);
+    print('File saved successfully');
+
+  } catch (e) {
+    print('Failed to save file: $e');
+  }
+}
+
+
+
+
+
+
+Future<String> loadAsset() async {
+  return await rootBundle.loadString('lib/assets/files/prayers.xml');
+}
+
+Future<Map<String,String>> parseXml(DateTime chosenDate) async {
   final xmlString = await loadAsset();
   final document = xml.XmlDocument.parse(xmlString);
 
@@ -55,7 +141,7 @@ Future<Map<String,String>> parseXml() async {
     final maghrib = item.findElements('Maghrib').single.text;
     final isha = item.findElements('Isha').single.text;
 
-    if (compareDates(date.toString())){
+    if (compareDates(chosenDate, date.toString())){
       return {
         'Date': date.toString(),
         'Fajr': fajr.toString(),
@@ -70,8 +156,8 @@ Future<Map<String,String>> parseXml() async {
   return {};
 }
 
-bool compareDates(String dateString) {
-  final currentDate = DateTime.now();
+bool compareDates(DateTime chosenDate, String dateString) {
+  final currentDate = chosenDate;
   final dateParts = dateString.split(".");
   if (dateParts.length == 2) {
     final targetMonth = int.tryParse(dateParts[0]);

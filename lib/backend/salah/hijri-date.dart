@@ -1,12 +1,18 @@
 import 'package:hijri/hijri_calendar.dart';
 
-String getTodayDateH(){
-  var _today = HijriCalendar.now();
+String getTodayDateHijri(DateTime chosenDay){
+  var _today = HijriCalendar.fromDate(chosenDay);
 
   String result = _today.hDay.toString() + " ";
   result += getMonthNameInArabic(_today.hMonth) + " ";
   result += _today.hYear.toString() + " هـ";
   return result;
+}
+
+String getTodayDateGeorgian(DateTime chosenDay){
+  return chosenDay.day.toString() + " \\ "
+      + chosenDay.month.toString() + " \\ "
+      + chosenDay.year.toString();
 }
 
 String getMonthNameInArabic(int month) {
