@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 import 'package:xml/xml.dart' as xml;
 import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
@@ -5,6 +8,38 @@ import 'package:flutter/services.dart' show rootBundle;
 Future<String> loadAsset() async {
   return await rootBundle.loadString('lib/assets/files/prayers.xml');
 }
+
+Future<bool> readDSTStatus() async {
+  final directory = await getApplicationDocumentsDirectory();
+  final file = File('${directory.path}/dst.json');
+  String content = await file.readAsString();
+  Map<String, dynamic> map = json.decode(content);
+  try {
+    // Read the JSON asset file
+    Map<String, dynamic> map = json.decode(content);
+    bool isDst = map["dst"];
+    return isDst;
+  } catch (e) {
+    print(e.toString());
+    return false;
+  }
+}
+
+
+Future<void> updateDstStatus(bool isDst) async {
+  Map<String, bool> content = {"dst" : isDst ? false : true};
+  String jsonString = json.encode(content);
+
+  try {
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/dst.json');
+    await file.writeAsString(jsonString);
+    print('File saved successfully');
+  } catch (e) {
+    print('Failed to save file: $e');
+  }
+}
+
 
 Future<Map<String,String>> parseXml() async {
   final xmlString = await loadAsset();

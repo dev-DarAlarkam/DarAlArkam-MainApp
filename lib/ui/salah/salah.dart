@@ -4,17 +4,25 @@ import 'package:flutter/material.dart';
 import 'package:daralarkam_main_app/globals/globalColors.dart' as colors;
 import '../../backend/salah/salah.dart';
 
-bool isDST = false;
 
 class SalahTab extends StatefulWidget {
   const SalahTab({Key? key}) : super(key: key);
-
   @override
   State<SalahTab> createState() => _SalahTabState();
 }
 
 class _SalahTabState extends State<SalahTab> {
+  bool isDst = false;
 
+  @override
+  void initState() {
+    Future<bool> futureIsDst = readDSTStatus();
+    futureIsDst.then((value) {
+      isDst = value;
+      setState(() {});
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -38,8 +46,8 @@ class _SalahTabState extends State<SalahTab> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const CircularProgressIndicator();
                   } else if (snapshot.hasData) {
-                    final prayerTimes = snapshot.data;
 
+                    final prayerTimes = snapshot.data;
                     return Center(
                       child: SizedBox(
                         height: height*0.7,
@@ -51,17 +59,17 @@ class _SalahTabState extends State<SalahTab> {
                             const Expanded(flex:4,child: SizedBox()),
                             dateRow(context),
                             const SizedBox(height: 10,),
-                            salahRow("الفجر", adjustTimeForDST(prayerTimes!['Fajr']!, isDST), context),
+                            salahRow("الفجر", adjustTimeForDST(prayerTimes!['Fajr']!, isDst), context),
                             const SizedBox(height: 10,),
-                            salahRow("الشروق", adjustTimeForDST(prayerTimes['Shuruq']!, isDST), context),
+                            salahRow("الشروق", adjustTimeForDST(prayerTimes['Shuruq']!, isDst), context),
                             const SizedBox(height: 10,),
-                            salahRow("الظهر", adjustTimeForDST(prayerTimes['Duhr']!, isDST), context),
+                            salahRow("الظهر", adjustTimeForDST(prayerTimes['Duhr']!, isDst), context),
                             const SizedBox(height: 10,),
-                            salahRow("العصر", adjustTimeForDST(prayerTimes['Asr']!, isDST), context),
+                            salahRow("العصر", adjustTimeForDST(prayerTimes['Asr']!, isDst), context),
                             const SizedBox(height: 10,),
-                            salahRow("المغرب", adjustTimeForDST(prayerTimes['Maghrib']!, isDST), context),
+                            salahRow("المغرب", adjustTimeForDST(prayerTimes['Maghrib']!, isDst), context),
                             const SizedBox(height: 10,),
-                            salahRow("العشاء", adjustTimeForDST(prayerTimes['Isha']!, isDST), context),
+                            salahRow("العشاء", adjustTimeForDST(prayerTimes['Isha']!, isDst), context),
                             const Expanded(flex:3,child: SizedBox()),
                           ],
                         ),
@@ -76,7 +84,7 @@ class _SalahTabState extends State<SalahTab> {
               ElevatedButton(
                 onPressed: _toggleDST,
                 child: coloredArabicText(
-                    isDST ? 'توقيت صيفي' : 'توقيت شتوي', c: Colors.white),
+                    isDst ? 'توقيت صيفي' : 'توقيت شتوي', c: Colors.white),
               ),
               const SizedBox(height: 10,),
             ],
@@ -86,8 +94,12 @@ class _SalahTabState extends State<SalahTab> {
     );
   }
   void _toggleDST() {
-    setState(() {
-      isDST = !isDST;
+    updateDstStatus(isDst).then((value) {
+      Future<bool> futureIsDst = readDSTStatus();
+      futureIsDst.then((value) {
+        isDst = value;
+        setState(() {});
+      });
     });
   }
 }
