@@ -23,7 +23,7 @@ class FirebaseUserMethods {
         && user.fatherName.isNotEmpty
         && user.grandfatherName.isNotEmpty
         && user.familyName.isNotEmpty
-        //checks if the birthday is valid
+        //checks if the entered birthday is valid
         && user.birthday != getFormattedDate() ) {
 
       final json = user.toJson();

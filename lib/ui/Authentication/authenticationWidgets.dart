@@ -38,7 +38,6 @@ Widget signUpOption(BuildContext context) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-
       //Sign Up Line
       GestureDetector(
         onTap: () {
@@ -47,21 +46,23 @@ Widget signUpOption(BuildContext context) {
         },
 
         //Text Label
-        child: boldColoredArabicText("لا تملك حسابًا؟ قم بإنشاء حساب", maxSize: 15, minSize: 10),
+        child: boldColoredArabicText("لا تملك حسابًا؟ قم بإنشاء حساب",
+            maxSize: 15, minSize: 10),
       ),
 
       // Reset Password Line
       GestureDetector(
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const ResetPasswordTab()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const ResetPasswordTab()));
         },
 
         //Text Label
-        child: boldColoredArabicText(
-            "أعد ضبط كلمة المرور", maxSize: 15, minSize: 10),
+        child: boldColoredArabicText("أعد ضبط كلمة المرور",
+            maxSize: 15, minSize: 10),
       ),
-
     ],
   );
 }
@@ -88,7 +89,7 @@ Widget googleButton(BuildContext context) {
       },
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.resolveWith(
-              (states) {
+          (states) {
             if (states.contains(MaterialState.pressed)) {
               return Colors.black26;
             }
@@ -106,7 +107,8 @@ Widget googleButton(BuildContext context) {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            boldColoredArabicText("تسحيل الدخول بواسطة جوجل   ", c: Colors.white),
+            boldColoredArabicText("تسحيل الدخول بواسطة جوجل   ",
+                c: Colors.white),
             const Icon(MyFlutterApp.google, color: Colors.white),
           ],
         ),
@@ -115,13 +117,12 @@ Widget googleButton(BuildContext context) {
   );
 }
 
-
 // Widget for the Facebook Sign in Button
 Widget facebookButton(BuildContext context) {
   double width = MediaQuery.of(context).size.width;
   return Container(
     height: 50,
-    width: width*0.8,
+    width: width * 0.8,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(25),
       color: color.green,
@@ -130,33 +131,148 @@ Widget facebookButton(BuildContext context) {
         onPressed: () async {
           FirebaseAuthMethods(FirebaseAuth.instance)
               .signInWithFacebook(context)
-              .then((value) {navigateBasedOnType(context, FirebaseAuth.instance.currentUser!.uid);})
-              .onError((error, stackTrace) {showSnackBar(context, error.toString());});
+              .then((value) {
+            navigateBasedOnType(
+                context, FirebaseAuth.instance.currentUser!.uid);
+          }).onError((error, stackTrace) {
+            showSnackBar(context, error.toString());
+          });
         },
         style: ButtonStyle(
-      backgroundColor: MaterialStateProperty.resolveWith(
+          backgroundColor: MaterialStateProperty.resolveWith(
             (states) {
-          if (states.contains(MaterialState.pressed)) {
-            return Colors.black26;
-          }
-          return color.green;
-        },
-      ),
-      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
+              if (states.contains(MaterialState.pressed)) {
+                return Colors.black26;
+              }
+              return color.green;
+            },
+          ),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+          ),
         ),
-      ),
-    ),
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              boldColoredArabicText("تسجيل الدخول بواسطة فيسبوك", c:Colors.white),
+              boldColoredArabicText("تسجيل الدخول بواسطة فيسبوك",
+                  c: Colors.white),
               const Icon(MyFlutterApp.facebook_f, color: Colors.white)
             ],
           ),
         )),
   );
 }
+
+// Widget for the Apple Sign in Button
+Widget appleButton(BuildContext context) {
+  double width = MediaQuery.of(context).size.width;
+  return Container(
+    height: 50,
+    width: width * 0.8,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(25),
+      color: color.green,
+    ),
+    child: ElevatedButton(
+        onPressed: () async {
+          FirebaseAuthMethods(FirebaseAuth.instance)
+              .signInWithApple(context)
+              .then((value) {
+            navigateBasedOnType(
+                context, FirebaseAuth.instance.currentUser!.uid);
+          }).onError((error, stackTrace) {
+            showSnackBar(context, error.toString());
+          });
+        },
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith(
+            (states) {
+              if (states.contains(MaterialState.pressed)) {
+                return Colors.black26;
+              }
+              return color.green;
+            },
+          ),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+          ),
+        ),
+        child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              boldColoredArabicText("تسجيل الدخول بواسطة أبل", c: Colors.white),
+              const Icon(MyFlutterApp.apple, color: Colors.white)
+            ],
+          ),
+        )),
+  );
+}
+
+Widget googleLogInButton(BuildContext context) {
+  return Container(
+      height: 50,
+      width: 50,
+      decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(25),
+  color: color.green,
+  ),
+  child: IconButton(
+    onPressed: () async {
+      FirebaseAuthMethods(FirebaseAuth.instance)
+          .signInWithGoogle(context)
+          .then((value) {
+        navigateBasedOnType(context, FirebaseAuth.instance.currentUser!.uid);
+      }).onError((error, stackTrace) {
+        showSnackBar(context, error.toString());
+      });
+    },
+    icon: const Icon(MyFlutterApp.google, color: Colors.white),
+  ));
+}
+
+Widget facebookLogInButton(BuildContext context) => Container(
+    height: 50,
+    width: 50,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(25),
+      color: color.green,
+    ),
+    child: IconButton(
+    onPressed: () async {
+      FirebaseAuthMethods(FirebaseAuth.instance)
+          .signInWithFacebook(context)
+          .then((value) {
+        navigateBasedOnType(context, FirebaseAuth.instance.currentUser!.uid);
+      }).onError((error, stackTrace) {
+        showSnackBar(context, error.toString());
+      });
+    },
+    icon: const Icon(MyFlutterApp.facebook, color: Colors.white)));
+
+Widget appleLogInButton(BuildContext context) => Container(
+    height: 50,
+    width: 50,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(25),
+      color: color.green,
+    ),
+    child: IconButton(
+        onPressed: () async {
+          FirebaseAuthMethods(FirebaseAuth.instance)
+              .signInWithApple(context)
+              .then((value) {
+            navigateBasedOnType(
+                context, FirebaseAuth.instance.currentUser!.uid);
+          }).onError((error, stackTrace) {
+            showSnackBar(context, error.toString());
+          });
+        },
+        icon: const Icon(MyFlutterApp.apple, color: Colors.white)));

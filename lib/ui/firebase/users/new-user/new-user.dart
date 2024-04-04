@@ -79,6 +79,8 @@ class _NewUserTabState extends State<NewUserTab> {
   }
 
   // Widget for the birthday picker button
+  // this function allows to pick the date of birth up to 5 years from the current date
+
   Widget birthdayButton(BuildContext context) {
     return Container(
       width: 140,
@@ -93,7 +95,7 @@ class _NewUserTabState extends State<NewUserTab> {
                 context: context,
                 initialDate: DateTime.now(),
                 firstDate: DateTime(1970),
-                lastDate: DateTime(2222))
+                lastDate: DateTime(DateTime.now().year-5))
                 .then((value) {
               setState(() {
                 _date = value!;

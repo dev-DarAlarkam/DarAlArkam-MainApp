@@ -4,7 +4,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../ui/home/home.dart';
 import './utils/showSnackBar.dart';
-
+import 'dart:io' show Platform;
 
 class FirebaseAuthMethods {
   final FirebaseAuth _auth;
@@ -89,6 +89,23 @@ class FirebaseAuthMethods {
       await _auth.signInWithCredential(facebookAuthCredential);
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message!); // Displaying the error message
+    }
+  }
+
+  //APPLE SIGN IN
+  //this type of sign in is activated only for IOS devices
+  Future<void> signInWithApple(BuildContext context) async {
+
+    //checking if the platform is IOS
+    if(Platform.isIOS) {
+      try {
+        final appleProvider = AppleAuthProvider();
+        await _auth.signInWithProvider(appleProvider);
+      } on FirebaseAuthException catch (e) {
+        showSnackBar(context, e.message!); // Displaying the error message
+      }
+    } else {
+      showSnackBar(context, "هذه الخاصية مفعّلة فقط لأجهزة أبل");
     }
   }
 

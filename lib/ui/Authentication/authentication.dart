@@ -94,10 +94,15 @@ class _AuthenticationTabState extends State<AuthenticationTab> {
                   signInButton(context, "تسجيل الدخول", emailTextController, passwordTextController),
                   const SizedBox(height: 10,),
                   line(),
-                  const SizedBox(height: 10,),
-                  googleButton(context),
-                  const SizedBox(height: 10,),
-                  facebookButton(context),
+                  const SizedBox(height: 20,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      googleLogInButton(context),
+                      facebookLogInButton(context),
+                      appleLogInButton(context)
+                    ],
+                  ),
                   const Expanded(flex: 3, child: SizedBox()),
                 ],
               ),

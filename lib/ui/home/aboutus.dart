@@ -30,12 +30,12 @@ class AboutUs extends StatelessWidget {
                   SizedBox(height: height*.1,child: Image.asset("lib/assets/photos/main-logo.png"),),
                   const Expanded(flex:1,child: SizedBox()),
                   Container(
-                  height: height*.4,
-                  width: width*0.8,
-                  decoration: BoxDecoration(
-                      color: colors.green,
-                      borderRadius: BorderRadius.circular(15),
-                  ),
+                    height: height*.4,
+                    width: width*0.8,
+                    decoration: BoxDecoration(
+                        color: colors.green,
+                        borderRadius: BorderRadius.circular(15),
+                    ),
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
                     child: Column(
